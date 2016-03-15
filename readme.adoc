@@ -1,1 +1,5 @@
-= README
+= A real time clock over Wifi based on the ESP 8266
+
+== First Test
+
+image::gifs/3matrixdemo.gif[3 Matrix Demo]
