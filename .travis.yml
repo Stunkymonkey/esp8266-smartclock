@@ -33,13 +33,16 @@ cache:
      directories:
          - "~/.platformio"
 
+env:
+     - PLATFORMIO_CI_SRC=src/main.cpp
+
 install:
      - pip install -U platformio
      - wget https://github.com/wayoda/LedControl/releases/download/1.0.6/LedControl-1.0.6.zip -O /tmp/LedControl.zip
      - unzip /tmp/LedControl.zip -d /tmp
 
 script:
-     - platformio run
+     - platformio ci --lib="/tmp/LedControl.h" --board=nodemcuv2
 
 
 #
