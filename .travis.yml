@@ -33,10 +33,10 @@ cache:
      directories:
          - "~/.platformio"
 
- install:
+install:
      - pip install -U platformio
 
- script:
+script:
      - platformio run
 
 
