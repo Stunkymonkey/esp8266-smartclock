@@ -38,7 +38,7 @@ env:
 
 install:
      - pip install -U platformio
-     - wget https://github.com/sej7278/LedControl/archive/master.zip /tmp/master.zip
+     - wget https://github.com/sej7278/LedControl/archive/master.zip -O /tmp/master.zip
      - unzip /tmp/master -d /tmp
 
 script:
