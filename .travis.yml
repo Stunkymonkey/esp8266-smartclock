@@ -42,7 +42,7 @@ install:
      - unzip /tmp/LedControl.zip -d /tmp
 
 script:
-     - platformio ci --lib="/tmp/LedControl.h" --board=nodemcuv2
+     - platformio ci --lib="/tmp/LedControl" --board=nodemcuv2
 
 
 #
