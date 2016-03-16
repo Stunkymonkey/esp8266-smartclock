@@ -38,8 +38,8 @@ install:
      - wget https://github.com/wayoda/LedControl/releases/download/1.0.6/LedControl-1.0.6.zip -O /tmp/LedControl.zip
      - unzip /tmp/LedControl.zip -d /tmp
 
-script:     
-     - platformio ci --lib="/tmp/LedControl" --board=nodemcuv2
+script:
+     - platformio run
 
 
 #
