@@ -38,8 +38,8 @@ env:
 
 install:
      - pip install -U platformio
-     - wget https://github.com/sej7278/LedControl/archive/master.zip /tmp/LedControl.zip
-     - unzip /tmp/LedControl.zip -d /tmp
+     - wget https://github.com/sej7278/LedControl/archive/master.zip /tmp/master.zip
+     - unzip /tmp/master -d /tmp
 
 script:
      - platformio ci --lib="/tmp/LedControl-master" --board=nodemcuv2
