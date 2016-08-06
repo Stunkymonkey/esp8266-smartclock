@@ -1,5 +1,7 @@
 # Playground
 
+<img src="assets/example.jpg"/>
+
 ### TODO:
 + test more than one matrix
 + use NodeMCU Board
