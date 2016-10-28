@@ -2,15 +2,21 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <ESP8266WebServer.h>
-#include "FS.h"
+#include <FS.h>
 
 const boolean DEBUG = true;
 const String WIFI_CONFIG_PATH = "/config.txt";
 const String NAME_CONFIG_PATH = "/name.txt";
-/* WIFI_CONFIG_PATH:
- * ssid \n
- * pw
+const String SOCKET_CONFIG_PATH = "/sockets/";
+
+/* File structure:
+ * /NAME_CONFIG_PATH:
+ *    name
+ * /WIFI_CONFIG_PATH:
+ *    ssid \n
+ *    pw
  */
+
 String deviceName = "";
 String configSsid = "";
 String configPw = "";
