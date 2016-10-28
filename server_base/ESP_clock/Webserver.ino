@@ -24,6 +24,7 @@ void createServer() {
     content += "</form>";
     //name settings
     content += "<h3>Change Name</h3><form action='/nameSet' method='GET'>";
+    content += "<p>Your Interface is visible at $name.local</p>";
     content += "<input type='text' name='name' placeholder='Your Device Name' value='"+deviceName+"' autofocus><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
