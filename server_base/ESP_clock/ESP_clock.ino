@@ -6,11 +6,15 @@
 
 const boolean DEBUG = true;
 const String WIFI_CONFIG_PATH = "/config.txt";
+const String NAME_CONFIG_PATH = "/name.txt";
 /* WIFI_CONFIG_PATH:
  * ssid \n
  * pw
  */
-const String DEVICE_NAME = "Home Controller";
+String deviceName = "";
+String configSsid = "";
+String configPw = "";
+
 boolean isAPMode = false;
 
 ESP8266WebServer server(80);
@@ -23,11 +27,14 @@ void setup()
   Serial.begin(115200);
   print("Start setup routine");
 
-  
   bool mountFs = SPIFFS.begin();
   if (!mountFs) {
     print("Failed to mount File-System!");
   }
+
+  //load device Name
+  deviceName = loadDeviceName();
+
   File configFile = SPIFFS.open(WIFI_CONFIG_PATH, "r");
   if (!configFile) {
     setupAP();
@@ -51,11 +58,28 @@ void setup()
     if (!testWifi()) {
       setupAP();
     } else {
+      //cache as variables
+      configPw = pw;
+      configSsid = ssid;
       print("Connected!!!");
     }
   }
   createServer();
   server.begin();
+}
+
+String loadDeviceName() {
+  File configFile = SPIFFS.open(NAME_CONFIG_PATH, "r");
+  if (configFile) {
+    String name;
+    while (configFile.available()) {
+      name = configFile.readStringUntil('\n');
+    }
+    name.trim();
+    return name;
+  } else {
+    return "ESP8266";
+  }
 }
 
 bool testWifi(void) {
@@ -72,14 +96,14 @@ bool testWifi(void) {
 
 void setupAP() {
   print("Setup AP Mode");
-  boolean result = WiFi.softAP(DEVICE_NAME.c_str());
+  boolean result = WiFi.softAP(deviceName.c_str());
   if (result == true) {
     isAPMode = true;
   }
 }
 
 void sendResponse(String content) {
-  String finalContent = "<!DOCTYPE html><html><head><title>" + DEVICE_NAME + "</title></head><body><container>";
+  String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title></head><body><container>";
   finalContent += content;
   finalContent += "</container></body></html>";
   server.send(200, "text/html", finalContent);
@@ -94,14 +118,18 @@ void createServer() {
     sendResponse(content);
   });
   server.on("/settings", []() {
-    content = "<h3>Settings</h3><form action='/settingsSet' method='GET'>";
-    content += "<input type='text' name='ssid' placeholder='Your Wifi SSID' autofocus><br>";
-    content += "<input type='password' name='pw' placeholder='Your Wifi Password'><br>";
+    content = "<h3>WiFi Settings</h3><form action='/wifiSet' method='GET'>";
+    content += "<input type='text' name='ssid' placeholder='Your Wifi SSID' value='"+configSsid+"' autofocus><br>";
+    content += "<input type='password' name='pw' placeholder='Your Wifi Password' value='"+configPw+"'><br>";
+    content += "<input type='submit' value='Speichern'>";
+    content += "</form>";
+    content += "<h3>Change Name</h3><form action='/nameSet' method='GET'>";
+    content += "<input type='text' name='name' placeholder='Your Device Name' value='"+deviceName+"' autofocus><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
     sendResponse(content);
   });
-  server.on("/settingsSet", []() {
+  server.on("/wifiSet", []() {
     String ssid = server.arg("ssid");
     String pw = server.arg("pw");
     print(ssid);
@@ -114,6 +142,17 @@ void createServer() {
     f.println(pw);
     f.close();
     sendResponse("Please restart the module");
+  });
+   server.on("/nameSet", []() {
+    String name = server.arg("name");
+    File f = SPIFFS.open(NAME_CONFIG_PATH, "w");
+    if (!f) {
+      print("File doesn't exist yet. Creating it");
+    }
+    f.println(name);
+    f.close();
+    deviceName = name;
+    sendResponse("Saved!");
   });
 }
 
