@@ -9,14 +9,12 @@ void initWifi() {
     int tmp = 0;
     while (configFile.available()) {
       if (tmp == 0) {
-        ssid = configFile.readStringUntil('\n');
+        ssid = configFile.readStringUntil('\n').trim();
       } else {
-        pw = configFile.readStringUntil('\n');
+        pw = configFile.readStringUntil('\n').trim();
       }
       tmp = tmp +1;
     }
-    ssid.trim();
-    pw.trim();
     WiFi.disconnect(true);
     WiFi.begin(ssid.c_str(), pw.c_str());
     if (!testWifi()) {

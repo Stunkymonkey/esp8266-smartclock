@@ -17,8 +17,10 @@ String loadDeviceName() {
       name = configFile.readStringUntil('\n');
     }
     name.trim();
+    configFile.close();
     return name;
   } else {
+    configFile.close();
     return "ESP8266";
   }
 }
