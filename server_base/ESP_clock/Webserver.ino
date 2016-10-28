@@ -31,14 +31,16 @@ void createServer() {
     //sockets
     content += "<h3>Sockets</h3>";
     for(int i=0; i<3; i++) {
+      Serial.println(configSocketSets[i][0]);
+      String socketSet[4] = configSocketSets[i];
       content += "<form action='/socketSet' method='GET'><span>Socket ";
       content +=  String(i);
       content += "</span><br>";
-      content += "<input type='text' name='name' placeholder='Name for socket'>";
-      content += "<input type='text' name='houseCode' placeholder='Housecode'>";
+      content += "<input type='text' name='name' placeholder='Name for socket' value='"+socketSet[0]+"'>";
+      content += "<input type='text' name='houseCode' placeholder='Housecode' value='"+socketSet[1]+"'>";
       content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
-      content += "<input type='number' name='groupCode' placeholder='Gruppe (optional)'>";
-      content += "<input type='number' name='socketCode' placeholder='Device Code'>";
+      content += "<input type='number' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[2]+"'>";
+      content += "<input type='number' name='socketCode' placeholder='Device Code' value='"+socketSet[3]+"'>";
       content += "<input type='submit' value='Speichern'>";
       content += "</form><br>";
     }

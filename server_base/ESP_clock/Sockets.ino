@@ -1,10 +1,11 @@
 void saveSocketSet(String newSocketSet[]) {
   String path = SOCKET_CONFIG_PATH + newSocketSet[0];
   File f = SPIFFS.open(path, "w");
-  for(int i=1; i<sizeof(newSocketSet); i++) {
+  for(int i=1; i<=sizeof(newSocketSet); i++) {
     f.println(newSocketSet[i]);
   }
-  f.close();  
+  f.close();
+  loadSocketSets();
 }
 
 void loadSocketSets() {
@@ -34,19 +35,19 @@ void loadSocketSets() {
               break;
           }
           n ++;
-          socketId.replace(SOCKET_CONFIG_PATH, "");
-          int i = socketId.toInt();
-          socketName.trim();
-          houseCode.trim();
-          groupCode.trim();
-          socketCode.trim();
-          configSocketSets[i][0] = socketName;
-          configSocketSets[i][1] = houseCode;
-          configSocketSets[i][2] = groupCode;
-          configSocketSets[i][3] = socketCode;
-          print("Cache new socket "+socketId+" with name "+socketName);
-          entry.close();
         }
+        socketId.replace(SOCKET_CONFIG_PATH, "");
+        int i = socketId.toInt();
+        socketName.trim();
+        houseCode.trim();
+        groupCode.trim();
+        socketCode.trim();
+        configSocketSets[i][0] = socketName;
+        configSocketSets[i][1] = houseCode;
+        configSocketSets[i][2] = groupCode;
+        configSocketSets[i][3] = socketCode;
+        print("Cache new socket "+socketId+" with name "+socketCode);
+        entry.close();
       } else {
         print("Error in reading sockets");
       }
