@@ -65,7 +65,15 @@ void setup()
     }
   }
   createServer();
+  if (!MDNS.begin(deviceName)) {
+    print("Error setting up MDNS responder!");
+    while(1) { 
+      delay(1000);
+    }
+  }
   server.begin();
+  print("mDNS responder started");
+  MDNS.addService("http", "tcp", 80);
 }
 
 String loadDeviceName() {
