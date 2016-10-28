@@ -20,6 +20,7 @@ const String SOCKET_CONFIG_PATH = "/sockets/";
 String deviceName = "";
 String configSsid = "";
 String configPw = "";
+String configSocketSets[3][4];
 
 boolean isAPMode = false;
 
@@ -41,6 +42,9 @@ void setup()
 
   //load device Name
   deviceName = loadDeviceName();
+
+  //load sockets
+  loadSocketSets();
 
   //init wifi access point
   initWifi();

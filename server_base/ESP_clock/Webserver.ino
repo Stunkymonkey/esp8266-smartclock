@@ -34,8 +34,9 @@ void createServer() {
       content += "<form action='/socketSet' method='GET'><span>Socket ";
       content +=  String(i);
       content += "</span><br>";
-      content += "<input type='text' name='name' placeholder='Title for socket'>";
+      content += "<input type='text' name='name' placeholder='Name for socket'>";
       content += "<input type='text' name='houseCode' placeholder='Housecode'>";
+      content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
       content += "<input type='number' name='groupCode' placeholder='Gruppe (optional)'>";
       content += "<input type='number' name='socketCode' placeholder='Device Code'>";
       content += "<input type='submit' value='Speichern'>";
@@ -66,6 +67,17 @@ void createServer() {
     f.println(name);
     f.close();
     deviceName = name;
+    sendResponse("Saved!");
+  });
+  server.on("/socketSet", []() {
+    String socketID = server.arg("socketID");    
+    String socketName = server.arg("name");
+    String houseCode = server.arg("houseCode");
+    String groupCode = server.arg("groupCode");
+    String socketCode = server.arg("socketCode");
+
+    String socketSet[5] = {socketID, socketName, houseCode, groupCode, socketCode};
+    saveSocketSet(socketSet);
     sendResponse("Saved!");
   });
 }

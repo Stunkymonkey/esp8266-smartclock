@@ -1,3 +1,4 @@
+
 void initWifi() {
   File configFile = SPIFFS.open(WIFI_CONFIG_PATH, "r");
   if (!configFile) {
@@ -9,12 +10,14 @@ void initWifi() {
     int tmp = 0;
     while (configFile.available()) {
       if (tmp == 0) {
-        ssid = configFile.readStringUntil('\n').trim();
+        ssid = configFile.readStringUntil('\n');
       } else {
-        pw = configFile.readStringUntil('\n').trim();
+        pw = configFile.readStringUntil('\n');
       }
       tmp = tmp +1;
     }
+    ssid.trim();
+    pw.trim();
     WiFi.disconnect(true);
     WiFi.begin(ssid.c_str(), pw.c_str());
     if (!testWifi()) {
@@ -40,7 +43,7 @@ bool testWifi(void) {
   return false;
 } 
 
-void setupAP() {
+void setupAP(void) {
   print("Setup AP Mode");
   boolean result = WiFi.softAP(deviceName.c_str());
   if (result == true) {
