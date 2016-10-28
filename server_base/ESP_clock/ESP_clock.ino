@@ -10,7 +10,7 @@ const String WIFI_CONFIG_PATH = "/config.txt";
  * ssid \n
  * pw
  */
-const String DEVICE_NAME = "Home Controller";
+const String DEVICE_NAME = "esp8266";
 boolean isAPMode = false;
 
 ESP8266WebServer server(80);
@@ -55,7 +55,15 @@ void setup()
     }
   }
   createServer();
+  if (!MDNS.begin(DEVICE_NAME)) {
+    print("Error setting up MDNS responder!");
+    while(1) { 
+      delay(1000);
+    }
+  }
   server.begin();
+  print("mDNS responder started");
+  MDNS.addService("http", "tcp", 80);
 }
 
 bool testWifi(void) {
