@@ -2,6 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
+#include <NTPClient.h>
 #include <ESP8266WebServer.h>
 #include <FS.h>
 #include <RCSwitch.h>
@@ -13,13 +14,11 @@ const String WIFI_CONFIG_PATH = "/config.txt";
 const String NAME_CONFIG_PATH = "/name.txt";
 const String SOCKET_CONFIG_PATH = "/sockets/";
 
-const unsigned int NTP_PORT = 2390;
-IPAddress timeServerIP; // time.nist.gov NTP server address
-const char* ntpServerName = "de.pool.ntp.org";
-const int NTP_PACKET_SIZE = 48; // NTP time stamp is in the first 48 bytes of the message
-byte packetBuffer[ NTP_PACKET_SIZE];
-WiFiUDP udp;
+//NTP-Settings
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "de.pool.ntp.org", 3600, 60000);
 
+//LED-Matrix-Settings
 const int LED_MATRIX_PORT_DATA = 13;
 const int LED_MATRIX_PORT_CLK = 14;
 const int LED_MATRIX_PORT_CHIP_SELECT = 4;
@@ -86,7 +85,7 @@ void setup()
   MDNS.addService("http", "tcp", 80);
 
   //NTP-init
-  initNtp();
+  timeClient.begin();
 
   //RC-Switch
   mySwitch.enableTransmit(2);
@@ -96,9 +95,8 @@ void setup()
 void loop()
 {
   server.handleClient();
-  //getNtpTime();
-  // wait ten seconds before asking for the time again
-  //delay(10000);
+  //timeClient.update();
+  //Serial.println(timeClient.getFormattedTime());
 }
 
 
