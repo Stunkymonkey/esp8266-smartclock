@@ -13,6 +13,9 @@ void createServer() {
     content = "<h3>";
     content += "Welcome!";
     content += "</h3>";
+    for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+      content += "<p>" + configSocketSets[i][0] + " <a href=\"socket" + String(i) + "On\"><button>AN</button></a>&nbsp;<a href=\"socket" + String(i) + "Off\"><button>AUS</button></a></p>";
+    }
     sendResponse(content);
   });
   server.on("/settings", []() {
@@ -25,13 +28,12 @@ void createServer() {
     //name settings
     content += "<h3>Change Name</h3><form action='/nameSet' method='GET'>";
     content += "<p>Your Interface is visible at $name.local</p>";
-    content += "<input type='text' name='name' placeholder='Your Device Name' value='"+deviceName+"' autofocus><br>";
+    content += "<input type='text' name='name' placeholder='Your Device Name' value='"+deviceName+"'><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
     //sockets
     content += "<h3>Sockets</h3>";
-    for(int i=0; i<3; i++) {
-      Serial.println(configSocketSets[i][0]);
+    for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       String socketSet[4] = configSocketSets[i];
       content += "<form action='/socketSet' method='GET'><span>Socket ";
       content +=  String(i);
@@ -52,9 +54,6 @@ void createServer() {
     print(ssid);
     print(pw);
     File f = SPIFFS.open(WIFI_CONFIG_PATH, "w");
-    if (!f) {
-      print("File doesn't exist yet. Creating it");
-    }
     f.println(ssid);
     f.println(pw);
     f.close();
@@ -62,10 +61,8 @@ void createServer() {
   });
    server.on("/nameSet", []() {
     String name = server.arg("name");
+    name = parseName(name);
     File f = SPIFFS.open(NAME_CONFIG_PATH, "w");
-    if (!f) {
-      print("File doesn't exist yet. Creating it");
-    }
     f.println(name);
     f.close();
     deviceName = name;
@@ -82,5 +79,25 @@ void createServer() {
     saveSocketSet(socketSet);
     sendResponse("Saved!");
   });
+  for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+    String pathOn = "/socket"+String(i)+"On";
+    const char* pathOnChar = pathOn.c_str();
+    String pathOff = "/socket"+String(i)+"Off";
+    const char* pathOffChar = pathOff.c_str();
+
+    char houseC = configSocketSets[i][1].charAt(0);
+    int groupC = configSocketSets[i][2].toInt();
+    int socketC = configSocketSets[i][3].toInt();
+
+    server.on(pathOnChar, [pathOn, houseC, groupC, socketC](){
+      sendResponse("Sent: "+pathOn);
+      mySwitch.switchOn(houseC, groupC, socketC);
+    });
+    
+    server.on(pathOffChar, [pathOff, houseC, groupC, socketC](){
+      sendResponse("Sent: "+pathOff);
+      mySwitch.switchOff(houseC, groupC, socketC);
+    });
+  }
 }
 

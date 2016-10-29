@@ -26,14 +26,14 @@ void initWifi() {
       //cache as variables
       configPw = pw;
       configSsid = ssid;
-      print("Connected!!!");
+      print("Connected to "+ssid+"!");
     }
   }
 }
 
 bool testWifi(void) {
   int c = 0;
-  print("Waiting for Wifi to connect");  
+  print("Waiting for Wifi...");  
   while ( c < 20 ) {
     if (WiFi.status() == WL_CONNECTED) { return true; } 
     delay(500);  

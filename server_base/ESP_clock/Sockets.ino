@@ -46,7 +46,12 @@ void loadSocketSets() {
         configSocketSets[i][1] = houseCode;
         configSocketSets[i][2] = groupCode;
         configSocketSets[i][3] = socketCode;
-        print("Cache new socket "+socketId+" with name "+socketCode);
+        print("Cache socket { ID: "+socketId+\
+              ", Name: "+socketName+\
+              ", HouseC: "+houseCode+\
+              ", GroupC: "+groupCode+\
+              ", SocketC: "+socketCode+\
+              " }");
         entry.close();
       } else {
         print("Error in reading sockets");
