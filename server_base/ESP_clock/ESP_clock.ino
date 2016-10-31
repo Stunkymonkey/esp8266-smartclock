@@ -31,6 +31,7 @@ const int LED_MATRIX_PORT_AMOUNT = 1;
  *    ssid \n
  *    pw
  * /sockets/$id:
+ *    protocol (v3 = true; v1 = false)
  *    socketName;
  *    houseCode;
  *    groupCode;
