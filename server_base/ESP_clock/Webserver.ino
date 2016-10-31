@@ -1,5 +1,5 @@
 void sendResponse(String content) {
-  String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title></head><body><nav>"+ deviceName +"<br>";
+  String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name="viewport" content="initial-scale=1"></head><body><nav><h2>"+ deviceName +"</h2>";
   finalContent += "<ul><li><a href='/'>Home</a></li>";
   finalContent += "<li><a href='/settings'>Settings</a></li></ul></nav><hr>";
   finalContent += "<container>";
