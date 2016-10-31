@@ -33,11 +33,13 @@ void createServer() {
     content += "</form>";
     //sockets
     content += "<h3>Sockets</h3>";
+    
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       String socketSet[4] = configSocketSets[i];
       content += "<form action='/socketSet' method='GET'><span>Socket ";
-      content +=  String(i);
+      content +=  String(i+1);
       content += "</span><br>";
+      content += "<input type='checkbox' name='isV3' placeholder='is Techno Version'>(Currently:"+socketSet[4]+")<br>";
       content += "<input type='text' name='name' placeholder='Name for socket' value='"+socketSet[0]+"'>";
       content += "<input type='text' name='houseCode' placeholder='Housecode' value='"+socketSet[1]+"'>";
       content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
