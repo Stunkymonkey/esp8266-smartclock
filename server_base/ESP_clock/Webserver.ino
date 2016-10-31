@@ -1,7 +1,7 @@
 void sendResponse(String content) {
   String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name='viewport' content='initial-scale=1'></head><body><nav><h2>"+ deviceName +"</h2>";
   finalContent += "<ul><li><a href='/'>Home</a></li>";
-  finalContent += "<li><a href='/settings'>Settings</a></li></ul></nav><hr>";
+  finalContent += "<li><a href='/settings'>Settings</a></li></ul></nav>";
   finalContent += "<container>";
   finalContent += content;
   finalContent += "</container></body></html>";
@@ -35,16 +35,16 @@ void createServer() {
     content += "<h3>Sockets</h3>";
     
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-      String socketSet[4] = configSocketSets[i];
+      String socketSet[5] = configSocketSets[i];
       content += "<form action='/socketSet' method='GET'><span>Socket ";
       content +=  String(i+1);
       content += "</span><br>";
-      content += "<input type='checkbox' name='isV3' placeholder='is Techno Version'>(Currently:"+socketSet[4]+")<br>";
-      content += "<input type='text' name='name' placeholder='Name for socket' value='"+socketSet[0]+"'>";
-      content += "<input type='text' name='houseCode' placeholder='Housecode' value='"+socketSet[1]+"'>";
+      content += "<input type='checkbox' name='isV3' placeholder='is Techno Version'>(Currently:"+socketSet[0]+")<br>";
+      content += "<input type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'>";
+      content += "<input type='text' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'>";
       content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
-      content += "<input type='number' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[2]+"'>";
-      content += "<input type='number' name='socketCode' placeholder='Device Code' value='"+socketSet[3]+"'>";
+      content += "<input type='number' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'>";
+      content += "<input type='number' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'>";
       content += "<input type='submit' value='Speichern'>";
       content += "</form><br>";
     }
@@ -71,13 +71,17 @@ void createServer() {
     sendResponse("Saved!");
   });
   server.on("/socketSet", []() {
-    String socketID = server.arg("socketID");    
+    String socketID = server.arg("socketID");
+    String isv3 = server.arg("isV3");
+    if (isv3 != "on") {
+      isv3 = "off";
+    }
     String socketName = server.arg("name");
     String houseCode = server.arg("houseCode");
     String groupCode = server.arg("groupCode");
     String socketCode = server.arg("socketCode");
 
-    String socketSet[5] = {socketID, socketName, houseCode, groupCode, socketCode};
+    String socketSet[6] = {socketID, isv3, socketName, houseCode, groupCode, socketCode};
     saveSocketSet(socketSet);
     returnTo("/settings");
   });
@@ -87,19 +91,32 @@ void createServer() {
     String pathOff = "/socket"+String(i)+"Off";
     const char* pathOffChar = pathOff.c_str();
 
-    char houseC = configSocketSets[i][1].charAt(0);
-    int groupC = configSocketSets[i][2].toInt();
-    int socketC = configSocketSets[i][3].toInt();
+    String isv3String = configSocketSets[i][1];
+    bool isv3;
+    if (isv3String == "on") {
+      isv3 = true;
+    } else {
+      isv3 = false;
+    }
+    char houseC = configSocketSets[i][2].charAt(0);
+    int groupC = configSocketSets[i][3].toInt();
+    int socketC = configSocketSets[i][4].toInt();
 
-    server.on(pathOnChar, [pathOn, houseC, groupC, socketC](){
+    server.on(pathOnChar, [pathOn, isv3, houseC, groupC, socketC](){
       print(pathOn);
-      mySwitch.switchOn(houseC, groupC, socketC);
+      if (isv3) {
+        mySwitch.switchOn(houseC, groupC, socketC);
+      }
+      //TODO else friedl
       returnTo("/");
     });
     
-    server.on(pathOffChar, [pathOff, houseC, groupC, socketC](){
+    server.on(pathOffChar, [pathOff, isv3, houseC, groupC, socketC](){
       print(pathOff);
-      mySwitch.switchOff(houseC, groupC, socketC);
+      if (isv3) {
+        mySwitch.switchOff(houseC, groupC, socketC);
+      }
+      //TODO else friedl
       returnTo("/");
     });
   }

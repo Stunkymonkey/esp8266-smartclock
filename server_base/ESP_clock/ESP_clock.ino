@@ -41,7 +41,7 @@ const int LED_MATRIX_PORT_AMOUNT = 1;
 String deviceName = "";
 String configSsid = "";
 String configPw = "";
-String configSocketSets[3][4];
+String configSocketSets[3][5];
 
 LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
                          LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
