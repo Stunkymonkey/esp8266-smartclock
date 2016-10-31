@@ -77,7 +77,7 @@ void createServer() {
 
     String socketSet[5] = {socketID, socketName, houseCode, groupCode, socketCode};
     saveSocketSet(socketSet);
-    sendResponse("Saved!");
+    returnTo("/settings");
   });
   for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
     String pathOn = "/socket"+String(i)+"On";
@@ -90,14 +90,21 @@ void createServer() {
     int socketC = configSocketSets[i][3].toInt();
 
     server.on(pathOnChar, [pathOn, houseC, groupC, socketC](){
-      sendResponse("Sent: "+pathOn);
+      print(pathOn);
       mySwitch.switchOn(houseC, groupC, socketC);
+      returnTo("/");
     });
     
     server.on(pathOffChar, [pathOff, houseC, groupC, socketC](){
-      sendResponse("Sent: "+pathOff);
+      print(pathOff);
       mySwitch.switchOff(houseC, groupC, socketC);
+      returnTo("/");
     });
   }
+}
+
+void returnTo(String path) {
+  server.sendHeader("Location", path, true);
+  server.send(302, "text/plain", "");
 }
 
