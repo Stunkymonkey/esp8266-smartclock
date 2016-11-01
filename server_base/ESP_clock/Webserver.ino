@@ -1,5 +1,7 @@
 void sendResponse(String content) {
-  String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name='viewport' content='initial-scale=1'></head><body><nav><h2>"+ deviceName +"</h2>";
+  String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name='viewport' content='initial-scale=1'><style>";
+  finalContent += "body{background:#1F2237;color:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;font-size:16px}a{color:inherit}container,nav{color:#1F2237;background:#f9f9f9;border-radius:2px;width:95%;max-width:800px;display:block;margin:1em auto;padding:.5em 1em}nav{display:flex;align-items:baseline}nav h2{flex-grow:2}nav ul{padding:0;list-style:none}nav li{display:inline-block;margin-right:1em}input{padding:1em .8em;margin-bottom:.8em;margin-right:.5em;width:100%;max-width:300px;box-sizing:border-box;border-radius:2px;border:1px solid gray;outline:0;font-size:.8rem}input[type=submit]{background-color:#64a97c;color:#fff;border-color:#64a97c}";
+  finalContent += "</style></head><body><nav><h2>"+ deviceName +"</h2>";
   finalContent += "<ul><li><a href='/'>Home</a></li>";
   finalContent += "<li><a href='/settings'>Settings</a></li></ul></nav>";
   finalContent += "<container>";
@@ -11,24 +13,24 @@ void sendResponse(String content) {
 void createServer() {
   server.on("/", []() {
     content = "<h3>";
-    content += "Welcome!";
+    content += "Controll your home:";
     content += "</h3>";
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-      content += "<p>" + configSocketSets[i][0] + " <a href=\"socket" + String(i) + "On\"><button>AN</button></a>&nbsp;<a href=\"socket" + String(i) + "Off\"><button>AUS</button></a></p>";
+      content += "<p><span class='title'>" + configSocketSets[i][0] + "</span><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Off\">Toggle</a></p>";
     }
     sendResponse(content);
   });
   server.on("/settings", []() {
     //wifi settings
     content = "<h3>WiFi Settings</h3><form action='/wifiSet' method='GET'>";
-    content += "<input type='text' name='ssid' placeholder='Your Wifi SSID' value='"+configSsid+"' autofocus><br>";
-    content += "<input type='password' name='pw' placeholder='Your Wifi Password' value='"+configPw+"'><br>";
+    content += "<label for='ssid'>Wifi SSID</label><input id='ssid' type='text' name='ssid' placeholder='Your Wifi SSID' value='"+configSsid+"' autofocus><br>";
+    content += "<label for='pw'>Wifi Password</label><input id='pw' type='password' name='pw' placeholder='Your Wifi Password' value='"+configPw+"'><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
     //name settings
     content += "<h3>Change Name</h3><form action='/nameSet' method='GET'>";
     content += "<p>Your Interface is visible at $name.local</p>";
-    content += "<input type='text' name='name' placeholder='Your Device Name' value='"+deviceName+"'><br>";
+    content += "<label for='name'>New Name</label><input type='text' id='name' name='name' placeholder='Your Device Name' value='"+deviceName+"'><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
     //sockets
@@ -39,12 +41,12 @@ void createServer() {
       content += "<form action='/socketSet' method='GET'><span>Socket ";
       content +=  String(i+1);
       content += "</span><br>";
-      content += "<input type='checkbox' name='isV3' placeholder='is Techno Version'>(Currently:"+socketSet[0]+")<br>";
-      content += "<input type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'>";
-      content += "<input type='text' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'>";
       content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
-      content += "<input type='number' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'>";
-      content += "<input type='number' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'>";
+      content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Techno Version'>(Currently:"+socketSet[0]+")<br>";
+      content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'>";
+      content += "<label for='houseCode'Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'>";
+      content += "<label for='groupCode'Housecode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'>";
+      content += "<label for='socketCode'Socketcode</label><input type='number' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'>";
       content += "<input type='submit' value='Speichern'>";
       content += "</form><br>";
     }
