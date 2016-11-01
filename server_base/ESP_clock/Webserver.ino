@@ -35,7 +35,7 @@ void createServer() {
     content += "</form>";
     //name settings
     content += "<h3>Display Intensity</h3><form action='/intensitySet' method='GET'>";
-    content += "<label for='intensity'>Intensity</label><input type='number' min='0' max='15' id='intensity' name='intensity' placeholder='Intensity' value='"+led_matrix_intensity+"'><br>";
+    content += "<label for='intensity'>Intensity</label><input type='range' min='0' max='15' id='intensity' name='intensity' placeholder='Intensity' value='"+String(led_matrix_intensity)+"'><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
     //sockets
@@ -82,8 +82,14 @@ void createServer() {
     sendResponse("Saved!");
   });
   server.on("/intensitySet", []() {
-    String intensity = server.arg("intensity");
-    //@felixTodo
+    String intensity_String = server.arg("intensity");
+    int intensity = intensity_String.toInt();
+    File f = SPIFFS.open(LED_CONFIG_PATH, "w");
+    f.println(intensity);
+    f.close();
+    led_matrix_intensity = intensity;
+    sendResponse("Saved!");
+    initMatrix(led_matrix_intensity);
   });
   server.on("/socketSet", []() {
     String socketID = server.arg("socketID");
