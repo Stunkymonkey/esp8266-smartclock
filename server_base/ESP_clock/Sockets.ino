@@ -44,7 +44,9 @@ void loadSocketSets() {
               socketCode = entry.readStringUntil('\n');
               break;
             default:
-              print("Error too many lines in reading sockets");
+              print("Error too many lines in reading sockets... deleting file");
+              SPIFFS.remove(entry.name());
+              break;
           }
           n ++;
         }
