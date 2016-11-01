@@ -60,7 +60,9 @@ void setup()
 {
   Serial.begin(115200);
   print("Starting setup");
-
+  pinMode(LED_BUILTIN, OUTPUT);
+  LEDOn();
+  
   //mount fs
   bool mountFs = SPIFFS.begin();
   if (!mountFs) {
@@ -90,6 +92,7 @@ void setup()
 
   //RC-Switch
   mySwitch.enableTransmit(2);
+  LEDOff();
 }
 
 
