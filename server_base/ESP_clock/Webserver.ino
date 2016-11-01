@@ -29,7 +29,7 @@ void createServer() {
     content += "</form>";
     //name settings
     content += "<h3>Change Name</h3><form action='/nameSet' method='GET'>";
-    content += "<p>Your Interface is visible at $name.local</p>";
+    content += "<p>Your Interface is visible at $name.local, Allowed characters: A-Z,a-z,0-9,'-'</p>";
     content += "<label for='name'>New Name</label><input type='text' id='name' name='name' placeholder='Your Device Name' value='"+deviceName+"'><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
