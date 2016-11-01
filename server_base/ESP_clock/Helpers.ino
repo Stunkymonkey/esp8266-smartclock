@@ -41,3 +41,11 @@ String parseName(String name) {
   return result;
 }
 
+void LEDOn() {
+  digitalWrite(LED_BUILTIN, LOW);
+}
+
+void LEDOff() {
+  digitalWrite(LED_BUILTIN, HIGH);
+}
+

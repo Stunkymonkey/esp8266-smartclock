@@ -97,32 +97,53 @@ void createServer() {
     String pathOff = "/socket"+String(i)+"Off";
     const char* pathOffChar = pathOff.c_str();
 
-    String isv3String = configSocketSets[i][1];
+    String isv3String = configSocketSets[i][0];
     bool isv3;
-    if (isv3String == "on") {
+    if (isv3String.equals(String("on"))) {
       isv3 = true;
     } else {
       isv3 = false;
     }
-    char houseC = configSocketSets[i][2].charAt(0);
+    String houseC_String = configSocketSets[i][2];
     int groupC = configSocketSets[i][3].toInt();
     int socketC = configSocketSets[i][4].toInt();
 
-    server.on(pathOnChar, [pathOn, isv3, houseC, groupC, socketC](){
+    server.on(pathOnChar, [pathOn, isv3, houseC_String, groupC, socketC](){
       print(pathOn);
       if (isv3) {
+        char houseC = houseC_String.charAt(0);
         mySwitch.switchOn(houseC, groupC, socketC);
+      } else {
+        //@TODO: friedls scheiß funktioniert einfach nicht
+        int len = houseC_String.length() + 1;
+        char houseC[len];
+        houseC_String.toCharArray(houseC, len);
+
+        Serial.println(houseC);
+        char* yolo = "00100";
+        
+        mySwitch.switchOn(&houseC[0], socketC);
       }
-      //TODO else friedl
       returnTo("/");
     });
     
-    server.on(pathOffChar, [pathOff, isv3, houseC, groupC, socketC](){
+    server.on(pathOffChar, [pathOff, isv3, houseC_String, groupC, socketC](){
       print(pathOff);
       if (isv3) {
+        char houseC = houseC_String.charAt(0);
         mySwitch.switchOff(houseC, groupC, socketC);
+      } else {
+        //@TODO: friedls scheiß funktioniert einfach nicht
+        int len = houseC_String.length() + 1;
+        char houseC[len];
+        houseC_String.toCharArray(houseC, len);
+        
+        Serial.println(houseC);
+        char* yolo = "00100";
+        
+        mySwitch.switchOff(&houseC[0], socketC);
       }
-      //TODO else friedl
+      
       returnTo("/");
     });
   }
