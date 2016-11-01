@@ -1,6 +1,6 @@
 void sendResponse(String content) {
   String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name='viewport' content='initial-scale=1'><style>";
-  finalContent += "body{background:#1F2237;color:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;font-size:16px}a{color:inherit}container,nav{color:#1F2237;background:#f9f9f9;border-radius:2px;width:95%;max-width:800px;display:block;margin:1em auto;padding:.5em 1em}nav{display:flex;align-items:baseline}nav h2{flex-grow:2}nav ul{padding:0;list-style:none}nav li{display:inline-block;margin-right:1em}input{padding:1em .8em;margin-bottom:.8em;margin-right:.5em;width:100%;max-width:300px;box-sizing:border-box;border-radius:2px;border:1px solid gray;outline:0;font-size:.8rem}input[type=submit]{background-color:#64a97c;color:#fff;border-color:#64a97c}";
+  finalContent += ".switch,input{box-sizing:border-box}body{background:#1F2237;color:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;font-size:16px}a{color:inherit}container,nav{color:#1F2237;background:#f9f9f9;border-radius:2px;width:95%;max-width:800px;display:block;margin:1em auto;padding:.5em 1em}nav{display:flex;align-items:baseline}nav h2{flex-grow:2}nav ul{padding:0;list-style:none}nav li{display:inline-block;margin-right:1em}input{padding:1em .8em;margin-bottom:.8em;margin-right:.5em;width:100%;max-width:300px;border-radius:2px;border:1px solid gray;outline:0;font-size:.8rem}input[type=submit]{background-color:#64a97c;color:#fff;border-color:#64a97c}label{display:block;margin-bottom:.2em;font-size:.8em;color:#656565}.switch{display:inline-block;padding:1.5em 0;width:30%;background:#cc5e5e;text-align:center;margin-right:2%;color:#fff;font-size:1.4em;font-weight:700;text-decoration:none;border-radius:3px;}";
   finalContent += "</style></head><body><nav><h2>"+ deviceName +"</h2>";
   finalContent += "<ul><li><a href='/'>Home</a></li>";
   finalContent += "<li><a href='/settings'>Settings</a></li></ul></nav>";
@@ -16,7 +16,7 @@ void createServer() {
     content += "Controll your home:";
     content += "</h3>";
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-      content += "<p><span class='title'>" + configSocketSets[i][0] + "</span><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Off\">Toggle</a></p>";
+      content += "<p><label class='title'>" + configSocketSets[i][1] + "</label><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Off\">Toggle</a></p>";
     }
     sendResponse(content);
   });
@@ -38,15 +38,19 @@ void createServer() {
     
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       String socketSet[5] = configSocketSets[i];
-      content += "<form action='/socketSet' method='GET'><span>Socket ";
+      content += "<form action='/socketSet' method='GET'><span><p><b>Socket ";
       content +=  String(i+1);
-      content += "</span><br>";
+      content += "</b></p><br>";
       content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
-      content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Techno Version'>(Currently:"+socketSet[0]+")<br>";
-      content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'>";
-      content += "<label for='houseCode'Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'>";
-      content += "<label for='groupCode'Housecode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'>";
-      content += "<label for='socketCode'Socketcode</label><input type='number' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'>";
+      if(socketSet[0].equals(String("on"))) {
+        content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3' checked><br>";
+      } else {
+        content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3'><br>";
+      }
+      content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'><br>";
+      content += "<label for='houseCode'>Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'><br>";
+      content += "<label for='groupCode'>Groupcode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'><br>";
+      content += "<label for='socketCode'>Socketcode</label><input type='number' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'><br>";
       content += "<input type='submit' value='Speichern'>";
       content += "</form><br>";
     }
