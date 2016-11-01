@@ -33,6 +33,11 @@ void createServer() {
     content += "<label for='name'>New Name</label><input type='text' id='name' name='name' placeholder='Your Device Name' value='"+deviceName+"'><br>";
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
+    //name settings
+    content += "<h3>Display Intensity</h3><form action='/intensitySet' method='GET'>";
+    content += "<label for='intensity'>Intensity</label><input type='number' min='0' max='15' id='intensity' name='intensity' placeholder='Intensity' value='"+led_matrix_intensity+"'><br>";
+    content += "<input type='submit' value='Speichern'>";
+    content += "</form>";
     //sockets
     content += "<h3>Sockets</h3>";
     
@@ -75,6 +80,10 @@ void createServer() {
     f.close();
     deviceName = name;
     sendResponse("Saved!");
+  });
+  server.on("/intensitySet", []() {
+    String intensity = server.arg("intensity");
+    //@felixTodo
   });
   server.on("/socketSet", []() {
     String socketID = server.arg("socketID");
