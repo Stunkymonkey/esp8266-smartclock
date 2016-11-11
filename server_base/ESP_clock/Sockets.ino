@@ -1,13 +1,8 @@
-void saveSocketSet(String newSocketSet[]) {
-  if (sizeof(newSocketSet) == 4 ) {
-    print("keine sinn, dass das 4 lang ist");
-  } else {
-    Serial.println(sizeof(newSocketSet));
-  }
+void saveSocketSet(String newSocketSet[], int array_size) {
+  Serial.println(array_size);
   String path = SOCKET_CONFIG_PATH + newSocketSet[0];
   File f = SPIFFS.open(path, "w");
-  for(int i=1; i <= (sizeof(newSocketSet)+1); i++) {
-    Serial.println(newSocketSet[i]);
+  for(int i=1; i < array_size; i++) {
     f.println(newSocketSet[i]);
   }
   f.close();

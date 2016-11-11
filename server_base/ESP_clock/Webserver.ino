@@ -103,7 +103,8 @@ void createServer() {
     String socketCode = server.arg("socketCode");
 
     String socketSet[6] = {socketID, isv3, socketName, houseCode, groupCode, socketCode};
-    saveSocketSet(socketSet);
+    int array_size = sizeof(socketSet) / sizeof(socketSet[0]);
+    saveSocketSet(socketSet, array_size);
     returnTo("/settings");
   });
   for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
