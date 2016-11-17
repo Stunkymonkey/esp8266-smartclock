@@ -16,7 +16,7 @@ void createServer() {
     content += "Controll your home:";
     content += "</h3>";
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-      content += "<p><label class='title'>" + configSocketSets[i][1] + "</label><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Off\">Toggle</a></p>";
+      content += "<p><label class='title'>" + configSocketSets[i][1] + "</label><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Toggle\">Toggle</a></p>";
     }
     sendResponse(content);
   });
@@ -112,6 +112,8 @@ void createServer() {
     const char* pathOnChar = pathOn.c_str();
     String pathOff = "/socket"+String(i)+"Off";
     const char* pathOffChar = pathOff.c_str();
+    String pathToggle = "/socket"+String(i)+"Toggle";
+    const char* pathToggleChar = pathToggle.c_str();
 
     String isv3String = configSocketSets[i][0];
     bool isv3;
@@ -124,7 +126,7 @@ void createServer() {
     int groupC = configSocketSets[i][3].toInt();
     int socketC = configSocketSets[i][4].toInt();
 
-    server.on(pathOnChar, [pathOn, isv3, houseC_String, groupC, socketC](){
+    server.on(pathOnChar, [i, pathOn, isv3, houseC_String, groupC, socketC](){
       print(pathOn);
       if (isv3) {
         char houseC = houseC_String.charAt(0);
@@ -140,10 +142,11 @@ void createServer() {
         
         mySwitch.switchOn(&houseC[0], socketC);
       }
+      statusSocketSets[i] = true;
       returnTo("/");
     });
     
-    server.on(pathOffChar, [pathOff, isv3, houseC_String, groupC, socketC](){
+    server.on(pathOffChar, [i, pathOff, isv3, houseC_String, groupC, socketC](){
       print(pathOff);
       if (isv3) {
         char houseC = houseC_String.charAt(0);
@@ -159,7 +162,32 @@ void createServer() {
         
         mySwitch.switchOff(&houseC[0], socketC);
       }
-      
+      statusSocketSets[i] = false;
+      returnTo("/");
+    });
+    
+    server.on(pathToggleChar, [i, pathToggle, isv3, houseC_String, groupC, socketC](){
+      print(pathToggle);
+      if (isv3) {
+        char houseC = houseC_String.charAt(0);
+        if (statusSocketSets[i]) {
+          mySwitch.switchOff(houseC, groupC, socketC);
+        } else {
+          mySwitch.switchOn(houseC, groupC, socketC);
+        }
+      } else {
+        //@TODO: friedls scheiß funktioniert einfach nicht
+        int len = houseC_String.length() + 1;
+        char houseC[len];
+        houseC_String.toCharArray(houseC, len);
+        
+        Serial.println(houseC);
+        char* yolo = "00100";
+        
+        mySwitch.switchOff(&houseC[0], socketC);
+      }
+      statusSocketSets[i] = !statusSocketSets[i];
+      Serial.println(statusSocketSets[i]);
       returnTo("/");
     });
   }

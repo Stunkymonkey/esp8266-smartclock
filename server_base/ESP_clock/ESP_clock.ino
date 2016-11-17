@@ -44,6 +44,7 @@ String deviceName = "";
 String configSsid = "";
 String configPw = "";
 String configSocketSets[3][5];
+boolean statusSocketSets[3];
 
 LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
                          LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
