@@ -1,4 +1,7 @@
 #include <WiFiClient.h>
+extern "C" {
+  #include "user_interface.h"
+}
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>

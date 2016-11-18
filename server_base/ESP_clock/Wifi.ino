@@ -18,8 +18,17 @@ void initWifi() {
     }
     ssid.trim();
     pw.trim();
+
+    wifi_station_set_auto_connect(true);
+    int len = deviceName.length() + 1;
+    char deviceNameChar[len];
+    deviceName.toCharArray(deviceNameChar, len);
+    wifi_station_set_hostname(deviceNameChar);
+    //Serial.println(WiFi.localIP());
+
     WiFi.disconnect(true);
     WiFi.begin(ssid.c_str(), pw.c_str());
+
     if (!testWifi()) {
       setupAP();
     } else {
