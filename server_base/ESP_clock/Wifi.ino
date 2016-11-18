@@ -58,6 +58,8 @@ void setupAP(void) {
   if (result == true) {
     isAPMode = true;
   }
+  dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
+  dnsServer.start(53, "*", WiFi.localIP());
 }
 
 

@@ -4,6 +4,7 @@ extern "C" {
 }
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
+#include <DNSServer.h>
 #include <WiFiUdp.h>
 #include <NTPClient.h>
 #include <ESP8266WebServer.h>
@@ -17,6 +18,9 @@ const String WIFI_CONFIG_PATH = "/config.txt";
 const String NAME_CONFIG_PATH = "/name.txt";
 const String LED_CONFIG_PATH = "/led.txt";
 const String SOCKET_CONFIG_PATH = "/sockets/";
+
+//AP-Settings
+DNSServer dnsServer;
 
 //NTP-Settings
 WiFiUDP ntpUDP;
