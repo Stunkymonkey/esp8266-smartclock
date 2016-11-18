@@ -13,14 +13,13 @@ extern "C" {
 #include <LedControl.h>
 
 const boolean DEBUG = true;
+
 const String DEFAULT_DEVICE_NAME= "ESP8266";
 const String WIFI_CONFIG_PATH = "/config.txt";
 const String NAME_CONFIG_PATH = "/name.txt";
 const String LED_CONFIG_PATH = "/led.txt";
 const String SOCKET_CONFIG_PATH = "/sockets/";
 
-//AP-Settings
-DNSServer dnsServer;
 
 //NTP-Settings
 WiFiUDP ntpUDP;
@@ -32,6 +31,9 @@ const int LED_MATRIX_PORT_DATA = 13;
 const int LED_MATRIX_PORT_CLK = 14;
 const int LED_MATRIX_PORT_CHIP_SELECT = 4;
 const int LED_MATRIX_PORT_AMOUNT = 3;
+
+//Socket-Remote
+const int SOCKET_PORT = 2;
 
 /* File structure:
  * /NAME_CONFIG_PATH:
@@ -62,16 +64,24 @@ ESP8266WebServer server(80);
 //used to combine webpages in createServer();
 String content;
 
+//AP-Settings
+DNSServer dnsServer;
+
 //Socket-remote
 RCSwitch mySwitch = RCSwitch();
 
 
 void setup()
 {
-  Serial.begin(115200);
+  if (DEBUG){
+    Serial.begin(115200);
+  }
   print("Starting setup");
+  print("Note: Blue LED not controllable in debug mode!");
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(2, OUTPUT);
   LEDOn();
+  WifiLEDOff();
   
   //mount fs
   bool mountFs = SPIFFS.begin();
@@ -112,7 +122,7 @@ void setup()
   setProgress(0.9);
 
   //RC-Switch
-  mySwitch.enableTransmit(2);
+  mySwitch.enableTransmit(SOCKET_PORT);
   LEDOff();
   
   setProgress(1.0);
@@ -122,6 +132,7 @@ void setup()
 
 void loop()
 {
+  delay(50); //for less power consumption. Does not matter
   server.handleClient();
   //timeClient.update();
   //Serial.println(timeClient.getFormattedTime());

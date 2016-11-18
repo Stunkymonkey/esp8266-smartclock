@@ -36,6 +36,7 @@ void initWifi() {
       configPw = pw;
       configSsid = ssid;
       print("Connected to "+ssid+"!");
+      WifiLEDOn();
     }
   }
 }

@@ -1,10 +1,10 @@
 void print(char value[]) {
-  if (DEBUG == true) {
+  if (DEBUG) {
     Serial.println(value);
   }
 }
 void print(String value) {
-  if (DEBUG == true) {
+  if (DEBUG) {
     Serial.println(value);
   }
 }
@@ -47,5 +47,19 @@ void LEDOn() {
 
 void LEDOff() {
   digitalWrite(LED_BUILTIN, HIGH);
+}
+
+void WifiLEDOn() {
+  if (!DEBUG) {
+    print("Blue LED: ON");
+  }
+  digitalWrite(2, LOW);
+}
+
+void WifiLEDOff() {
+  if (!DEBUG) {
+    print("Blue LED: OFF");
+  }
+  digitalWrite(2, HIGH);
 }
 
