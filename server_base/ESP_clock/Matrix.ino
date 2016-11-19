@@ -50,6 +50,17 @@ int loadIntensity() {
   }
 }
 
+void saveIntensity() {
+  String intensity_String = server.arg("intensity");
+  int intensity = intensity_String.toInt();
+  File f = SPIFFS.open(LED_CONFIG_PATH, "w");
+  f.println(intensity);
+  f.close();
+  led_matrix_intensity = intensity;
+  sendResponse("Saved!");
+  initMatrix(led_matrix_intensity);
+}
+
 void yolo() {
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<8; i++) {

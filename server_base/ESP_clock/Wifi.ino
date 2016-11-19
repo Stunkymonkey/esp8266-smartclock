@@ -2,6 +2,7 @@
 void initWifi() {
   File configFile = SPIFFS.open(WIFI_CONFIG_PATH, "r");
   if (!configFile) {
+    print(WIFI_CONFIG_PATH + " not found");
     setupAP();
   }
   else {
@@ -29,12 +30,12 @@ void initWifi() {
     WiFi.disconnect(true);
     WiFi.begin(ssid.c_str(), pw.c_str());
 
+    WifiPw = pw;
+    WifiSsid = ssid;
+
     if (!testWifi()) {
       setupAP();
     } else {
-      //cache as variables
-      configPw = pw;
-      configSsid = ssid;
       print("Connected to "+ssid+"!");
       WifiLEDOn();
     }
@@ -63,4 +64,15 @@ void setupAP(void) {
   dnsServer.start(53, "*", WiFi.localIP());
 }
 
+void saveWifi() {
+  String ssid = server.arg("ssid");
+  String pw = server.arg("pw");
+  print(ssid);
+  print(pw);
+  File f = SPIFFS.open(WIFI_CONFIG_PATH, "w");
+  f.println(ssid);
+  f.println(pw);
+  f.close();
+  sendResponse("Please restart the module");
+}
 

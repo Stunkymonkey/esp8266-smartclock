@@ -1,3 +1,4 @@
+// IMPORTS
 #include <WiFiClient.h>
 extern "C" {
   #include "user_interface.h"
@@ -19,14 +20,15 @@ extern "C" {
 
 #include <DHT.h>
 
+// CONFIG VARIABLES
+
 const boolean DEBUG = true;
 
 const String DEFAULT_DEVICE_NAME= "ESP8266";
-const String WIFI_CONFIG_PATH = "/config.txt";
+const String WIFI_CONFIG_PATH = "/wifi.txt";
 const String NAME_CONFIG_PATH = "/name.txt";
 const String LED_CONFIG_PATH = "/led.txt";
 const String SOCKET_CONFIG_PATH = "/sockets/";
-
 
 //NTP-Settings
 WiFiUDP ntpUDP;
@@ -46,6 +48,9 @@ const int SOCKET_PORT = 2; //D4
 const int SENSOR_PORT = 12; //D6
 const long SENSOR_INTERVAL = 2000;
 
+
+// GLOBAL VARIABLES
+
 /* File structure:
  * /NAME_CONFIG_PATH:
  *    name
@@ -61,8 +66,8 @@ const long SENSOR_INTERVAL = 2000;
  */
 
 String deviceName = "";
-String configSsid = "";
-String configPw = "";
+String WifiSsid = "";
+String WifiPw = "";
 String configSocketSets[3][5];
 boolean statusSocketSets[3];
 
@@ -90,11 +95,11 @@ unsigned long sensorPreviousMillis = 0;
 
 void setup()
 {
+  
   if (DEBUG){
     Serial.begin(115200);
   }
   print("Starting setup");
-  print("Note: Blue LED not controllable in debug mode!");
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(2, OUTPUT);
   LEDOn();

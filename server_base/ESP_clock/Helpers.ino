@@ -25,6 +25,16 @@ String loadDeviceName() {
   }
 }
 
+void saveDeviceName() {
+  String name = server.arg("name");
+  name = parseName(name);
+  File f = SPIFFS.open(NAME_CONFIG_PATH, "w");
+  f.println(name);
+  f.close();
+  deviceName = name;
+  sendResponse("Saved! Restart for resetting network");
+}
+
 String parseName(String name) {
   String result = "";
   for (int i=0; i<name.length(); i++) {
