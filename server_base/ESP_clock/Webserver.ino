@@ -18,6 +18,12 @@ void createServer() {
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       content += "<p><label class='title'>" + configSocketSets[i][1] + "</label><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Toggle\">Toggle</a></p>";
     }
+    content += "<h3>";
+    content += "<p> Temperature: " + String(temperature) + " &deg;C</p>";
+    content += "<p> Humidity: " + String(humidity) + " %</p>";
+    content += "<p> Heat-Index: " + String(heatindex) + "</p>";
+    content += "<p> Time: " + String(timeClient.getFormattedTime()) + "</p>";
+    content += "</h3>";
     sendResponse(content);
   });
   server.on("/settings", []() {

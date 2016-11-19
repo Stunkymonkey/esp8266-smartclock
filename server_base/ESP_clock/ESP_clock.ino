@@ -6,11 +6,18 @@ extern "C" {
 #include <ESP8266mDNS.h>
 #include <DNSServer.h>
 #include <WiFiUdp.h>
+
 #include <NTPClient.h>
+
 #include <ESP8266WebServer.h>
+
 #include <FS.h>
+
 #include <RCSwitch.h>
+
 #include <LedControl.h>
+
+#include <DHT.h>
 
 const boolean DEBUG = true;
 
@@ -33,7 +40,11 @@ const int LED_MATRIX_PORT_CHIP_SELECT = 4;
 const int LED_MATRIX_PORT_AMOUNT = 3;
 
 //Socket-Remote
-const int SOCKET_PORT = 2;
+const int SOCKET_PORT = 2; //D4
+
+//Temperature and Humidity
+const int SENSOR_PORT = 12; //D6
+const long SENSOR_INTERVAL = 2000;
 
 /* File structure:
  * /NAME_CONFIG_PATH:
@@ -69,6 +80,12 @@ DNSServer dnsServer;
 
 //Socket-remote
 RCSwitch mySwitch = RCSwitch();
+
+//Temperature and Humidity
+#define DHTTYPE DHT11
+DHT dht(SENSOR_PORT, DHTTYPE);
+float humidity, temperature, heatindex;
+unsigned long sensorPreviousMillis = 0;
 
 
 void setup()
@@ -123,10 +140,14 @@ void setup()
 
   //RC-Switch
   mySwitch.enableTransmit(SOCKET_PORT);
-  LEDOff();
+
+  dht.begin();
+  gettemperature();
   
+  LEDOff();
   setProgress(1.0);
-  yolo();
+  //WifiLEDOff();
+  //yolo();
 }
 
 
@@ -134,7 +155,8 @@ void loop()
 {
   delay(50); //for less power consumption. Does not matter
   server.handleClient();
-  //timeClient.update();
+  gettemperature();
+  timeClient.update();
   //Serial.println(timeClient.getFormattedTime());
 }
 
