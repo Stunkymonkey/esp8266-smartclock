@@ -146,7 +146,7 @@ void setup()
   
   LEDOff();
   setProgress(1.0);
-  //WifiLEDOff();
+  WifiLEDOff();
   //yolo();
 }
 

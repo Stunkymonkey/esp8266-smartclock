@@ -1,4 +1,5 @@
 void sendResponse(String content) {
+  WifiLEDOn();
   String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name='viewport' content='initial-scale=1'><style>";
   finalContent += ".switch,input{box-sizing:border-box}body{background:#1F2237;color:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;font-size:16px}a{color:inherit}container,nav{color:#1F2237;background:#f9f9f9;border-radius:2px;width:95%;max-width:800px;display:block;margin:1em auto;padding:.5em 1em}nav{display:flex;align-items:baseline}nav h2{flex-grow:2}nav ul{padding:0;list-style:none}nav li{display:inline-block;margin-right:1em}input{padding:1em .8em;margin-bottom:.8em;margin-right:.5em;width:100%;max-width:300px;border-radius:2px;border:1px solid gray;outline:0;font-size:.8rem}input[type=submit]{background-color:#64a97c;color:#fff;border-color:#64a97c}label{display:block;margin-bottom:.2em;font-size:.8em;color:#656565}.switch{display:inline-block;padding:1.5em 0;width:30%;background:#cc5e5e;text-align:center;margin-right:2%;color:#fff;font-size:1.4em;font-weight:700;text-decoration:none;border-radius:3px;}";
   finalContent += "</style></head><body><nav><h2>"+ deviceName +"</h2>";
@@ -8,6 +9,7 @@ void sendResponse(String content) {
   finalContent += content;
   finalContent += "</container></body></html>";
   server.send(200, "text/html", finalContent);
+  WifiLEDOff();
 }
 
 void createServer() {
