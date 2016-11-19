@@ -97,7 +97,7 @@ void SocketOn(int i) {
   int groupC = configSocketSets[i][3].toInt();
   int socketC = configSocketSets[i][4].toInt();
 
-  print("On: " + String(i));
+  print("On: " + configSocketSets[i][1]);
 
   if (isv3) {
     char houseC = houseC_String.charAt(0);
@@ -129,7 +129,7 @@ void SocketOff(int i) {
   int groupC = configSocketSets[i][3].toInt();
   int socketC = configSocketSets[i][4].toInt();
 
-  print("Off: " + String(i));
+  print("Off: " + configSocketSets[i][1]);
 
   if (isv3) {
     char houseC = houseC_String.charAt(0);
