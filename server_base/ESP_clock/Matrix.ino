@@ -21,7 +21,7 @@ void setProgress(float progress) {
     amountOfOn = amountOfOn - 8;
   }
   if (progress == 1.0) {
-    delay(1000);
+    delay(500);
     clearMatrix();
   }
 }
@@ -57,8 +57,8 @@ void saveIntensity() {
   f.println(intensity);
   f.close();
   led_matrix_intensity = intensity;
-  sendResponse("Saved!");
   initMatrix(led_matrix_intensity);
+  returnTo("/settings");
 }
 
 void yolo() {
