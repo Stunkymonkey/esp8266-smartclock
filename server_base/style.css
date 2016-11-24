@@ -1,0 +1,75 @@
+/* use: http://cssminifier.com/raw*/
+body {
+	background: #1F2237;
+	color:  rgb(249, 249, 249);
+	font-family: -apple-system, BlinkMacSystemFont, 
+	"Segoe UI", "Roboto", "Oxygen", 
+	"Ubuntu", "Cantarell", "Fira Sans", 
+	"Droid Sans", "Helvetica Neue", sans-serif;
+	font-size: 16px;
+}
+a {
+	color: inherit;
+}
+nav, container {
+	color: #1F2237;
+	background:  rgb(249, 249, 249);
+	border-radius: 2px;
+	width: 95%;
+	max-width: 800px;
+	display: block;
+	margin: 1em auto;
+	padding: 0.5em 1em;
+}
+nav {
+	display: flex;
+	align-items: baseline;
+}
+nav h2 {
+	flex-grow: 2;
+}
+nav ul {
+	padding: 0;
+	list-style: none;
+}
+nav li {
+	display: inline-block;
+	margin-right: 1em;
+}
+input {
+	padding: 1em 0.8em;
+	margin-bottom: 0.8em;
+	margin-right: 0.5em;
+	width: 100%;
+	max-width: 300px;
+	box-sizing: border-box;
+	border-radius: 2px;
+	border: 1px solid gray;
+	outline: 0;
+	font-size: 0.8rem;
+}
+input[type="submit"] {
+	background-color: #64a97c;
+	color: white;
+	border-color: #64a97c;
+}
+label {
+	display: block;
+	margin-bottom: 0.2em;
+	font-size: 0.8em;
+	color: #656565;
+}
+.switch {
+    display: inline-block;
+    padding: 1.5em 0;
+    width: 30%;
+    box-sizing: border-box;
+    background: #cc5e5e;
+    text-align: center;
+    margin-right: 2%;
+    color: white;
+    font-size: 1.4em;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 3px;
+}
