@@ -158,11 +158,14 @@ void setup()
 
 void loop()
 {
-  delay(50); //for less power consumption. Does not matter
+  delay(500); //for less power consumption. Does not matter
   server.handleClient();
   gettemperature();
   timeClient.update();
-  //Serial.println(timeClient.getFormattedTime());
+  //int numbers[4] = { 1,9,3,2 };
+  //drawNumber(numbers);
+  drawTime(timeClient.getFormattedTime());
+
 }
 
 
