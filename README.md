@@ -1,4 +1,4 @@
-# = A real time clock over Wifi based on the ESP 8266
+# A real time clock over Wifi based on the ESP 8266
 
 + Steckdosen an/auschalten [HTTP, Webseite]
 + Pixel an/auschalten [HTTP, Webseite]
