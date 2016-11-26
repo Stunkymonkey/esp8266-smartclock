@@ -56,6 +56,7 @@ bool testWifi(void) {
 
 void setupAP(void) {
   print("Setup AP Mode");
+  WiFi.mode(WIFI_AP);
   boolean result = WiFi.softAP(deviceName.c_str());
   if (result == true) {
     isAPMode = true;

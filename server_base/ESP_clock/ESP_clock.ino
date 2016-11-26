@@ -7,67 +7,23 @@ extern "C" {
 #include <ESP8266mDNS.h>
 #include <DNSServer.h>
 #include <WiFiUdp.h>
-
 #include <NTPClient.h>
-
 #include <ESP8266WebServer.h>
-
 #include <FS.h>
-
 #include <RCSwitch.h>
-
 #include <LedControl.h>
-
 #include <DHT.h>
 
-// CONFIG VARIABLES
-
-const boolean DEBUG = true;
-
-const String DEFAULT_DEVICE_NAME= "ESP8266";
-const String WIFI_CONFIG_PATH = "/wifi.txt";
-const String NAME_CONFIG_PATH = "/name.txt";
-const String LED_CONFIG_PATH = "/led.txt";
-const String SOCKET_CONFIG_PATH = "/sockets/";
-
-//NTP-Settings
-WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "de.pool.ntp.org", 3600, 60000);
-
-//LED-Matrix-Settings
-int led_matrix_intensity = 15;
-const int LED_MATRIX_PORT_DATA = 13;
-const int LED_MATRIX_PORT_CLK = 14;
-const int LED_MATRIX_PORT_CHIP_SELECT = 4;
-const int LED_MATRIX_PORT_AMOUNT = 3;
-
-//Socket-Remote
-const int SOCKET_PORT = 2; //D4
-
-//Temperature and Humidity
-const int SENSOR_PORT = 12; //D6
-const long SENSOR_INTERVAL = 2000;
+//include personal config
+#include "config.h"
 
 
 // GLOBAL VARIABLES
-
-/* File structure:
- * /NAME_CONFIG_PATH:
- *    name
- * /WIFI_CONFIG_PATH:
- *    ssid \n
- *    pw
- * /sockets/$id:
- *    protocol (v3 = true; v1 = false)
- *    socketName;
- *    houseCode;
- *    groupCode;
- *    socketCode;
- */
-
 String deviceName = "";
+
 String WifiSsid = "";
 String WifiPw = "";
+
 String configSocketSets[3][5];
 boolean statusSocketSets[3];
 
@@ -87,25 +43,29 @@ DNSServer dnsServer;
 RCSwitch mySwitch = RCSwitch();
 
 //Temperature and Humidity
-#define DHTTYPE DHT11
-DHT dht(SENSOR_PORT, DHTTYPE);
+DHT dht(SENSOR_PORT, DHT11);
 float humidity, temperature, heatindex;
 unsigned long sensorPreviousMillis = 0;
 
+//NTP
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, NTP_SERVER, NTP_OFFSET, NTP_INTERVAL);
+//NTPClient timeClient(ntpUDP, "de.pool.ntp.org", 3600, 60000);
 
 void setup()
 {
-  
+  //Serial-Output
   if (DEBUG){
     Serial.begin(115200);
   }
   print("Starting setup");
+  //enable LEDs
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(2, OUTPUT);
   LEDOn();
   WifiLEDOff();
   
-  //mount fs
+  //mount File-System
   bool mountFs = SPIFFS.begin();
   if (!mountFs) {
     print("Failed to mount File-System!");
@@ -120,8 +80,9 @@ void setup()
   deviceName = loadDeviceName();
 
   //load sockets
-  loadSocketSets();
-
+  if (ENABLE_SOCKETS) {
+    loadSocketSets();
+  }
   setProgress(0.3);
 
   //init wifi access point
@@ -146,8 +107,10 @@ void setup()
   //RC-Switch
   mySwitch.enableTransmit(SOCKET_PORT);
 
-  dht.begin();
-  gettemperature();
+  if (ENABLE_SENSOR) {
+    dht.begin();
+    gettemperature();
+  }
   
   LEDOff();
   setProgress(1.0);
@@ -158,14 +121,10 @@ void setup()
 
 void loop()
 {
-  delay(500); //for less power consumption. Does not matter
+  delay(REACTION_TIME);
   server.handleClient();
   gettemperature();
   timeClient.update();
-  //int numbers[4] = { 1,9,3,2 };
-  //drawNumber(numbers);
   drawTime(timeClient.getFormattedTime());
-
 }
-
 

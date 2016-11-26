@@ -4,18 +4,20 @@ void createServer() {
   server.on("/wifiSet", saveWifi);
   server.on("/nameSet", saveDeviceName);
   server.on("/intensitySet", saveIntensity);
-  server.on("/socketSet", saveSocketSet);
-  for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-    String pathOn = "/socket"+String(i)+"On";
-    const char* pathOnChar = pathOn.c_str();
-    String pathOff = "/socket"+String(i)+"Off";
-    const char* pathOffChar = pathOff.c_str();
-    String pathToggle = "/socket"+String(i)+"Toggle";
-    const char* pathToggleChar = pathToggle.c_str();
-
-    server.on(pathOnChar, [i](){SocketOn(i);});
-    server.on(pathOffChar, [i](){SocketOff(i);});
-    server.on(pathToggleChar, [i](){SocketToggle(i);});
+  if (ENABLE_SOCKETS) {
+    server.on("/socketSet", saveSocketSet);
+    for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+      String pathOn = "/socket"+String(i)+"On";
+      const char* pathOnChar = pathOn.c_str();
+      String pathOff = "/socket"+String(i)+"Off";
+      const char* pathOffChar = pathOff.c_str();
+      String pathToggle = "/socket"+String(i)+"Toggle";
+      const char* pathToggleChar = pathToggle.c_str();
+  
+      server.on(pathOnChar, [i](){SocketOn(i);});
+      server.on(pathOffChar, [i](){SocketOff(i);});
+      server.on(pathToggleChar, [i](){SocketToggle(i);});
+    }
   }
 }
 
@@ -39,17 +41,22 @@ void sendResponse(String content) {
 }
 
 void Home() {
-  content = "<h3>";
-  content += "Controll your home:";
-  content += "</h3>";
-  for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-    content += "<p><label class='title'>" + configSocketSets[i][1] + "</label><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Toggle\">Toggle</a></p>";
+  content = "";
+  if (ENABLE_SOCKETS) {
+    content += "<h3>";
+    content += "Control your home:";
+    content += "</h3>";
+    for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+      content += "<p><label class='title'>" + configSocketSets[i][1] + "</label><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Toggle\">Toggle</a></p>";
+    }
   }
   content += "<h3>";
-  content += "<p> Temperature: " + String(temperature) + " &deg;C</p>";
-  content += "<p> Humidity: " + String(humidity) + " %</p>";
-  content += "<p> Heat-Index: " + String(heatindex) + "</p>";
   content += "<p> Time: " + String(timeClient.getFormattedTime()) + "</p>";
+  if (ENABLE_SENSOR) {
+    content += "<p> Temperature: " + String(temperature) + " &deg;C</p>";
+    content += "<p> Humidity: " + String(humidity) + " %</p>";
+    content += "<p> Heat-Index: " + String(heatindex) + "</p>";
+  }
   content += "</h3>";
   sendResponse(content);
 }
@@ -73,25 +80,26 @@ void Settings() {
   content += "<input type='submit' value='Speichern'>";
   content += "</form>";
   //sockets
-  content += "<h3>Sockets</h3>";
-  
-  for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-    String socketSet[5] = configSocketSets[i];
-    content += "<form action='/socketSet' method='GET'><span><p><b>Socket ";
-    content +=  String(i+1);
-    content += "</b></p><br>";
-    content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
-    if(socketSet[0].equals(String("on"))) {
-      content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3' checked><br>";
-    } else {
-      content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3'><br>";
+  if (ENABLE_SOCKETS) {
+    content += "<h3>Sockets</h3>";
+    for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+      String socketSet[5] = configSocketSets[i];
+      content += "<form action='/socketSet' method='GET'><span><p><b>Socket ";
+      content +=  String(i+1);
+      content += "</b></p><br>";
+      content += "<input type='hidden' name='socketID' value='"+String(i)+"'>";
+      if(socketSet[0].equals(String("on"))) {
+        content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3' checked><br>";
+      } else {
+        content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3'><br>";
+      }
+      content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'><br>";
+      content += "<label for='houseCode'>Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'><br>";
+      content += "<label for='groupCode'>Groupcode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'><br>";
+      content += "<label for='socketCode'>Socketcode</label><input type='number' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'><br>";
+      content += "<input type='submit' value='Speichern'>";
+      content += "</form><br>";
     }
-    content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'><br>";
-    content += "<label for='houseCode'>Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'><br>";
-    content += "<label for='groupCode'>Groupcode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'><br>";
-    content += "<label for='socketCode'>Socketcode</label><input type='number' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'><br>";
-    content += "<input type='submit' value='Speichern'>";
-    content += "</form><br>";
   }
   sendResponse(content);
 }
