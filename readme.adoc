@@ -1,7 +1,0 @@
-= A real time clock over Wifi based on the ESP 8266
-
-image:https://travis-ci.com/konstantinbo/esp8266-clock.svg?token=LiqALUv98wAx5suKympD&branch=master["Build Status", link="https://travis-ci.com/konstantinbo/esp8266-clock"]
-
-== First Test
-
-image::gifs/3matrixdemo.gif[3 Matrix Demo]
