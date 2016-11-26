@@ -18,7 +18,7 @@ const int     NTP_OFFSET = 3600;
 const int     NTP_INTERVAL = 60000;
 
 //LED-Matrix
-int           led_matrix_intensity = 15;
+int           DEFAULT_LED_MATRIX_INTENSITY = 15;
 const int     LED_MATRIX_PORT_DATA = 13;
 const int     LED_MATRIX_PORT_CLK = 14;
 const int     LED_MATRIX_PORT_CHIP_SELECT = 4;

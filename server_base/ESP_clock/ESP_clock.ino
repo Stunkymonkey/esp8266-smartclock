@@ -29,6 +29,7 @@ boolean statusSocketSets[3];
 
 LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
                          LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
+int led_matrix_intensity;
 
 boolean isAPMode = false;
 
@@ -73,8 +74,10 @@ void setup()
   setProgress(0.1);
 
   //init Led-Matrixes:
-  led_matrix_intensity = loadIntensity();
-  initMatrix(led_matrix_intensity);
+  if (ENABLE_MATRIX) {
+    led_matrix_intensity = loadIntensity();
+    initMatrix(led_matrix_intensity);
+  }
 
   //load device Name
   deviceName = loadDeviceName();
@@ -105,7 +108,9 @@ void setup()
   setProgress(0.9);
 
   //RC-Switch
-  mySwitch.enableTransmit(SOCKET_PORT);
+  if (ENABLE_SOCKETS) {
+    mySwitch.enableTransmit(SOCKET_PORT);
+  }
 
   if (ENABLE_SENSOR) {
     dht.begin();

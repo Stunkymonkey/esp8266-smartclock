@@ -46,7 +46,7 @@ int loadIntensity() {
     return intensity.toInt();
   } else {
     configFile.close();
-    return led_matrix_intensity;
+    return DEFAULT_LED_MATRIX_INTENSITY;
   }
 }
 
@@ -122,11 +122,13 @@ void drawNumber(int data[]) {
 
 /*splits up time string to numbers: buggy not finsished at all!*/
 void drawTime(String time) {
-  int hour1 = time.charAt(0) - '0';
-  int hour2 = time.charAt(1) - '0';
-  int minute1 = time.charAt(3) - '0';
-  int minute2 = time.charAt(4) - '0';
-  int numbers[4] = { hour1, hour2, minute1, minute2 };
-  drawNumber(numbers);
+  if (ENABLE_MATRIX) {
+    int hour1 = time.charAt(0) - '0';
+    int hour2 = time.charAt(1) - '0';
+    int minute1 = time.charAt(3) - '0';
+    int minute2 = time.charAt(4) - '0';
+    int numbers[4] = { hour1, hour2, minute1, minute2 };
+    drawNumber(numbers);
+  }
 }
 
