@@ -74,11 +74,13 @@ void Settings() {
   content += "<label for='name'>New Name</label><input type='text' id='name' name='name' placeholder='Your Device Name' value='"+deviceName+"'><br>";
   content += "<input type='submit' value='Speichern'>";
   content += "</form>";
-  //name settings
-  content += "<h3>Display Intensity</h3><form action='/intensitySet' method='GET'>";
-  content += "<label for='intensity'>Intensity</label><input type='range' min='0' max='15' id='intensity' name='intensity' placeholder='Intensity' value='"+String(led_matrix_intensity)+"'><br>";
-  content += "<input type='submit' value='Speichern'>";
-  content += "</form>";
+  //intensity settings
+  if (ENABLE_MATRIX) {
+    content += "<h3>Display Intensity</h3><form action='/intensitySet' method='GET'>";
+    content += "<label for='intensity'>Intensity</label><input type='range' min='0' max='15' id='intensity' name='intensity' placeholder='Intensity' value='"+String(led_matrix_intensity)+"'><br>";
+    content += "<input type='submit' value='Speichern'>";
+    content += "</form>";
+  }
   //sockets
   if (ENABLE_SOCKETS) {
     content += "<h3>Sockets</h3>";
