@@ -3,7 +3,9 @@ void createServer() {
   server.on("/settings", Settings);
   server.on("/wifiSet", saveWifi);
   server.on("/nameSet", saveDeviceName);
-  server.on("/intensitySet", saveIntensity);
+  if (ENABLE_MATRIX) {
+    server.on("/intensitySet", saveIntensity);
+  }
   if (ENABLE_SOCKETS) {
     server.on("/socketSet", saveSocketSet);
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
