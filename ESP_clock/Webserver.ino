@@ -16,8 +16,8 @@ void createServer() {
       String pathToggle = "/socket"+String(i)+"Toggle";
       const char* pathToggleChar = pathToggle.c_str();
   
-      server.on(pathOnChar, [i](){SocketOn(i);});
-      server.on(pathOffChar, [i](){SocketOff(i);});
+      server.on(pathOnChar, [i](){SocketSwitch(i, true);});
+      server.on(pathOffChar, [i](){SocketSwitch(i, false);});
       server.on(pathToggleChar, [i](){SocketToggle(i);});
     }
   }

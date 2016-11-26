@@ -85,7 +85,7 @@ void loadSocketSets() {
   }
 }
 
-void SocketOn(int i) {
+void SocketSwitch(int i, bool state) {
   String isv3String = configSocketSets[i][0];
   bool isv3;
   if (isv3String.equals(String("on"))) {
@@ -97,43 +97,19 @@ void SocketOn(int i) {
   int groupC = configSocketSets[i][3].toInt();
   int socketC = configSocketSets[i][4].toInt();
 
-  print("On: " + configSocketSets[i][1]);
-
+  if (state) {
+    print("On: " + configSocketSets[i][1]);
+  } else {
+    print("Off: " + configSocketSets[i][1]);
+  }
+  
   if (isv3) {
     char houseC = houseC_String.charAt(0);
-    mySwitch.switchOn(houseC, groupC, socketC);
-  } else {
-    //@TODO: friedls scheiß funktioniert einfach nicht
-    int len = houseC_String.length() + 1;
-    char houseC[len];
-    houseC_String.toCharArray(houseC, len);
-
-    Serial.println(houseC);
-    char* yolo = "00100";
-    
-    mySwitch.switchOn(&houseC[0], socketC);
-  }
-  statusSocketSets[i] = true;
-  returnTo("/");
-}
-
-void SocketOff(int i) {
-  String isv3String = configSocketSets[i][0];
-  bool isv3;
-  if (isv3String.equals(String("on"))) {
-    isv3 = true;
-  } else {
-    isv3 = false;
-  }
-  String houseC_String = configSocketSets[i][2];
-  int groupC = configSocketSets[i][3].toInt();
-  int socketC = configSocketSets[i][4].toInt();
-
-  print("Off: " + configSocketSets[i][1]);
-
-  if (isv3) {
-    char houseC = houseC_String.charAt(0);
-    mySwitch.switchOff(houseC, groupC, socketC);
+    if (state) {
+      mySwitch.switchOn(houseC, groupC, socketC);
+    } else {
+      mySwitch.switchOff(houseC, groupC, socketC);
+    }
   } else {
     //@TODO: friedls scheiß funktioniert einfach nicht
     int len = houseC_String.length() + 1;
@@ -142,19 +118,19 @@ void SocketOff(int i) {
     
     Serial.println(houseC);
     char* yolo = "00100";
-    
-    mySwitch.switchOff(&houseC[0], socketC);
+
+    if (state) {
+      mySwitch.switchOn(&houseC[0], socketC);
+    } else {
+      mySwitch.switchOff(&houseC[0], socketC);
+    }
   }
-  statusSocketSets[i] = false;
+  statusSocketSets[i] = state;
   returnTo("/");
 }
 
 void SocketToggle(int i) {
   Serial.print("Toggle-");
-  if (!statusSocketSets[i]) {
-    SocketOn(i);
-  } else {
-    SocketOff(i);
-  }
+  SocketSwitch(i, !statusSocketSets[i]);
 }
 
