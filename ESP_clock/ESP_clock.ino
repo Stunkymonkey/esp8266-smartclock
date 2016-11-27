@@ -13,6 +13,7 @@ extern "C" {
 #include <RCSwitch.h>
 #include <LedControl.h>
 #include <DHT.h>
+#include <Ticker.h>
 
 //include personal config
 #include "config.h"
@@ -24,8 +25,9 @@ String deviceName = "";
 String WifiSsid = "";
 String WifiPw = "";
 
-String configSocketSets[3][5];
-boolean statusSocketSets[3];
+String configSocketSets[SOCKET_AMOUNT][5];
+boolean statusSocketSets[SOCKET_AMOUNT];
+Ticker countdownSocketSets;
 
 LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
                          LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);

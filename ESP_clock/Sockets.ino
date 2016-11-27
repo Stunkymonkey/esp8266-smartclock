@@ -134,3 +134,18 @@ void SocketToggle(int i) {
   SocketSwitch(i, !statusSocketSets[i]);
 }
 
+void SocketWeb(int i, bool state) {
+  String countdown_String = server.arg("countdown");
+  int countdown = countdown_String.toInt();
+  //countdown = 1;
+
+  if (countdown != 0) {
+    //countdownSocketSets[i] = true;
+    float wait = countdown * 60;
+    countdownSocketSets.once(wait, SocketToggle, i);
+  } else {
+    SocketSwitch(i, state);
+  }
+  returnTo("/");
+}
+

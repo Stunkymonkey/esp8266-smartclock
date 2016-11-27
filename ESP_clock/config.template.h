@@ -26,6 +26,7 @@ const int     LED_MATRIX_PORT_AMOUNT = 3;
 
 //REMOTE-SOCKET
 const int     SOCKET_PORT = 2; //D4
+const int     SOCKET_AMOUNT = 3;
 
 //TEMPERATURE AND HUMIDITY
 const int     SENSOR_PORT = 12; //D6
