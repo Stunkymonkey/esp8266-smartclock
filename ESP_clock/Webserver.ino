@@ -98,7 +98,7 @@ void Settings() {
       content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='"+socketSet[1]+"'><br>";
       content += "<label for='houseCode'>Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'><br>";
       content += "<label for='groupCode'>Groupcode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'><br>";
-      content += "<label for='socketCode'>Socketcode</label><input type='number' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'><br>";
+      content += "<label for='socketCode'>Socketcode</label><input type='text' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'><br>";
       content += "<input type='submit' value='Speichern'>";
       content += "</form><br>";
     }

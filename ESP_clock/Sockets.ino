@@ -96,7 +96,8 @@ void SocketSwitch(int i, bool state) {
   String houseC_String = configSocketSets[i][2];
   int groupC = configSocketSets[i][3].toInt();
   int socketC = configSocketSets[i][4].toInt();
-
+  String socketC_String = configSocketSets[i][4];
+  
   if (state) {
     print("On: " + configSocketSets[i][1]);
   } else {
@@ -111,18 +112,19 @@ void SocketSwitch(int i, bool state) {
       mySwitch.switchOff(houseC, groupC, socketC);
     }
   } else {
-    //@TODO: friedls scheiß funktioniert einfach nicht
+    //hacky way - I really should learn more about C
     int len = houseC_String.length() + 1;
     char houseC[len];
     houseC_String.toCharArray(houseC, len);
-    
-    Serial.println(houseC);
-    char* yolo = "00100";
+
+    int lenSocket = socketC_String.length() +1;
+    char socketCS[lenSocket];
+    socketC_String.toCharArray(socketCS, lenSocket);
 
     if (state) {
-      mySwitch.switchOn(&houseC[0], socketC);
+      mySwitch.switchOn(houseC, socketCS);
     } else {
-      mySwitch.switchOff(&houseC[0], socketC);
+      mySwitch.switchOff(houseC, socketCS);
     }
   }
   statusSocketSets[i] = state;
