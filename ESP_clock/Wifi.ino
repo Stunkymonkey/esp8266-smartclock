@@ -44,12 +44,17 @@ void initWifi() {
 
 bool testWifi(void) {
   int c = 0;
-  print("Waiting for Wifi...");  
+  Serial.print("Waiting for Wifi");
   while ( c < 20 ) {
-    if (WiFi.status() == WL_CONNECTED) { return true; } 
-    delay(500);  
+    if (WiFi.status() == WL_CONNECTED) {
+      Serial.println("");
+      return true;
+    }
+    Serial.print(".");
+    delay(500);
     c++;
   }
+  Serial.println("");
   print("Connect timed out, opening AP");
   return false;
 } 
@@ -75,5 +80,24 @@ void saveWifi() {
   f.println(pw);
   f.close();
   sendResponse("Please restart the module");
+}
+
+void updateDYNDNS() {
+  if (ENABLE_DYNDNS) {
+    unsigned long currentMillis = millis();
+    if(currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL) {
+      dyndnsPreviousMillis = currentMillis;
+      http.begin(DYNDNS_URL);
+      int httpCode = http.GET();
+      if (httpCode == HTTP_CODE_OK) {
+        String payload = http.getString();
+        payload.trim();
+        print("DYNDNS-update succeed!= " + payload);
+      } else {
+        print("DYNDNS-update failed!");
+      }
+      http.end();
+    }
+  }
 }
 

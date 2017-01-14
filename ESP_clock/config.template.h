@@ -8,6 +8,7 @@ const int     REACTION_TIME = 500;  //less power consumption or less responsive
 const bool    ENABLE_SOCKETS = true;
 const bool    ENABLE_SENSOR = true;
 const bool    ENABLE_MATRIX = true;
+const bool    ENABLE_DYNDNS = false;
 
 //DEVICE-NAME
 const String  DEFAULT_DEVICE_NAME= "ESP8266";
@@ -26,10 +27,17 @@ const int     LED_MATRIX_PORT_AMOUNT = 3;
 
 //REMOTE-SOCKET
 const int     SOCKET_PORT = 2; //D4
+const int     SOCKET_AMOUNT = 3;
 
 //TEMPERATURE AND HUMIDITY
 const int     SENSOR_PORT = 12; //D6
 const long    SENSOR_INTERVAL = 2000;
+
+//DYNDNS
+const long    DYNDNS_INTERVAL = 600000; // every 10 minutes
+const String  DYNDNS_URL = "http://freedns.afraid.org/dynamic/update.php?asdf...";
+
+//############################################
 
 //STORAGE
 /* File structure:

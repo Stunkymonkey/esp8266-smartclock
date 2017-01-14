@@ -4,6 +4,7 @@ extern "C" {
   #include "user_interface.h"
 }
 #include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
 #include <ESP8266mDNS.h>
 #include <DNSServer.h>
 #include <WiFiUdp.h>
@@ -24,8 +25,8 @@ String deviceName = "";
 String WifiSsid = "";
 String WifiPw = "";
 
-String configSocketSets[3][5];
-boolean statusSocketSets[3];
+String configSocketSets[SOCKET_AMOUNT][5];
+boolean statusSocketSets[SOCKET_AMOUNT];
 
 LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
                          LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
@@ -52,6 +53,11 @@ unsigned long sensorPreviousMillis = 0;
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, NTP_SERVER, NTP_OFFSET, NTP_INTERVAL);
 //NTPClient timeClient(ntpUDP, "de.pool.ntp.org", 3600, 60000);
+
+//DYNDNS
+HTTPClient http;
+const int httpPort = 80;
+unsigned long dyndnsPreviousMillis = 0;
 
 void setup()
 {
@@ -130,6 +136,7 @@ void loop()
   server.handleClient();
   gettemperature();
   timeClient.update();
+  updateDYNDNS();
   drawTime(timeClient.getFormattedTime());
 }
 

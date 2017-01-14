@@ -88,11 +88,7 @@ void loadSocketSets() {
 void SocketSwitch(int i, bool state) {
   String isv3String = configSocketSets[i][0];
   bool isv3;
-  if (isv3String.equals(String("on"))) {
-    isv3 = true;
-  } else {
-    isv3 = false;
-  }
+  isv3 = isv3String.equals(String("on"));
   String houseC_String = configSocketSets[i][2];
   int groupC = configSocketSets[i][3].toInt();
   int socketC = configSocketSets[i][4].toInt();
