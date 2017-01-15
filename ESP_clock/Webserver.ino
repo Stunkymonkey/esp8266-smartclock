@@ -24,8 +24,10 @@ void createServer() {
 }
 
 void returnTo(String path) {
+  WifiLEDOn();
   server.sendHeader("Location", path, true);
   server.send(302, "text/plain", "");
+  WifiLEDOff();
 }
 
 void sendResponse(String content) {
