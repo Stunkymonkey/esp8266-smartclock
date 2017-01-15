@@ -1,6 +1,9 @@
 void createServer() {
   server.on("/", Home);
   server.on("/settings", Settings);
+  if (ENABLE_SENSOR) {
+    server.on("/sensorData", sensorData);
+  }
   server.on("/wifiSet", saveWifi);
   server.on("/nameSet", saveDeviceName);
   if (ENABLE_MATRIX) {
@@ -56,6 +59,7 @@ void Home() {
   }
   if (ENABLE_SENSOR) {
     content += "<h3>Sensor information</h3>";
+    content += "<p>The JSON API endpoint is at:<b>/sensorData</b></p>";
     content += "<p><label class='title'>Temperature:</label>" + String(temperature) + " &deg;C</p>";
     content += "<p><label class='title'>Humidity:</label>" + String(humidity) + " %</p>";
     content += "<p><label class='title'>Heat-Index:</label>" + String(heatindex) + "</p>";
@@ -106,5 +110,15 @@ void Settings() {
     }
   }
   sendResponse(content);
+}
+
+/*
+ * endpoint to output sensor data as json
+ */
+void sensorData() {
+  String json = "{ \"temperatur\": \""+String(temperature)+"\",";
+  json += " \"humidity\": \""+String(humidity)+"\",";
+  json += " \"timestamp\": \""+String(timeClient.getFormattedTime())+"\"}";
+  server.send(200, "application/json", json);
 }
 
