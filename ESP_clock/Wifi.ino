@@ -71,6 +71,7 @@ void setupAP(void) {
 }
 
 void saveWifi() {
+  if (!auth()) { return; }
   String ssid = server.arg("ssid");
   String pw = server.arg("pw");
   print(ssid);

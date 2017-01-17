@@ -86,6 +86,7 @@ void loadSocketSets() {
 }
 
 void SocketSwitch(int i, bool state) {
+  if (!auth()) { return; }
   String isv3String = configSocketSets[i][0];
   bool isv3;
   isv3 = isv3String.equals(String("on"));

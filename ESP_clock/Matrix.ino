@@ -51,6 +51,7 @@ int loadIntensity() {
 }
 
 void saveIntensity() {
+  if (!auth()) { return; }
   String intensity_String = server.arg("intensity");
   int intensity = intensity_String.toInt();
   File f = SPIFFS.open(LED_CONFIG_PATH, "w");

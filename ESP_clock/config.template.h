@@ -9,9 +9,15 @@ const bool    ENABLE_SOCKETS = true;
 const bool    ENABLE_SENSOR = true;
 const bool    ENABLE_MATRIX = true;
 const bool    ENABLE_DYNDNS = false;
+const bool    ENABLE_LOGIN = true;
+const bool    ENABLE_LOCAL_NO_LOGIN = true;
 
 //DEVICE-NAME
 const String  DEFAULT_DEVICE_NAME= "ESP8266";
+
+//LOGIN
+const char    WWW_USERNAME[] = "admin";
+const char    WWW_PASSWORD[] = "password";
 
 //NTP
 const char    NTP_SERVER[] = "de.pool.ntp.org";

@@ -48,6 +48,7 @@ void sendResponse(String content) {
 }
 
 void Home() {
+  if (!auth()) { return; }
   content = "";
   if (ENABLE_SOCKETS) {
     content += "<h3>";
@@ -68,6 +69,7 @@ void Home() {
 }
 
 void Settings() {
+  if (!auth()) { return; }
   //wifi settings
   content = "<h3>WiFi Settings</h3><form action='/wifiSet' method='GET'>";
   content += "<label for='ssid'>Wifi SSID</label><input id='ssid' type='text' name='ssid' placeholder='Your Wifi SSID' value='"+WifiSsid+"' autofocus><br>";
@@ -112,10 +114,30 @@ void Settings() {
   sendResponse(content);
 }
 
+bool auth() {
+  if (ENABLE_LOGIN) {
+    if (ENABLE_LOCAL_NO_LOGIN) {
+      String clientIp = server.client().remoteIP().toString();
+      String net = "192.168";
+      if (clientIp.startsWith(net)) {
+        //print("local");
+        return true;
+      }
+      //print("external");
+    }
+    if (!server.authenticate(WWW_USERNAME, WWW_PASSWORD)) {
+      server.requestAuthentication();
+      return false;
+    }
+  }
+  return true;
+}
+
 /*
  * endpoint to output sensor data as json
  */
 void sensorData() {
+  if (!auth()) { return; }
   String json = "{ \"temperatur\": \""+String(temperature)+"\",";
   json += " \"humidity\": \""+String(humidity)+"\",";
   json += " \"timestamp\": \""+String(timeClient.getFormattedTime())+"\"}";

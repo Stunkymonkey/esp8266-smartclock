@@ -26,6 +26,7 @@ String loadDeviceName() {
 }
 
 void saveDeviceName() {
+  if (!auth()) { return; }
   String name = server.arg("name");
   name = parseName(name);
   File f = SPIFFS.open(NAME_CONFIG_PATH, "w");
