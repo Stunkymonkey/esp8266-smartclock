@@ -79,3 +79,7 @@ label {
 .switch:last-child {
 	margin-right:  0;	
 }
+.sensorData {
+	display: flex;
+	justify-content: space-between;
+}
