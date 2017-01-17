@@ -36,7 +36,7 @@ void returnTo(String path) {
 void sendResponse(String content) {
   WifiLEDOn();
   String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name='viewport' content='initial-scale=1'><style>";
-  finalContent += ".switch,input{box-sizing:border-box}body{background:#1F2237;color:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;font-size:16px}a{color:inherit}container,nav{color:#1F2237;background:#f9f9f9;border-radius:2px;width:95%;max-width:800px;display:block;margin:1em auto;padding:.5em 1em}nav{display:flex;align-items:baseline}nav h2{flex-grow:2}nav ul{padding:0;list-style:none}nav li{display:inline-block;margin-right:1em}input{padding:1em .8em;margin-bottom:.8em;margin-right:.5em;width:100%;max-width:300px;border-radius:2px;border:1px solid gray;outline:0;font-size:.8rem}input[type=submit]{background-color:#64a97c;color:#fff;border-color:#64a97c}label{display:block;margin-bottom:.2em;font-size:.9em;color:#656565}.switch{display:inline-block;padding:1.5em 0;width:30%;background:#cc5e5e;text-align:center;margin-right:5%;color:#fff;font-size:1.4em;font-weight:700;text-decoration:none;border-radius:3px}.switch:last-child{margin-right:0}";
+  finalContent += "container,input,nav{border-radius:2px;box-sizing:border-box}.switch,container,input,nav{box-sizing:border-box}body{background:#1F2237;color:#f9f9f9;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Fira Sans\",\"Droid Sans\",\"Helvetica Neue\",sans-serif;font-size:16px;margin:0}a{color:inherit}container,nav{color:#1F2237;background:#f9f9f9;width:95%;max-width:800px;display:block;margin:1em auto;padding:.5em 1em}nav{display:flex;align-items:baseline;margin-top:0}nav h2{flex-grow:2}nav ul{padding:0;list-style:none}nav li{display:inline-block;margin-right:1em}input{padding:1em .8em;margin-bottom:.8em;margin-right:.5em;width:100%;max-width:300px;border:1px solid gray;outline:0;font-size:.8rem}input[type=submit]{background-color:#64a97c;color:#fff;border-color:#64a97c}label{display:block;margin-bottom:.2em;font-size:.9em;color:#656565}.switch{display:inline-block;padding:1.5em 0;width:30%;background:#cc5e5e;text-align:center;margin-right:5%;color:#fff;font-size:1.4em;font-weight:700;text-decoration:none;border-radius:3px}.switch:last-child{margin-right:0}";
   finalContent += "</style></head><body><nav><h2>"+ deviceName +"</h2>";
   finalContent += "<ul><li><a href='/'>Home</a></li>";
   finalContent += "<li><a href='/settings'>Settings</a></li></ul></nav>";
@@ -59,7 +59,7 @@ void Home() {
   }
   if (ENABLE_SENSOR) {
     content += "<h3>Sensor information</h3>";
-    content += "<p>The JSON API endpoint is at:<b>/sensorData</b></p>";
+    content += "<p>The JSON API endpoint is at: <a href=\"/sensorData\">/sensorData</a></p>";
     content += "<p><label class='title'>Temperature:</label>" + String(temperature) + " &deg;C</p>";
     content += "<p><label class='title'>Humidity:</label>" + String(humidity) + " %</p>";
     content += "<p><label class='title'>Heat-Index:</label>" + String(heatindex) + "</p>";
