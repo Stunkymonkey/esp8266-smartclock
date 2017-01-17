@@ -7,6 +7,7 @@ body {
 	"Ubuntu", "Cantarell", "Fira Sans", 
 	"Droid Sans", "Helvetica Neue", sans-serif;
 	font-size: 16px;
+	margin: 0;
 }
 a {
 	color: inherit;
@@ -20,10 +21,12 @@ nav, container {
 	display: block;
 	margin: 1em auto;
 	padding: 0.5em 1em;
+	box-sizing: border-box;
 }
 nav {
 	display: flex;
 	align-items: baseline;
+	margin-top: 0;
 }
 nav h2 {
 	flex-grow: 2;
@@ -75,4 +78,8 @@ label {
 }
 .switch:last-child {
 	margin-right:  0;	
+}
+.sensorData {
+	display: flex;
+	justify-content: space-between;
 }
