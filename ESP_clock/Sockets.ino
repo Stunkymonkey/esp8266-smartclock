@@ -61,6 +61,9 @@ void loadSocketSets() {
       }
       socketId.replace(SOCKET_CONFIG_PATH, "");
       int i = socketId.toInt();
+      if (i > (sizeof configSocketSets / sizeof configSocketSets[0])) {
+        continue;
+      }
       isv3.trim();
       socketName.trim();
       houseCode.trim();
