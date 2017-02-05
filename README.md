@@ -8,17 +8,22 @@ We started designing and building a small clock that is connected to your local 
 <img src="images/screenshot2.png"/>
 
 ## Hardware
+The total costs are around 20€:
+
 * NodeMCU board
-* DHT11
+* DHT11 (optional)
 * 433Mhz transmitter
 * 3x MAX7219 based 8x8 led matrix
 * Wireless Remote Control Electrical Outlet Switch (working on 433Mhz)
+* some wires
 
 ## Features
 * opens an access point to enter your local Wifi SSID and password
 * three customisable slots for your sockets
 * custom brightness settings for the LED matrix
 * Read Data from a DHT11 temperature and humidity sensor
+* NTP Time
+* Supports multiple Wireless Remote Control protocols (We are using the <a href="https://github.com/sui77/rc-switch">rc-switch</a> library)
 
 ## Ideas for the future
 * a light sensor could turn on the lights automatically
