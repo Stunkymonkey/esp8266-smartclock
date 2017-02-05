@@ -23,4 +23,3 @@ We started designing and building a small clock that is connected to your local 
 ## Ideas for the future
 * a light sensor could turn on the lights automatically
 * a proper case (3D printed, wood...)
->>>>>>> add images and english readme
