@@ -1,15 +1,26 @@
-# A real time clock over Wifi based on the ESP 8266
+# esp8266-smartclock
 
-+ Steckdosen an/auschalten:
-    + Einstellungen können jederzeit änderbar
-    + mit Verzögerung an- und ausschalten
-+ Zu bestehndem WLAN verbinden (initalier AP zur Eingabe von SSID und Pwd)
-+ Hostname-Einstellungen
-+ Uhrzeit via NTP abfragen
-    + Uhrzeit auf Display anzeigen
-+ Temperatur & Feuchtigkeit auslesen und per API zur Verfügung stellen
-+ Startup-Animation
-+ Für Dyn-DNS URL GET-aufruf
+We started designing and building a small clock that is connected to your local Wifi and controls your home using cheap 433Mhz power outlets.
 
-## Optional:
-+ Helligkeit messen
+<img src="images/IMG_4446.JPG"/>
+<img src="images/IMG_1157.JPG"/>
+<img src="images/screenshot1.png"/>
+<img src="images/screenshot2.png"/>
+
+## Hardware
+* NodeMCU board
+* DHT11
+* 433Mhz transmitter
+* 3x MAX7219 based 8x8 led matrix
+* Wireless Remote Control Electrical Outlet Switch (working on 433Mhz)
+
+## Features
+* opens an access point to enter your local Wifi SSID and password
+* three customisable slots for your sockets
+* custom brightness settings for the LED matrix
+* Read Data from a DHT11 temperature and humidity sensor
+
+## Ideas for the future
+* a light sensor could turn on the lights automatically
+* a proper case (3D printed, wood...)
+>>>>>>> add images and english readme
