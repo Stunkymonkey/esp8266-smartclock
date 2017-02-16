@@ -75,7 +75,7 @@ void Settings() {
   //wifi settings
   content = "<h3>WiFi Settings</h3><form action='/wifiSet' method='GET'>";
   content += "<label for='ssid'>Wifi SSID</label><input id='ssid' type='text' name='ssid' placeholder='Your Wifi SSID' value='"+WifiSsid+"' autofocus><br>";
-  content += "<label for='pw'>Wifi Password</label><input id='pw' type='password' name='pw' placeholder='Your Wifi Password' value='"+WifiPw+"'><br>";
+  content += "<label for='pw'>Wifi Password</label><input id='pw' type='password' name='pw' placeholder='Your Wifi Password'><br>";
   content += "<input type='submit' value='Speichern'>";
   content += "</form>";
   //name settings
