@@ -121,15 +121,29 @@ void drawNumber(int data[]) {
   }
 }
 
+/* should be written again */
+void drawSecondsGraph(int seconds) {
+    //scale seconds from 0 to 7
+    int secPixels = seconds / 8;
+    // loop through last row of display
+    for(int i = 0; i<8; i++) {
+      if(i<=secPixels) {
+        lc.setLed(2, 7, i, true);
+      }
+      else {
+        lc.setLed(2, 7, i, false);
+      }
+    }
+}
+
 /*splits up time string to numbers: buggy not finsished at all!*/
-void drawTime(String time) {
-  if (ENABLE_MATRIX) {
+void drawTime(String time, int seconds) {
     int hour1 = time.charAt(0) - '0';
     int hour2 = time.charAt(1) - '0';
     int minute1 = time.charAt(3) - '0';
     int minute2 = time.charAt(4) - '0';
     int numbers[4] = { hour1, hour2, minute1, minute2 };
     drawNumber(numbers);
-  }
+    drawSecondsGraph(seconds);
 }
 

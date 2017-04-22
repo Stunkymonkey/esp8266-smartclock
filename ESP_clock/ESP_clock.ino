@@ -135,8 +135,11 @@ void loop()
   delay(REACTION_TIME);
   server.handleClient();
   gettemperature();
-  timeClient.update();
   updateDYNDNS();
-  drawTime(timeClient.getFormattedTime());
+  if (ENABLE_MATRIX) {
+    timeClient.update();
+    drawTime(timeClient.getFormattedTime(), timeClient.getSeconds());
+  }
+  
 }
 
