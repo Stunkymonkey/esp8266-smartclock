@@ -95,7 +95,7 @@ void Settings() {
   if (ENABLE_SOCKETS) {
     content += "<h3>Sockets</h3>";
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-      String socketSet[5] = configSocketSets[i];
+      String socketSet[7] = configSocketSets[i];
       content += "<form action='/socketSet' method='GET'><span><p><b>Socket ";
       content +=  String(i+1);
       content += "</b></p><br>";
@@ -109,6 +109,11 @@ void Settings() {
       content += "<label for='houseCode'>Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='"+socketSet[2]+"'><br>";
       content += "<label for='groupCode'>Groupcode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='"+socketSet[3]+"'><br>";
       content += "<label for='socketCode'>Socketcode</label><input type='text' id='socketCode' name='socketCode' placeholder='Device Code' value='"+socketSet[4]+"'><br>";
+      if(ENABLE_TIMER) {
+       content += "<p>Timer settings (optional)</p>";
+       content += "<label for='timerOnTime'>Turn on at: (Format: xx:xx)</label><input id='timerOnTime' type='text' name='timerOnTime' placeholder='Time (e.g. 12:23)' value='"+socketSet[5]+"'><br>";
+       content += "<label for='timerOffTime'>Turn off at: (Format: xx:xx)</label><input id='timerOffTime' type='text' name='timerOffTime' placeholder='Time (e.g. 12:23)' value='"+socketSet[6]+"'><br>";
+      }
       content += "<input type='submit' value='Speichern'>";
       content += "</form><br>";
     }

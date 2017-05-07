@@ -17,7 +17,13 @@ void saveSocketSet() {
   f.println(houseCode);
   f.println(groupCode);
   f.println(socketCode);
-  
+  //save Timer Values (empty values are saved as an empty string)
+  if(ENABLE_TIMER) {
+    String timerOnTime = server.arg("timerOnTime");
+    String timerOffTime = server.arg("timerOffTime");
+    f.println(timerOnTime);
+    f.println(timerOffTime);
+  }
   f.close();
   loadSocketSets();
   returnTo("/settings");
@@ -34,6 +40,9 @@ void loadSocketSets() {
       String houseCode;
       String groupCode;
       String socketCode;
+      //load timer values every time
+      String timerOnTime;
+      String timerOffTime;
       int n = 0;
       while (entry.available()) {
         switch (n){
@@ -52,6 +61,10 @@ void loadSocketSets() {
           case 4:
             socketCode = entry.readStringUntil('\n');
             break;
+          case 5:
+            timerOnTime = entry.readStringUntil('\n');
+          case 6:
+            timerOffTime = entry.readStringUntil('\n');
           default:
             print("Error too many lines in reading sockets... deleting file");
             SPIFFS.remove(entry.name());
@@ -69,17 +82,23 @@ void loadSocketSets() {
       houseCode.trim();
       groupCode.trim();
       socketCode.trim();
+      timerOnTime.trim();
+      timerOffTime.trim();
       configSocketSets[i][0] = isv3;
       configSocketSets[i][1] = socketName;
       configSocketSets[i][2] = houseCode;
       configSocketSets[i][3] = groupCode;
       configSocketSets[i][4] = socketCode;
+      configSocketSets[i][5] = timerOnTime;
+      configSocketSets[i][6] = timerOffTime;
       print("Cache socket { ID: "+socketId+\
             ", isv3: "+isv3+\
             ", Name: "+socketName+\
             ", HouseC: "+houseCode+\
             ", GroupC: "+groupCode+\
             ", SocketC: "+socketCode+\
+            ", Timer On: "+timerOnTime+\
+            ", Timer Off: "+timerOffTime+\
             " }");
       entry.close();
     } else {

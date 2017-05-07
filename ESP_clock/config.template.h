@@ -6,6 +6,8 @@ const int     REACTION_TIME = 500;  //less power consumption or less responsive
 
 //SERVICES
 const bool    ENABLE_SOCKETS = true;
+//timer requires enabled sockets
+const bool    ENABLE_TIMER = true;
 const bool    ENABLE_SENSOR = true;
 const bool    ENABLE_MATRIX = true;
 const bool    ENABLE_DYNDNS = false;
@@ -57,7 +59,9 @@ const String  DYNDNS_URL = "http://freedns.afraid.org/dynamic/update.php?asdf...
  *    socketName;
  *    houseCode;
  *    groupCode;
- *    socketCode;
+ *    socketCode;    
+ *    timerOnTime;
+ *    timerOffTimer
  */
 const String  WIFI_CONFIG_PATH = "/wifi.txt";
 const String  NAME_CONFIG_PATH = "/name.txt";
