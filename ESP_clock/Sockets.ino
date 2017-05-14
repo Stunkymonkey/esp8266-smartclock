@@ -63,10 +63,13 @@ void loadSocketSets() {
             break;
           case 5:
             timerOnTime = entry.readStringUntil('\n');
+            break;
           case 6:
             timerOffTime = entry.readStringUntil('\n');
+            break;
           default:
             print("Error too many lines in reading sockets... deleting file");
+            Serial.println(entry.readStringUntil('\n'));
             SPIFFS.remove(entry.name());
             break;
         }
@@ -105,10 +108,12 @@ void loadSocketSets() {
       print("Error in reading sockets");
     }
   }
+  //re-init timer with new data
+  initTimer();
 }
 
 void SocketSwitch(int i, bool state) {
-  if (!auth()) { return; }
+  //if (!auth()) { return; }
   String isv3String = configSocketSets[i][0];
   bool isv3;
   isv3 = isv3String.equals(String("on"));
@@ -116,7 +121,6 @@ void SocketSwitch(int i, bool state) {
   int groupC = configSocketSets[i][3].toInt();
   int socketC = configSocketSets[i][4].toInt();
   String socketC_String = configSocketSets[i][4];
-  
   if (state) {
     print("On: " + configSocketSets[i][1]);
   } else {
@@ -147,7 +151,6 @@ void SocketSwitch(int i, bool state) {
     }
   }
   statusSocketSets[i] = state;
-  returnTo("/");
 }
 
 void SocketToggle(int i) {

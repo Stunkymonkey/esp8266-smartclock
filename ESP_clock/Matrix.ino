@@ -91,6 +91,7 @@ byte numbers[10][3] = {
 };
 
 /*draws array of for integers: 1_2_:_3_4*/
+boolean blinkState = true;
 void drawNumber(int data[]) {
   int dis = 0;
   int row = 0;
@@ -111,7 +112,15 @@ void drawNumber(int data[]) {
 
     /*show : between 2 numbers: @todo better way*/
     if(i==1) {
-          lc.setRow(dis, row, B00100100);
+          if(blinkState == true) {
+            lc.setRow(dis, row, B00100100);
+            blinkState = false;
+          }
+          else {
+            lc.setRow(dis, row, B00000000);
+            blinkState = true;
+          }
+          
           row++;
           if(row==8) { row = 0; dis = dis+1; }
           lc.setRow(dis, row, B00000000);
