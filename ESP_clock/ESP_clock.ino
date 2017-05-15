@@ -4,12 +4,15 @@ extern "C" {
   #include "user_interface.h"
 }
 #include <ESP8266WiFi.h>
+#include <WiFiClient.h>
 #include <ESP8266HTTPClient.h>
+#include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <DNSServer.h>
 #include <WiFiUdp.h>
+#include <ArduinoOTA.h>
+#include <ESP8266HTTPUpdateServer.h>
 #include <NTPClient.h>
-#include <ESP8266WebServer.h>
 #include <FS.h>
 #include <RCSwitch.h>
 #include <LedControl.h>
@@ -37,6 +40,9 @@ boolean isAPMode = false;
 ESP8266WebServer server(80);
 //used to combine webpages in createServer();
 String content;
+
+//OTA-Server
+ESP8266HTTPUpdateServer httpUpdater;
 
 //AP-Settings
 DNSServer dnsServer;
@@ -104,8 +110,16 @@ void setup()
   if (!MDNS.begin(deviceName.c_str())) {
     print("Error setting up MDNS responder!");
   }
+  
+  // OTA enable
+  if (ENABLE_OTA) {
+    httpUpdater.setup(&server, "/update", OTA_USERNAME, OTA_PASSWORD);
+  }
+  
+  // Http-Server start
   server.begin();
   setProgress(0.7);
+  
   //service announcement
   MDNS.addService("http", "tcp", 80);
 

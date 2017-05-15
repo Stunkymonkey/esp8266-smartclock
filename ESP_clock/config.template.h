@@ -11,6 +11,7 @@ const bool    ENABLE_MATRIX = true;
 const bool    ENABLE_DYNDNS = false;
 const bool    ENABLE_LOGIN = true;
 const bool    ENABLE_LOCAL_NO_LOGIN = true;
+const bool    ENABLE_OTA = true;
 
 //DEVICE-NAME
 const String  DEFAULT_DEVICE_NAME= "ESP8266";
@@ -18,6 +19,10 @@ const String  DEFAULT_DEVICE_NAME= "ESP8266";
 //LOGIN
 const char    WWW_USERNAME[] = "admin";
 const char    WWW_PASSWORD[] = "password";
+
+//FIRMWARE
+const char    OTA_USERNAME[] = "admin";
+const char    OTA_PASSWORD[] = "admin";
 
 //NTP
 const char    NTP_SERVER[] = "de.pool.ntp.org";

@@ -19,13 +19,14 @@ The total costs are around 20€:
 
 ## Features
 * opens an access point to enter your local Wifi SSID and password
-* three customisable slots for your outlets
+* customisable slots for your outlets
 * custom brightness settings for the LED matrix
 * Read Data from a DHT11 temperature and humidity sensor
 * NTP Time support
 * supports multiple Wireless Remote Control protocols (We are using the <a href="https://github.com/sui77/rc-switch">rc-switch</a> library)
 * dyndns (making a get request on a given url every 10 minutes)
 * password-authentication for user from the internet (no https 😞)
+* OverTheAir Update
 
 ## Ideas for the future
 * a light sensor could turn on the lights automatically
