@@ -28,6 +28,12 @@ The total costs are around 20€:
 * password-authentication for user from the internet (no https 😞)
 * OverTheAir Update
 
+### Update via OTA
+```
+curl -u admin:admin -F "image=@/tmp/arduino_build_*/ESP_clock.ino.bin" esp8266/update
+```
+or via webinterface at `http://esp8266/update`
+
 ## Ideas for the future
 * a light sensor could turn on the lights automatically
 * a proper case (3D printed, wood...)
