@@ -1,4 +1,4 @@
-// IMPORTS
+  // IMPORTS
 #include <WiFiClient.h>
 extern "C" {
   #include "user_interface.h"
@@ -34,6 +34,7 @@ boolean statusSocketSets[SOCKET_AMOUNT];
 LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
                          LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
 int led_matrix_intensity;
+unsigned long matrixBlinkPreviousMillis = 0;
 
 boolean isAPMode = false;
 
@@ -153,6 +154,7 @@ void loop()
   if (ENABLE_MATRIX) {
     timeClient.update();
     drawTime(timeClient.getFormattedTime(), timeClient.getSeconds());
+    matrixBlinkSeperator();
   }
   
 }

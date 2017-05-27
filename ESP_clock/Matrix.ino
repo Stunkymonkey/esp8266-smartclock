@@ -90,36 +90,6 @@ byte numbers[10][3] = {
   /*9*/{B10011110,B10010010,B11111110}
 };
 
-/*draws array of for integers: 1_2_:_3_4*/
-void drawNumber(int data[]) {
-  int dis = 0;
-  int row = 0;
-  clearMatrix();
-  /*each number to draw*/
-  for(int i=0; i<sizeof(data); i++) {
-    /*each row of the number*/
-    for(int a=0; a<3; a++) {
-        lc.setRow(dis, row, numbers[data[i]][a]);
-        row++;
-        /*works for me*/
-        if(row==8) { row = 0; dis = dis+1; }
-    }
-    /*spacing*/
-    lc.setRow(dis, row, B00000000);
-    row++;
-    if(row==8) { row = 0; dis = dis+1; }
-
-    /*show : between 2 numbers: @todo better way*/
-    if(i==1) {
-          lc.setRow(dis, row, B00100100);
-          row++;
-          if(row==8) { row = 0; dis = dis+1; }
-          lc.setRow(dis, row, B00000000);
-          row++;
-          if(row==8) { row = 0; dis = dis+1; }
-    }
-  }
-}
 
 /* should be written again */
 void drawSecondsGraph(int seconds) {
@@ -136,14 +106,71 @@ void drawSecondsGraph(int seconds) {
     }
 }
 
+/*
+ * draws 1 pixel wide spacing
+ */
+void drawSpacing(int row, int dis) {
+  lc.setRow(dis, row, B00000000);
+}
+
+/*
+ * draws 1 pixel wide seperator
+ */
+void drawSeperator(int row, int dis) {
+  lc.setRow(dis, row, B00101000);
+}
+
+/*
+ * draws 3 pixel number from numbers data
+ */
+
+void drawNumber(int number, int row, int dis) {
+    /*each row of the number*/
+    for(int a=0; a<3; a++) {
+        lc.setRow(dis, row, numbers[number][a]);
+        row++;
+        /*works for me*/
+        if(row==8) { row = 0; dis = dis+1; }
+    }
+}
+
+
+boolean seperatorBlink = false;
+void matrixBlinkSeperator() {
+  unsigned long currentMillis = millis();
+  if(currentMillis - matrixBlinkPreviousMillis >= 1000) {
+    matrixBlinkPreviousMillis = currentMillis;
+    if(!seperatorBlink) {
+      seperatorBlink = true;
+    } else {
+      seperatorBlink = false;
+    }
+  }
+  if (!seperatorBlink) {
+    drawSeperator(0, 1);
+  } else {
+    drawSpacing(0, 1);
+  }
+}
+
+
 /*splits up time string to numbers: buggy not finsished at all!*/
 void drawTime(String time, int seconds) {
     int hour1 = time.charAt(0) - '0';
     int hour2 = time.charAt(1) - '0';
     int minute1 = time.charAt(3) - '0';
     int minute2 = time.charAt(4) - '0';
-    int numbers[4] = { hour1, hour2, minute1, minute2 };
-    drawNumber(numbers);
+    // each number is 3 pixel wide, wich adds up to 4 pixels including spacing
+    drawNumber(hour1, 0, 0);
+    drawSpacing(3, 0);
+    drawNumber(hour2, 4, 0);
+    drawSpacing(7, 0);
+    //seperator gets drawn by matrixBlinkSeperator()
+    drawSpacing(1, 1);
+    drawNumber(minute1, 2, 1);
+    drawSpacing(5, 1);
+    drawNumber(minute2, 6, 1);
+
     drawSecondsGraph(seconds);
 }
 
