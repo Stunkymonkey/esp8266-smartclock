@@ -21,7 +21,7 @@ void createServer() {
   
       server.on(pathOnChar, [i](){SocketSwitch(i, true); returnTo("/");});
       server.on(pathOffChar, [i](){SocketSwitch(i, false); returnTo("/");});
-      server.on(pathToggleChar, [i](){SocketToggle(i);});
+      server.on(pathToggleChar, [i](){SocketToggle(i); returnTo("/");});
     }
   }
 }

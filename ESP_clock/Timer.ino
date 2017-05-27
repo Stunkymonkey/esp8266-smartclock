@@ -1,7 +1,8 @@
 /* compare Time to valid Timers */
-/* is currently checking for exact hours&minute. so this function should be called at least every minute */
+/* is currently checking for exact hours&minute. so this function should be called at least once a minute */
 void checkTimer(int hours, int minutes) {
-    for(int i=0; i<(sizeof validTimersOn / sizeof validTimersOn[0]); i++) {
+    //use SOCKET_AMOUNT instead of: (sizeof validTimersOn / sizeof validTimersOn[0])
+    for(int i=0; i<SOCKET_AMOUNT; i++) {
       if(hours == validTimersOn[i][0] && minutes == validTimersOn[i][1]) {
         SocketSwitch(validTimersOn[i][2], true);
       }
@@ -22,6 +23,10 @@ void initTimer() {
       validTimersOn[i][0] = hour.toInt();
       validTimersOn[i][1] = minute.toInt();
       validTimersOn[i][2] = i;
+    } else {
+      validTimersOn[i][0] = -1;
+      validTimersOn[i][1] = -1;
+      validTimersOn[i][2] = -1;
     }
     if (socketSet[6].length() == 5) {
       String hour = getValue(socketSet[6], ':', 0);
@@ -29,6 +34,10 @@ void initTimer() {
       validTimersOff[i][0] = hour.toInt();
       validTimersOff[i][1] = minute.toInt();
       validTimersOff[i][2] = i;
+    } else {
+      validTimersOff[i][0] = -1;
+      validTimersOff[i][1] = -1;
+      validTimersOff[i][2] = -1;
     }
   }
 }
