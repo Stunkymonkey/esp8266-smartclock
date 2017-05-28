@@ -28,6 +28,13 @@ The total costs are around 20€:
 * password-authentication for user from the internet (no https 😞)
 * OverTheAir Update
 
+## Development
+
+### Compile
+```
+arduino ./ESP_clock/ESP_clock.ino --verify --preserve-temp-files
+```
+
 ### Update via OTA
 ```
 curl -u admin:admin -F "image=@$(find /tmp/arduino* -name 'ESP_clock.ino.bin')" esp8266/update
