@@ -30,7 +30,7 @@ The total costs are around 20€:
 
 ### Update via OTA
 ```
-curl -u admin:admin -F "image=@/tmp/arduino_build_*/ESP_clock.ino.bin" esp8266/update
+curl -u admin:admin -F "image=@$(find /tmp/arduino* -name 'ESP_clock.ino.bin')" esp8266/update
 ```
 or via webinterface at `http://esp8266/update`
 
