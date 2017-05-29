@@ -14,3 +14,17 @@ void gettemperature() {
   }
 }
 
+int get_heat_index_level() {
+  if (heatindex < 27) {
+    return 0;
+  } else if (heatindex >= 27 && heatindex < 32) {
+    return 1;
+  } else if (heatindex >= 32 && heatindex < 40) {
+    return 2;
+  } else if (heatindex >= 40 && heatindex < 54) {
+    return 3;
+  } else if (heatindex >= 54) {
+    return 4;
+  }
+}
+

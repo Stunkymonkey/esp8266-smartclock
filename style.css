@@ -62,6 +62,21 @@ label {
 	font-size: 0.9em;
 	color: #656565;
 }
+#l0 {
+	color: #008000;
+}
+#l1 {
+	color: #FFA500;
+}
+#l2 {
+	color: #FF8040;
+}
+#l3 {
+	color: #FF0000;
+}
+#l4 {
+	color: #800000;
+}
 .switch {
     display: inline-block;
     padding: 1.5em 0;
