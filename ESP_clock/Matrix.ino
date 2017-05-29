@@ -123,7 +123,6 @@ void drawSeperator(int row, int dis) {
 /*
  * draws 3 pixel number from numbers data
  */
-
 void drawNumber(int number, int row, int dis) {
     /*each row of the number*/
     for(int a=0; a<3; a++) {
@@ -134,17 +133,14 @@ void drawNumber(int number, int row, int dis) {
     }
 }
 
-
-boolean seperatorBlink = false;
+/*
+ * draws seperator with 2 leds
+ */
 void matrixBlinkSeperator() {
   unsigned long currentMillis = millis();
   if(currentMillis - matrixBlinkPreviousMillis >= 1000) {
     matrixBlinkPreviousMillis = currentMillis;
-    if(!seperatorBlink) {
-      seperatorBlink = true;
-    } else {
-      seperatorBlink = false;
-    }
+    seperatorBlink = !seperatorBlink;
   }
   if (!seperatorBlink) {
     drawSeperator(0, 1);
