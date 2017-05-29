@@ -93,17 +93,17 @@ byte numbers[10][3] = {
 
 /* should be written again */
 void drawSecondsGraph(int seconds) {
-    //scale seconds from 0 to 7
-    int secPixels = seconds / 8;
-    // loop through last row of display
-    for(int i = 0; i<8; i++) {
-      if(i<=secPixels) {
-        lc.setLed(2, 7, i, true);
-      }
-      else {
-        lc.setLed(2, 7, i, false);
-      }
+  //scale seconds from 0 to 7
+  int secPixels = seconds / 8;
+  // loop through last row of display
+  for(int i = 0; i<8; i++) {
+    if(i<=secPixels) {
+      lc.setLed(2, 7, i, true);
     }
+    else {
+      lc.setLed(2, 7, i, false);
+    }
+  }
 }
 
 /*
@@ -152,21 +152,21 @@ void matrixBlinkSeperator() {
 
 /*splits up time string to numbers: buggy not finsished at all!*/
 void drawTime(String time, int seconds) {
-    int hour1 = time.charAt(0) - '0';
-    int hour2 = time.charAt(1) - '0';
-    int minute1 = time.charAt(3) - '0';
-    int minute2 = time.charAt(4) - '0';
-    // each number is 3 pixel wide, wich adds up to 4 pixels including spacing
-    drawNumber(hour1, 0, 0);
-    drawSpacing(3, 0);
-    drawNumber(hour2, 4, 0);
-    drawSpacing(7, 0);
-    //seperator gets drawn by matrixBlinkSeperator()
-    drawSpacing(1, 1);
-    drawNumber(minute1, 2, 1);
-    drawSpacing(5, 1);
-    drawNumber(minute2, 6, 1);
+  int hour1 = time.charAt(0) - '0';
+  int hour2 = time.charAt(1) - '0';
+  int minute1 = time.charAt(3) - '0';
+  int minute2 = time.charAt(4) - '0';
+  // each number is 3 pixel wide, wich adds up to 4 pixels including spacing
+  drawNumber(hour1, 0, 0);
+  drawSpacing(3, 0);
+  drawNumber(hour2, 4, 0);
+  drawSpacing(7, 0);
+  //seperator gets drawn by matrixBlinkSeperator()
+  drawSpacing(1, 1);
+  drawNumber(minute1, 2, 1);
+  drawSpacing(5, 1);
+  drawNumber(minute2, 6, 1);
 
-    drawSecondsGraph(seconds);
+  drawSecondsGraph(seconds);
 }
 
