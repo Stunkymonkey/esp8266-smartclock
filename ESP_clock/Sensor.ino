@@ -36,6 +36,7 @@ int get_heat_index_level() {
   } else if (heatindex >= 54) {
     return 4;
   }
+}
 
 void sendSensorData(String message) {
   http.begin(POST_SENSOR_DATA_ENDPOINT);
