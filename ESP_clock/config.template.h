@@ -43,6 +43,9 @@ const int     SOCKET_AMOUNT = 3;
 //TEMPERATURE AND HUMIDITY
 const int     SENSOR_PORT = 12; //D6
 const long    SENSOR_INTERVAL = 2000;
+const bool    ENABLE_POST_SENSOR_DATA = false;
+const String  POST_SENSOR_DATA_ENDPOINT = "someurl";
+const String  POST_SENSOR_DATA_TOKEN = "sometoken";
 
 //DYNDNS
 const long    DYNDNS_INTERVAL = 600000; // every 10 minutes

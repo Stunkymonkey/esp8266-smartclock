@@ -47,6 +47,7 @@ String content;
 //OTA-Server
 ESP8266HTTPUpdateServer httpUpdater;
 
+
 //AP-Settings
 DNSServer dnsServer;
 

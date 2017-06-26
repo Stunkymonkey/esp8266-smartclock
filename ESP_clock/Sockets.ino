@@ -55,6 +55,7 @@ void loadSocketSets() {
           default:
             print("Error too many lines in reading sockets... deleting file");
             SPIFFS.remove(entry.name());
+            n=++;
             break;
         }
         n ++;
