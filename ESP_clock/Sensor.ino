@@ -11,13 +11,7 @@ void gettemperature() {
         return;
       }
       if(ENABLE_POST_SENSOR_DATA) {
-        char celsiusTemp[7];
-        char humidityTemp[7];
-        dtostrf(temperature, 6, 2, celsiusTemp);
-        dtostrf(humidity, 6, 2, humidityTemp);
-        String tstr(temperature);
-        String hstr(humidity);
-        String postMessage = "{\"tmp\":\""+ tstr + "\", \"humidity\":\"" + hstr + "\"}";
+        String postMessage = "{\"temp\":\""+ String(temperature) + "\", \"humidity\":\"" + String(humidity) + "\"}";
         sendSensorData(postMessage);
       }
     }
