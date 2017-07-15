@@ -63,7 +63,6 @@ unsigned long postSensorPreviousMillis = 0;
 //NTP
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, NTP_SERVER, NTP_OFFSET, NTP_INTERVAL);
-//NTPClient timeClient(ntpUDP, "de.pool.ntp.org", 3600, 60000);
 
 //DYNDNS
 HTTPClient http;
