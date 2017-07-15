@@ -10,7 +10,7 @@ void initMatrix(int k) {
   }
 }
 
-void displayLine(int addr, int line, byte value) {
+void displayRow(int addr, int line, byte value) {
   switch (LED_MATRIX_DIRECTION) {
     case 0:
       lc.setRow(addr, line, value);
@@ -23,6 +23,26 @@ void displayLine(int addr, int line, byte value) {
       break;
     case 3:
       lc.setColumn(addr, line, value);
+      break;
+    default:
+      print("ERROR: wrong direction of leds set.");
+    break;
+  }
+}
+
+void displayColumn(int addr, int line, byte value) {
+  switch (LED_MATRIX_DIRECTION) {
+    case 0:
+      lc.setColumn(addr, line, value);
+      break;
+    case 1:
+      lc.setRow(addr, 7-line, value);
+      break;
+    case 2:
+      lc.setColumn(addr, 7-line, value);
+      break;
+    case 3:
+      lc.setRow(addr, line, value);
       break;
     default:
       print("ERROR: wrong direction of leds set.");
@@ -56,7 +76,7 @@ void setProgress(float progress) {
   int amountOfOn = progress * amount;
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<amountOfOn; i++) {
-      displayLine(k, i, B11111111);
+      displayRow(k, i, B11111111);
     }
     amountOfOn = amountOfOn - 8;
   }
@@ -105,13 +125,13 @@ void saveIntensity() {
 void yolo() {
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<8; i++) {
-      displayLine(k, i, B11111111);
+      displayRow(k, i, B11111111);
       delay(200);
     }
   }
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<8; i++) {
-      displayLine(k, i, B00000000);
+      displayRow(k, i, B00000000);
       delay(200);
     }
   }
@@ -138,10 +158,10 @@ void drawSecondsGraph(int seconds) {
   // loop through last line of display
   for(int i = 0; i<8; i++) {
     if(i<=secPixels) {
-      displayLed(LED_MATRIX_PORT_AMOUNT-1, 7, i, true);
+      displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, true);
     }
     else {
-      displayLed(LED_MATRIX_PORT_AMOUNT-1, 7, i, false);
+      displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, false);
     }
   }
 }
@@ -150,14 +170,14 @@ void drawSecondsGraph(int seconds) {
  * draws 1 pixel wide spacing
  */
 void drawSpacing(int row, int dis) {
-  displayLine(dis, row, B00000000);
+  displayRow(dis, row, B00000000);
 }
 
 /*
  * draws 1 pixel wide seperator
  */
 void drawSeperator(int row, int dis) {
-  displayLine(dis, row, B00101000);
+  displayRow(dis, row, B00101000);
 }
 
 /*
@@ -166,7 +186,7 @@ void drawSeperator(int row, int dis) {
 void drawNumber(int number, int row, int dis) {
     /*each row of the number*/
     for(int a=0; a<3; a++) {
-        displayLine(dis, row, numbers[number][a]);
+        displayRow(dis, row, numbers[number][a]);
         row++;
         /*works for me*/
         if(row==8) { row = 0; dis = dis+1; }
@@ -189,6 +209,30 @@ void matrixBlinkSeperator() {
   }
 }
 
+// icons from https://electricimp.com/docs/learning/weather/
+byte weather[10][8] = {
+  /*clearday*/          {B10000001,B01011010,B00111100,B01111110,B01111110,B00111100,B01011010,B10000001},
+  /*clearnight*/        {B00110000,B00011000,B00001100,B00001110,B00001110,B00001100,B00011000,B00110000},
+  /*rain*/              {B00011100,B01111110,B11111111,B11111111,B01111110,B00001000,B01010010,B10000100},
+  /*snow*/              {B01000010,B00100100,B10011001,B01111110,B10011001,B00100100,B01000010,B00000000},
+  /*sleet*/             {B00011100,B01111110,B11111111,B11111111,B01111110,B10001001,B00100000,B10000101},
+  /*wind*/              {B00000000,B00000110,B00000001,B11111110,B00000000,B11111110,B00000001,B00000110},
+  /*fog*/               {B01010101,B10101010,B01010101,B10101010,B01010101,B10101010,B01010101,B10101010},
+  /*cloudy*/            {B00011100,B01111110,B11111111,B11111111,B01111110,B00000000,B00000000,B00000000},
+  /*partlycloudyday*/   {B00000000,B00011100,B01100010,B10000001,B10000001,B01111110,B00000000,B00000000},
+  /*partlycloudynight*/ {B11111111,B11110011,B10011101,B01111110,B01111110,B10000001,B11111111,B11111111}
+};
+
+void drawWeather(int number, int row, int addr) {
+  /*each row of the number*/
+  for(int a=0; a<8; a++) {
+    displayColumn(addr, row, weather[number][a]);
+    row++;
+    /*works for me*/
+    if(row==8) { row = 0; addr = addr+1; }
+  }
+}
+
 
 /*splits up time string to numbers: buggy not finsished at all!*/
 void drawTime(String time, int seconds) {
@@ -208,5 +252,6 @@ void drawTime(String time, int seconds) {
   drawNumber(minute2, 6, 1);
 
   drawSecondsGraph(seconds);
+  //drawWeather(minute2, 0, 3);
 }
 
