@@ -7,6 +7,7 @@ const int     REACTION_TIME = 500;  //less power consumption or less responsive
 //SERVICES
 const bool    ENABLE_SOCKETS = true;
 const bool    ENABLE_SENSOR = true;
+const bool    ENABLE_POST_SENSOR_DATA = false;
 const bool    ENABLE_MATRIX = true;
 const bool    ENABLE_DYNDNS = false;
 const bool    ENABLE_LOGIN = true;
@@ -43,9 +44,9 @@ const int     SOCKET_AMOUNT = 3;
 //TEMPERATURE AND HUMIDITY
 const int     SENSOR_PORT = 12; //D6
 const long    SENSOR_INTERVAL = 2000;
-const bool    ENABLE_POST_SENSOR_DATA = false;
 const String  POST_SENSOR_DATA_ENDPOINT = "someurl";
 const String  POST_SENSOR_DATA_TOKEN = "sometoken";
+const long    POST_SENSOR_INTERVAL = 1800000; // every 30 minutes
 
 //DYNDNS
 const long    DYNDNS_INTERVAL = 600000; // every 10 minutes

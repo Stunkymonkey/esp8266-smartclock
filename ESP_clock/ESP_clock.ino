@@ -1,4 +1,4 @@
-  // IMPORTS
+// IMPORTS
 #include <WiFiClient.h>
 extern "C" {
   #include "user_interface.h"
@@ -58,6 +58,7 @@ RCSwitch mySwitch = RCSwitch();
 DHT dht(SENSOR_PORT, DHT11);
 float humidity, temperature, heatindex;
 unsigned long sensorPreviousMillis = 0;
+unsigned long postSensorPreviousMillis = 0;
 
 //NTP
 WiFiUDP ntpUDP;
@@ -153,6 +154,7 @@ void loop()
   delay(REACTION_TIME);
   server.handleClient();
   gettemperature();
+  sendSensorData();
   updateDYNDNS();
   if (ENABLE_MATRIX) {
     timeClient.update();

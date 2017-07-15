@@ -10,10 +10,6 @@ void gettemperature() {
         Serial.println("Failed to read from DHT sensor!");
         return;
       }
-      if(ENABLE_POST_SENSOR_DATA) {
-        String postMessage = "{\"temp\":\""+ String(temperature) + "\", \"humidity\":\"" + String(humidity) + "\"}";
-        sendSensorData(postMessage);
-      }
     }
   }
 }
@@ -32,16 +28,24 @@ int get_heat_index_level() {
   }
 }
 
-void sendSensorData(String message) {
-  http.begin(POST_SENSOR_DATA_ENDPOINT);
-  http.addHeader("Content-Type", "application/json");
-  http.addHeader("token", POST_SENSOR_DATA_TOKEN);
-  int httpCode = http.POST(message);
-  if(DEBUG) {
-    Serial.print("http result:");
-    Serial.println(httpCode);
-    http.writeToStream(&Serial); 
+void sendSensorData() {
+  if(ENABLE_POST_SENSOR_DATA) {
+    unsigned long currentMillis = millis();
+    if(currentMillis - postSensorPreviousMillis >= POST_SENSOR_INTERVAL) {
+      postSensorPreviousMillis = currentMillis;
+      
+      String message = "{\"temp\":\""+ String(temperature) + "\", \"humidity\":\"" + String(humidity) + "\"}";
+      http.begin(POST_SENSOR_DATA_ENDPOINT);
+      http.addHeader("Content-Type", "application/json");
+      http.addHeader("token", POST_SENSOR_DATA_TOKEN);
+      int httpCode = http.POST(message);
+      if(DEBUG) {
+        Serial.print("http result:");
+        Serial.println(httpCode);
+        http.writeToStream(&Serial);
+      }
+      http.end();
+    }
   }
-  http.end();
 }
 
