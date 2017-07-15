@@ -156,8 +156,8 @@ void loop()
   gettemperature();
   sendSensorData();
   updateDYNDNS();
+  timeClient.update();
   if (ENABLE_MATRIX) {
-    timeClient.update();
     drawTime(timeClient.getFormattedTime(), timeClient.getSeconds());
     matrixBlinkSeperator();
   }

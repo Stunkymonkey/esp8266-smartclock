@@ -10,18 +10,58 @@ void initMatrix(int k) {
   }
 }
 
+void displayLine(int addr, int line, byte value) {
+  switch (LED_MATRIX_DIRECTION) {
+    case 0:
+      lc.setRow(addr, line, value);
+      break;
+    case 1:
+      lc.setColumn(addr, 7-line, value);
+      break;
+    case 2:
+      lc.setRow(addr, 7-line, value);
+      break;
+    case 3:
+      lc.setColumn(addr, line, value);
+      break;
+    default:
+      print("ERROR: wrong direction of leds set.");
+    break;
+  }
+}
+
+void displayLed(int addr, int row, int col, boolean state){
+  switch (LED_MATRIX_DIRECTION) {
+    case 0:
+      lc.setLed(addr, row, col, state);
+      break;
+    case 1:
+      lc.setLed(addr, col, 7-row, state);
+      break;
+    case 2:
+      lc.setLed(addr, 7-row, 7-col, state);
+      break;
+    case 3:
+      lc.setLed(addr, 7-col, row, state);
+      break;
+    default:
+      print("ERROR: wrong direction of leds set.");
+    break;
+  }
+}
+
 //add progress in percent
 void setProgress(float progress) {
   int amount = lc.getDeviceCount() * 8;
   int amountOfOn = progress * amount;
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<amountOfOn; i++) {
-      lc.setRow(k, i, B11111111);
+      displayLine(k, i, B11111111);
     }
     amountOfOn = amountOfOn - 8;
   }
   if (progress == 1.0) {
-    delay(500);
+    delay(300);
     clearMatrix();
   }
 }
@@ -46,7 +86,7 @@ int loadIntensity() {
     return intensity.toInt();
   } else {
     configFile.close();
-    return DEFAULT_LED_MATRIX_INTENSITY;
+    return LED_MATRIX_INTENSITY;
   }
 }
 
@@ -65,13 +105,13 @@ void saveIntensity() {
 void yolo() {
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<8; i++) {
-      lc.setRow(k, i, B11111111);
+      displayLine(k, i, B11111111);
       delay(200);
     }
   }
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<8; i++) {
-      lc.setRow(k, i, B00000000);
+      displayLine(k, i, B00000000);
       delay(200);
     }
   }
@@ -95,13 +135,13 @@ byte numbers[10][3] = {
 void drawSecondsGraph(int seconds) {
   //scale seconds from 0 to 7
   int secPixels = seconds / 8;
-  // loop through last row of display
+  // loop through last line of display
   for(int i = 0; i<8; i++) {
     if(i<=secPixels) {
-      lc.setLed(2, 7, i, true);
+      displayLed(LED_MATRIX_PORT_AMOUNT-1, 7, i, true);
     }
     else {
-      lc.setLed(2, 7, i, false);
+      displayLed(LED_MATRIX_PORT_AMOUNT-1, 7, i, false);
     }
   }
 }
@@ -110,14 +150,14 @@ void drawSecondsGraph(int seconds) {
  * draws 1 pixel wide spacing
  */
 void drawSpacing(int row, int dis) {
-  lc.setRow(dis, row, B00000000);
+  displayLine(dis, row, B00000000);
 }
 
 /*
  * draws 1 pixel wide seperator
  */
 void drawSeperator(int row, int dis) {
-  lc.setRow(dis, row, B00101000);
+  displayLine(dis, row, B00101000);
 }
 
 /*
@@ -126,7 +166,7 @@ void drawSeperator(int row, int dis) {
 void drawNumber(int number, int row, int dis) {
     /*each row of the number*/
     for(int a=0; a<3; a++) {
-        lc.setRow(dis, row, numbers[number][a]);
+        displayLine(dis, row, numbers[number][a]);
         row++;
         /*works for me*/
         if(row==8) { row = 0; dis = dis+1; }
