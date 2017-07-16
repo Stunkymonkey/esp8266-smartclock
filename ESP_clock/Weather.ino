@@ -5,16 +5,21 @@ void getWeatherInfo() {
       http.begin(WEATHER_URL);
       int httpCode = http.GET();
       if(httpCode > 0) {
+        postWeatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/8);
         if(httpCode == HTTP_CODE_OK) {
-          postSensorPreviousMillis = currentMillis;
+          postWeatherPreviousMillis = currentMillis;
           String payload = http.getString();
           String searchString = "\"icon\":\"";
           int index = 0;
           index = payload.indexOf(searchString);
-          String weatherIcon = "";
-          weatherIcon = payload.substring(index+searchString.length(),index+searchString.length()+3);
-          weatherStatus = weatherIconToIndex(weatherIcon);
-          print("weathericon: " + weatherStatus);
+          index = payload.indexOf(searchString, index+1);
+          weatherIcon = payload[8];
+          if (index != -1) {
+            //String weatherIcon = "";
+            weatherIcon = payload.substring(index+searchString.length(),index+searchString.length()+3);
+            weatherStatus = weatherIconToIndex(weatherIcon);
+            print("weathericon: " + String(weatherStatus));
+          }
         }
       }
       http.end();

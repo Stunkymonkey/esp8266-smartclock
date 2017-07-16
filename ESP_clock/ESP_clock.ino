@@ -71,7 +71,8 @@ unsigned long dyndnsPreviousMillis = 0;
 
 //WEATHER
 unsigned long postWeatherPreviousMillis = 0;
-int weatherStatus = 0;
+int weatherStatus = -1;
+String weatherIcon = "";
 
 void setup()
 {
