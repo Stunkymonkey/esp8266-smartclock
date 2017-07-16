@@ -86,7 +86,7 @@ void saveWifi() {
 void updateDYNDNS() {
   if (ENABLE_DYNDNS) {
     unsigned long currentMillis = millis();
-    if(currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL) {
+    if(currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL || dyndnsPreviousMillis == 0) {
       dyndnsPreviousMillis = currentMillis;
       http.begin(DYNDNS_URL);
       int httpCode = http.GET();

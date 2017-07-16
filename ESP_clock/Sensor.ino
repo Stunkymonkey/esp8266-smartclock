@@ -1,7 +1,7 @@
 void gettemperature() {
   if (ENABLE_SENSOR) {
     unsigned long currentMillis = millis();
-    if(currentMillis - sensorPreviousMillis >= SENSOR_INTERVAL) {
+    if(currentMillis - sensorPreviousMillis >= SENSOR_INTERVAL || sensorPreviousMillis == 0) {
       sensorPreviousMillis = currentMillis;
       temperature = dht.readTemperature();
       humidity = dht.readHumidity();
@@ -31,7 +31,7 @@ int get_heat_index_level() {
 void sendSensorData() {
   if(ENABLE_POST_SENSOR_DATA) {
     unsigned long currentMillis = millis();
-    if(currentMillis - postSensorPreviousMillis >= POST_SENSOR_INTERVAL) {
+    if(currentMillis - postSensorPreviousMillis >= POST_SENSOR_INTERVAL || postSensorPreviousMillis == 0) {
       postSensorPreviousMillis = currentMillis;
       
       String message = "{\"temp\":\""+ String(temperature) + "\", \"humidity\":\"" + String(humidity) + "\"}";

@@ -1,7 +1,7 @@
 void getWeatherInfo() {
   if(ENABLE_WEATHER) {
     unsigned long currentMillis = millis();
-    if(currentMillis - postWeatherPreviousMillis >= GET_WEATHER_INTERVAL) {
+    if(currentMillis - postWeatherPreviousMillis >= GET_WEATHER_INTERVAL || postWeatherPreviousMillis == 0) {
       http.begin(WEATHER_URL);
       int httpCode = http.GET();
       if(httpCode > 0) {
