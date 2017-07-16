@@ -60,7 +60,6 @@ void Home() {
   }
   if (ENABLE_SENSOR) {
     content += "<h3>Sensor information</h3>";
-    content += "<p>The JSON API endpoint is at: <a href=\"/sensorData\">/sensorData</a></p>";
     content += "<div class=\"sensorData\">";
     content += "<p><label class='title'>Temperature:</label>" + String(temperature) + " &deg;C</p>";
     content += "<p><label class='title'>Humidity:</label>" + String(humidity) + " %</p>";
@@ -91,6 +90,11 @@ void Settings() {
     content += "<input type='submit' value='Speichern'>";
     content += "</form>";
   }
+  if (ENABLE_SENSOR) {
+    content += "<h3>Sensor API</h3>";
+    content += "<p>The JSON API endpoint is at: <a href=\"/sensorData\">/sensorData</a></p>";
+  }
+  
   //sockets
   if (ENABLE_SOCKETS) {
     content += "<h3>Sockets</h3>";
