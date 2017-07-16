@@ -53,6 +53,10 @@ const long    POST_SENSOR_INTERVAL = 1800000; // every 30 minutes
 const long    DYNDNS_INTERVAL = 600000; // every 10 minutes
 const String  DYNDNS_URL = "http://freedns.afraid.org/dynamic/update.php?asdf...";
 
+//WEATHER
+const long    GET_WEATHER_INTERVAL = 1800000; // every 30 minutes
+const String  WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=asdasdewqrsv...";
+
 //############################################
 
 //STORAGE

@@ -69,6 +69,10 @@ HTTPClient http;
 const int httpPort = 80;
 unsigned long dyndnsPreviousMillis = 0;
 
+//WEATHER
+unsigned long postWeatherPreviousMillis = 0;
+int weatherStatus = 0;
+
 void setup()
 {
   //Serial-Output
@@ -154,6 +158,7 @@ void loop()
   server.handleClient();
   gettemperature();
   sendSensorData();
+  getWeatherInfo();
   updateDYNDNS();
   timeClient.update();
   if (ENABLE_MATRIX) {

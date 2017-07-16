@@ -8,6 +8,11 @@ void print(String value) {
     Serial.println(value);
   }
 }
+void print(int value) {
+  if (DEBUG) {
+    Serial.println(value);
+  }
+}
 
 String loadDeviceName() {
   File configFile = SPIFFS.open(NAME_CONFIG_PATH, "r");
