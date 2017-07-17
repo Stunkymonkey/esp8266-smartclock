@@ -9,6 +9,11 @@ void createServer() {
   if (ENABLE_MATRIX) {
     server.on("/intensitySet", saveIntensity);
   }
+  if (ENABLE_MATRIX) {
+    server.on("/ledsOn", [](){setMatrixStatus(true);});
+    server.on("/ledsOff", [](){setMatrixStatus(false);});
+    server.on("/ledsToggle", [](){setMatrixStatus(!MatrixStatus);});
+  }
   if (ENABLE_SOCKETS) {
     server.on("/socketSet", saveSocketSet);
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
@@ -51,9 +56,7 @@ void Home() {
   if (!auth()) { return; }
   content = "";
   if (ENABLE_SOCKETS) {
-    content += "<h3>";
-    content += "Control your home:";
-    content += "</h3>";
+    content += "<h3>Control your home:</h3>";
     for(int i=0; i<(sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       content += "<p><label class='title'>" + configSocketSets[i][1] + "</label><a class='switch' href=\"socket" + String(i) + "On\">ON</a><a class='switch' href=\"socket" + String(i) + "Off\">OFF</a><a class='switch' href=\"socket" + String(i) + "Toggle\">Toggle</a></p>";
     }
@@ -65,6 +68,10 @@ void Home() {
     content += "<p><label class='title'>Humidity:</label>" + String(humidity) + " %</p>";
     content += "<p id='l" + String(get_heat_index_level()) + "'><label class='title'>Heat-Index:</label>" + String(heatindex) + "</p>";
     content += "</div>";
+  }
+  if (ENABLE_MATRIX) {
+    content += "<h3>LED Matrix</h3>";
+    content += "<p><a class='switch' href=\"ledsOn\">ON</a><a class='switch' href=\"ledsOff\">OFF</a><a class='switch' href=\"ledsToggle\">Toggle</a></p>";
   }
   sendResponse(content);
 }

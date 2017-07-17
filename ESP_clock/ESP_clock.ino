@@ -34,6 +34,7 @@ boolean statusSocketSets[SOCKET_AMOUNT];
 LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
                          LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
 int led_matrix_intensity;
+boolean MatrixStatus = true;
 
 boolean seperatorBlink = false;
 unsigned long matrixBlinkPreviousMillis = 0;
@@ -162,7 +163,7 @@ void loop()
   getWeatherInfo();
   updateDYNDNS();
   timeClient.update();
-  if (ENABLE_MATRIX) {
+  if (ENABLE_MATRIX && MatrixStatus) {
     drawTime(timeClient.getFormattedTime(), timeClient.getSeconds());
     matrixBlinkSeperator();
   }

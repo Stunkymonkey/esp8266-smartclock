@@ -122,6 +122,14 @@ void saveIntensity() {
   returnTo("/settings");
 }
 
+void setMatrixStatus(boolean newStatus) {
+  MatrixStatus = newStatus;
+  if (!newStatus) {
+    clearMatrix();
+  }
+  returnTo("/");
+}
+
 void yolo() {
   for(int k = 0; k<lc.getDeviceCount(); k++) {
     for(int i = 0; i<8; i++) {
@@ -234,7 +242,6 @@ void drawWeather(int number, int addr) {
     displayColumn(addr, a, weather[number][a]);
   }
 }
-
 
 /*splits up time string to numbers: buggy not finsished at all!*/
 void drawTime(String time, int seconds) {
