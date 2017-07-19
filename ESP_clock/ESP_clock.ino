@@ -137,13 +137,6 @@ void setup()
 
   //NTP-init
   timeClient.begin();
-  setSyncProvider(UnixStamp);
-  setSyncInterval(NTP_INTERVAL);
-  if(timeStatus()!= timeSet) {
-    print("Time if Synced");
-  } else {
-    print("Error: Time was not synced.");
-  }
   setProgress(0.9);
 
   //RC-Switch
@@ -170,10 +163,8 @@ void loop()
   gettemperature();
   sendSensorData();
   getWeatherInfo();
-  ajdustSummerTime();
   updateDYNDNS();
   timeClient.update();
-  DEBUG_STRING += " " + String(hour()) + ":" + String(day()) + "." + String(month()) + "." + String(year());
   if (ENABLE_MATRIX && MatrixStatus) {
     drawTime(timeClient.getFormattedTime());
     drawSecondsGraph(timeClient.getSeconds());

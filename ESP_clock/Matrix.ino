@@ -244,7 +244,7 @@ void drawWeather(int number, int addr) {
 }
 
 /*splits up time string to numbers: buggy not finsished at all!*/
-void drawTime(String time, int seconds) {
+void drawTime(String time) {
   int hour1 = time.charAt(0) - '0';
   int hour2 = time.charAt(1) - '0';
   int minute1 = time.charAt(3) - '0';
@@ -254,14 +254,10 @@ void drawTime(String time, int seconds) {
   drawSpacing(3, 0);
   drawNumber(hour2, 4, 0);
   drawSpacing(7, 0);
-  //seperator gets drawn by matrixBlinkSeperator()
+  matrixBlinkSeperator();
   drawSpacing(1, 1);
   drawNumber(minute1, 2, 1);
   drawSpacing(5, 1);
   drawNumber(minute2, 6, 1);
-
-  drawSecondsGraph(seconds);
-
-  drawWeather(weatherStatus, 3);
 }
 
