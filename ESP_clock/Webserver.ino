@@ -73,6 +73,9 @@ void Home() {
     content += "<h3>LED Matrix</h3>";
     content += "<p><a class='switch' href=\"ledsOn\">ON</a><a class='switch' href=\"ledsOff\">OFF</a><a class='switch' href=\"ledsToggle\">Toggle</a></p>";
   }
+  if (DEBUG_STRING != "") {
+    content += "<h3>" + DEBUG_STRING + "</h3>";
+  }
   sendResponse(content);
 }
 

@@ -44,6 +44,7 @@ boolean isAPMode = false;
 ESP8266WebServer server(80);
 //used to combine webpages in createServer();
 String content;
+String DEBUG_STRING = "";
 
 //OTA-Server
 ESP8266HTTPUpdateServer httpUpdater;
@@ -74,6 +75,7 @@ unsigned long dyndnsPreviousMillis = 0;
 unsigned long postWeatherPreviousMillis = 0;
 int weatherStatus = -1;
 String weatherIcon = "";
+
 
 void setup()
 {
@@ -135,6 +137,13 @@ void setup()
 
   //NTP-init
   timeClient.begin();
+  setSyncProvider(UnixStamp);
+  setSyncInterval(NTP_INTERVAL);
+  if(timeStatus()!= timeSet) {
+    print("Time if Synced");
+  } else {
+    print("Error: Time was not synced.");
+  }
   setProgress(0.9);
 
   //RC-Switch
@@ -161,12 +170,14 @@ void loop()
   gettemperature();
   sendSensorData();
   getWeatherInfo();
+  ajdustSummerTime();
   updateDYNDNS();
   timeClient.update();
+  DEBUG_STRING += " " + String(hour()) + ":" + String(day()) + "." + String(month()) + "." + String(year());
   if (ENABLE_MATRIX && MatrixStatus) {
-    drawTime(timeClient.getFormattedTime(), timeClient.getSeconds());
-    matrixBlinkSeperator();
+    drawTime(timeClient.getFormattedTime());
+    drawSecondsGraph(timeClient.getSeconds());
+    drawWeather(weatherStatus, 3);
   }
-  
 }
 
