@@ -5,7 +5,7 @@ void getWeatherInfo() {
       http.begin(WEATHER_URL);
       int httpCode = http.GET();
       if(httpCode > 0) {
-        postWeatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/8);
+        postWeatherPreviousMillis = currentMillis - 60000;
         if(httpCode == HTTP_CODE_OK) {
           postWeatherPreviousMillis = currentMillis;
           String payload = http.getString();
@@ -20,6 +20,8 @@ void getWeatherInfo() {
             weatherStatus = weatherIconToIndex(weatherIcon);
             print("weathericon: " + String(weatherStatus));
           }
+        } else {
+          print("Error: updateing weather");
         }
       }
       http.end();
