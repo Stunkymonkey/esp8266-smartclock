@@ -28,7 +28,7 @@ const char    OTA_PASSWORD[] = "admin";
 //NTP
 const char    NTP_SERVER[] = "de.pool.ntp.org";
 const int     NTP_OFFSET = 3600;
-const int     NTP_INTERVAL = 60000;
+const int     NTP_INTERVAL = 60000; // every 10 minutes
 
 //LED-Matrix
 const int     LED_MATRIX_INTENSITY = 15;
