@@ -2,29 +2,56 @@ void getWeatherInfo() {
   if(ENABLE_WEATHER) {
     unsigned long currentMillis = millis();
     if(currentMillis - postWeatherPreviousMillis >= GET_WEATHER_INTERVAL || postWeatherPreviousMillis == 0) {
-      http.begin(WEATHER_URL);
-      int httpCode = http.GET();
-      if(httpCode > 0) {
-        postWeatherPreviousMillis = currentMillis - 60000;
-        if(httpCode == HTTP_CODE_OK) {
-          postWeatherPreviousMillis = currentMillis;
-          String payload = http.getString();
-          String searchString = "\"icon\":\"";
-          int index = 0;
-          index = payload.indexOf(searchString);
-          index = payload.indexOf(searchString, index+1);
-          weatherIcon = payload[8];
-          if (index != -1) {
-            //String weatherIcon = "";
-            weatherIcon = payload.substring(index+searchString.length(),index+searchString.length()+3);
-            weatherStatus = weatherIconToIndex(weatherIcon);
-            print("weathericon: " + String(weatherStatus));
-          }
-        } else {
-          print("Error: updateing weather");
+      WiFiClient client;
+      const char* host = "api.openweathermap.org";
+      if (!client.connect(host, 80)) {
+        print("weather: connection failed");
+        postWeatherPreviousMillis = currentMillis;
+        return;
+      }
+      
+      // We now create a URI for the request
+      String url = "/data/2.5/forecast?q=";
+      url += WEATHER_CITY;
+      url += "&appid=";
+      url += WEATHER_API_TOKEN;
+      
+      // This will send the request to the server
+      client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+                   "Host: " + host + "\r\n" + 
+                   "Connection: close\r\n\r\n");
+      unsigned long timeout = millis();
+      while (client.available() == 0) {
+        if (millis() - timeout > 3000) {
+          print("weather: Client Timeout !");
+          postWeatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/10);
+          client.stop();
+          return;
         }
       }
-      http.end();
+      
+      String payload = "";
+      if(client.available()){
+        payload = client.readStringUntil('\n');
+        // we want to get the second icon, because the first shows the weather right now
+        payload = client.readStringUntil(']');
+        payload = client.readStringUntil(']');
+        client.stop();
+      }
+      //print(payload);
+      payload.trim();
+      const String searchString = "\"icon\":\"";
+      int index = 0;
+      index = payload.indexOf(searchString);
+      if (index != -1) {
+        String weatherIcon = "";
+        weatherIcon = payload.substring(index+searchString.length(),index+searchString.length()+3);
+        weatherStatus = weatherIconToIndex(weatherIcon);
+        print("Weather-Icon: " + String(weatherStatus));
+      } else {
+        print("Error: updating weather");
+      }
+      postWeatherPreviousMillis = currentMillis;
     }
   }
 }

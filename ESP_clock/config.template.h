@@ -55,7 +55,8 @@ const String  DYNDNS_URL = "http://freedns.afraid.org/dynamic/update.php?asdf...
 
 //WEATHER
 const long    GET_WEATHER_INTERVAL = 1800000; // every 30 minutes
-const String  WEATHER_URL = "http://api.openweathermap.org/data/2.5/forecast?q=London,us&appid=asdasdewqrsv...";
+const String  WEATHER_CITY = "London,uk";
+const String  WEATHER_API_TOKEN = "asdasdewqrsv..."; // api.openweathermap.org
 
 //############################################
 

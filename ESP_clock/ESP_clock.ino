@@ -1,5 +1,4 @@
 // IMPORTS
-#include <WiFiClient.h>
 extern "C" {
   #include "user_interface.h"
 }
@@ -74,7 +73,6 @@ unsigned long dyndnsPreviousMillis = 0;
 //WEATHER
 unsigned long postWeatherPreviousMillis = 0;
 int weatherStatus = -1;
-String weatherIcon = "";
 
 
 void setup()

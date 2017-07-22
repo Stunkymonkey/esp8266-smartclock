@@ -93,7 +93,7 @@ void updateDYNDNS() {
       if (httpCode == HTTP_CODE_OK) {
         String payload = http.getString();
         payload.trim();
-        print("DYNDNS-update succeed!= " + payload);
+        print("DYNDNS-update succeed!");
       } else {
         print("DYNDNS-update failed!");
       }

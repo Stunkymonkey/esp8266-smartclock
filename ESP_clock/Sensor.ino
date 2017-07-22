@@ -39,10 +39,9 @@ void sendSensorData() {
       http.addHeader("Content-Type", "application/json");
       http.addHeader("token", POST_SENSOR_DATA_TOKEN);
       int httpCode = http.POST(message);
-      if(DEBUG) {
-        Serial.print("http result:");
-        Serial.println(httpCode);
+      if(DEBUG && httpCode == 200) {
         http.writeToStream(&Serial);
+        print("");
       }
       http.end();
     }
