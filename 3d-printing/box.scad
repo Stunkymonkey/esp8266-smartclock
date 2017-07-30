@@ -25,7 +25,7 @@ module box(x, y, zb, zt, t, r, dispx, dispy) {
         }
         
         //Cut out ledge
-        translate ([-zb-1,0,0]) cube([10, dispy, dispx], center = true);
+        translate ([(-zb/2)+1,0,0]) cube([10, dispy, dispx], center = true);
         
         //Hollow inside
         minkowski(){
@@ -33,11 +33,13 @@ module box(x, y, zb, zt, t, r, dispx, dispy) {
                 cube([new_x-2*t,new_y-2*t,new_zb-2*t], center = true);
                 translate([move_of_hollow+(new_zb/2-2*t),0,-(new_x/2)])
                     rotate(angle, [0, 1, 0])
-                        cube([10*x-2*t,y+1-2*t,zb-2*t], center = true);
+                        cube([10*x-2*t,y+1-2*t,zb-2*t+0.5], center = true);
             }
             sphere(r);
         }
+        
+        //cube([new_x*2, new_y*0.2, new_zb*2], center = true);
     }
 }
 
-box(5, 16, 5, 2, 0.2, 0.5, 3.2, 13.3);
+box(50, 160, 50, 20, 1, 5, 32, 133);
