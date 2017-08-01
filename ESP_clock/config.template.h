@@ -33,17 +33,17 @@ const int     NTP_INTERVAL = 60000; // every 10 minutes
 //LED-Matrix
 const int     LED_MATRIX_INTENSITY = 15;
 const int     LED_MATRIX_DIRECTION = 0; // 0=bottom, 1=right, 2=top, 3=left
-const int     LED_MATRIX_PORT_DATA = 13; //D7
-const int     LED_MATRIX_PORT_CLK = 14; //D5
-const int     LED_MATRIX_PORT_CHIP_SELECT = 4; //D2
+const int     LED_MATRIX_PORT_DATA = D3;
+const int     LED_MATRIX_PORT_CHIP_SELECT = D2;
+const int     LED_MATRIX_PORT_CLK = D1;
 const int     LED_MATRIX_PORT_AMOUNT = 3;
 
 //REMOTE-SOCKET
-const int     SOCKET_PORT = 2; //D4
+const int     SOCKET_PORT = D4;
 const int     SOCKET_AMOUNT = 3;
 
 //TEMPERATURE AND HUMIDITY
-const int     SENSOR_PORT = 12; //D6
+const int     SENSOR_PORT = D5;
 const long    SENSOR_INTERVAL = 2000;
 const String  POST_SENSOR_DATA_ENDPOINT = "someurl";
 const String  POST_SENSOR_DATA_TOKEN = "sometoken";
