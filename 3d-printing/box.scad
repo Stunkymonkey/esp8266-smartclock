@@ -1,4 +1,7 @@
-$fn=50;
+$fn=30;
+
+use <ESP8266Models.scad>;
+
 // x = height
 // y = widht
 // zb = depth bottom
@@ -7,7 +10,8 @@ $fn=50;
 // r = radius of round corner
 // dispx = display height
 // dispy = display width
-module box(x, y, zb, zt, t, r, dispx, dispy) {
+// side = {true == left / false == right}
+module box(x, y, zb, zt, t, r, dispx, dispy, side) {
     angle = atan(x/(zb-zt));
     new_x = x-2*r;
     new_y = y-2*r;
@@ -38,8 +42,16 @@ module box(x, y, zb, zt, t, r, dispx, dispy) {
             sphere(r);
         }
         
+        side_position = side ? y/2 : -y/2 ;
+        translate([0, side_position, -zb/4])
+            rotate(90, [1, 0, 0])
+                linear_extrude(height = r*2, center = true, convexity = 10, twist = 0)
+                    scale([0.8,0.5,1])
+                        circle(r = 5);
+                    
         //cube([new_x*2, new_y*0.2, new_zb*2], center = true);
     }
 }
 
-box(50, 160, 50, 20, 1, 5, 32, 133);
+box(50, 160, 50, 20, 2, 5, 32, 133, true);
+//NodeMCU(pins=1);
