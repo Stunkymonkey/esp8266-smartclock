@@ -43,15 +43,79 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
         }
         
         side_position = side ? y/2 : -y/2 ;
-        translate([0, side_position, -zb/4])
+        translate([0, side_position, -zb/10])
+            rotate(angle, [0, 1, 0])
             rotate(90, [1, 0, 0])
                 linear_extrude(height = r*2, center = true, convexity = 10, twist = 0)
-                    scale([0.8,0.5,1])
+                    scale([(sqrt(2)/2)*1.1,(sqrt(2)/2)*0.8,1])
                         circle(r = 5);
                     
         //cube([new_x*2, new_y*0.2, new_zb*2], center = true);
     }
+    translate([10, y/4, 0])
+        rotate(180+angle, [0, 1, 0])
+                esp_mount(3, 2);
+    translate([0, 0, -zb/2])
+        stands(4, 2, 10, x, y, zb, 10);
+}
+
+// height_front = front distance to floor
+// height_back = back distance to floor
+// diameter = radius of stands
+// x = size of bottom in x
+// y = size of bottom in y
+// zb = size of bottom in z
+// distance = position: distance from edges
+module stands(height_front, height_back, diameter, x, y, zb, distance) {
+    difference() {
+        union(){
+            translate([-x/2+distance, y/2-distance,-height_front/2])
+                cylinder(d=diameter, h=height_front, center=true);
+            translate([+x/2-distance, y/2-distance,-height_front/2])
+                cylinder(d=diameter, h=height_front, center=true);
+            translate([-x/2+distance, -y/2+distance,-height_front/2])
+                cylinder(d=diameter, h=height_front, center=true);
+            translate([+x/2-distance, -y/2+distance,-height_front/2])
+                cylinder(d=diameter, h=height_front, center=true);
+        }
+        angle = atan((height_front-height_back)/zb);
+        translate([-x/2, 0, -zb/2-(height_front)])
+            rotate(angle, [0, -1, 0])
+                cube([x*2, y, zb], center=true);
+    }
+}
+
+module esp_mount(height, depth) {
+    XDim = 25.0;
+    YDim = 48.0;
+    HD = 2.5; //are in reality 3.0
+    hole_size = 1.5;
+    HXO = 2.0;
+    HYO = 2.2;
+    difference() {
+        translate([-XDim/2+HXO, YDim/2-HYO,0])
+            cylinder(d=HD, h=height*2, center=true);
+        translate([-XDim/2+HXO, YDim/2-HYO,2*height-depth])
+            cylinder(d=hole_size, h=height*2, center=true);
+    }
+    difference() {
+        translate([XDim/2-HXO, YDim/2-HYO,0])
+            cylinder(d=HD, h=height*2, center=true);
+        translate([XDim/2-HXO, YDim/2-HYO,2*height-depth])
+            cylinder(d=hole_size, h=height*2, center=true);
+    }
+    difference() {
+        translate([-XDim/2+HXO, -YDim/2+HYO,0])
+            cylinder(d=HD, h=height*2, center=true);
+        translate([-XDim/2+HXO, -YDim/2+HYO,2*height-depth])
+            cylinder(d=hole_size, h=height*2, center=true);
+    }
+    difference() {
+        translate([XDim/2-HXO, -YDim/2+HYO,0])
+            cylinder(d=HD, h=height*2, center=true);
+        translate([XDim/2-HXO, -YDim/2+HYO,2*height-depth])
+            cylinder(d=hole_size, h=height*2, center=true);
+    }
 }
 
 box(50, 160, 50, 20, 2, 5, 32, 133, true);
-//NodeMCU(pins=1);
