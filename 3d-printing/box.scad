@@ -1,7 +1,5 @@
 $fn=30;
 
-use <ESP8266Models.scad>;
-
 // x = height
 // y = widht
 // zb = depth bottom
