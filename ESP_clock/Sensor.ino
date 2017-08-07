@@ -1,4 +1,4 @@
-void gettemperature() {
+void getTemperature() {
   if (ENABLE_SENSOR) {
     unsigned long currentMillis = millis();
     if(currentMillis - sensorPreviousMillis >= SENSOR_INTERVAL || sensorPreviousMillis == 0) {

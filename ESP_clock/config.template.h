@@ -27,7 +27,11 @@ const char    OTA_PASSWORD[] = "admin";
 
 //NTP
 const char    NTP_SERVER[] = "de.pool.ntp.org";
-const int     NTP_OFFSET = 3600;
+const int     NTP_TIMEZONE = 1;     // Central European Time
+//const int     NTP_TIMEZONE = -5;  // Eastern Standard Time (USA)
+//const int     NTP_TIMEZONE = -4;  // Eastern Daylight Time (USA)
+//const int     NTP_TIMEZONE = -8;  // Pacific Standard Time (USA)
+//const int     NTP_TIMEZONE = -7;  // Pacific Daylight Time (USA)
 const int     NTP_INTERVAL = 60000; // every 10 minutes
 
 //LED-Matrix

@@ -16,6 +16,8 @@ extern "C" {
 #include <RCSwitch.h>
 #include <LedControl.h>
 #include <DHT.h>
+#include <Time.h>
+#include <TimeLib.h>
 
 //include personal config
 #include "config.h"
@@ -63,7 +65,7 @@ unsigned long postSensorPreviousMillis = 0;
 
 //NTP
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, NTP_SERVER, NTP_OFFSET, NTP_INTERVAL);
+NTPClient timeClient(ntpUDP, NTP_SERVER, NTP_TIMEZONE * SECS_PER_HOUR, NTP_INTERVAL);
 
 //DYNDNS
 HTTPClient http;
@@ -136,6 +138,9 @@ void setup()
   //NTP-init
   timeClient.begin();
   timeClient.update();
+  
+  setSyncProvider(UnixStamp);
+  setSyncInterval(NTP_INTERVAL);
   setProgress(0.9);
 
   //RC-Switch
@@ -145,10 +150,10 @@ void setup()
 
   if (ENABLE_SENSOR) {
     dht.begin();
-    gettemperature();
+    getTemperature();
   }
 
-  
+  sendSensorData();
   getWeatherInfo();
   updateDYNDNS();
   
@@ -163,11 +168,13 @@ void loop()
 {
   delay(REACTION_TIME);
   server.handleClient();
-  gettemperature();
+  getTemperature();
   sendSensorData();
   getWeatherInfo();
   updateDYNDNS();
   timeClient.update();
+  ajdustSummerTime();
+  //DEBUG_STRING = " " + String(hour()) + ":" + String(minute()) + ":" + String(second()) +" - " + String(day()) + "." + String(month()) + "." + String(year());
   if (ENABLE_MATRIX && MatrixStatus) {
     drawTime(timeClient.getFormattedTime());
     drawSecondsGraph(timeClient.getSeconds());
