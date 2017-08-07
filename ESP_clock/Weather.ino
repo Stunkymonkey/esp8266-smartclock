@@ -1,12 +1,13 @@
 void getWeatherInfo() {
   if(ENABLE_WEATHER) {
     unsigned long currentMillis = millis();
-    if(currentMillis - postWeatherPreviousMillis >= GET_WEATHER_INTERVAL || postWeatherPreviousMillis == 0) {
+    if(currentMillis - weatherPreviousMillis >= GET_WEATHER_INTERVAL || weatherPreviousMillis == 0) {
       WiFiClient client;
       const char* host = "api.openweathermap.org";
       if (!client.connect(host, 80)) {
         print("weather: connection failed");
-        postWeatherPreviousMillis = currentMillis;
+        weatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/10);
+        weatherStatus = weatherIconToIndex("not defined");
         return;
       }
       
@@ -24,7 +25,8 @@ void getWeatherInfo() {
       while (client.available() == 0) {
         if (millis() - timeout > 3000) {
           print("weather: Client Timeout !");
-          postWeatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/10);
+          weatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/10);
+          weatherStatus = weatherIconToIndex("not defined");
           client.stop();
           return;
         }
@@ -38,7 +40,7 @@ void getWeatherInfo() {
         payload = client.readStringUntil(']');
         client.stop();
       }
-      //print(payload);
+
       payload.trim();
       const String searchString = "\"icon\":\"";
       int index = 0;
@@ -51,7 +53,7 @@ void getWeatherInfo() {
       } else {
         print("Error: updating weather");
       }
-      postWeatherPreviousMillis = currentMillis;
+      weatherPreviousMillis = currentMillis;
     }
   }
 }

@@ -71,7 +71,7 @@ const int httpPort = 80;
 unsigned long dyndnsPreviousMillis = 0;
 
 //WEATHER
-unsigned long postWeatherPreviousMillis = 0;
+unsigned long weatherPreviousMillis = 0;
 int weatherStatus = -1;
 
 
@@ -135,6 +135,7 @@ void setup()
 
   //NTP-init
   timeClient.begin();
+  timeClient.update();
   setProgress(0.9);
 
   //RC-Switch
@@ -146,6 +147,10 @@ void setup()
     dht.begin();
     gettemperature();
   }
+
+  
+  getWeatherInfo();
+  updateDYNDNS();
   
   LEDOff();
   setProgress(1.0);
