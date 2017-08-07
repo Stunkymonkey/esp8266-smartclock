@@ -47,7 +47,14 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
                 linear_extrude(height = r*2, center = true, convexity = 10, twist = 0)
                     scale([(sqrt(2)/2)*1.1,(sqrt(2)/2)*0.8,1])
                         circle(r = 5);
-                    
+        
+//        translate([x/2-1,0,-(new_x/2)])
+//            rotate(angle, [0, 1, 0])
+//                cube([90, new_y-2*r, 2], center = true);
+//        translate([x/2,0,-(new_x/2)])
+//            rotate(angle, [0, 1, 0])
+//                cube([90, new_y-4*r, 2], center = true);
+        
         //cube([new_x*2, new_y*0.2, new_zb*2], center = true);
     }
     translate([10, y/4, 0])
