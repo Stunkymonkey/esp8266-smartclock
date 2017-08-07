@@ -178,8 +178,8 @@ void loop()
   ajdustSummerTime();
   //DEBUG_STRING = " " + String(hour()) + ":" + String(minute()) + ":" + String(second()) +" - " + String(day()) + "." + String(month()) + "." + String(year());
   if (ENABLE_MATRIX && MatrixStatus) {
-    drawTime(timeClient.getFormattedTime());
-    drawSecondsGraph(timeClient.getSeconds());
+    drawTime();
+    drawSecondsGraph();
     drawWeather(weatherStatus, 3);
   }
 }

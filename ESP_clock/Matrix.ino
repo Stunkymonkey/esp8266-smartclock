@@ -160,9 +160,9 @@ byte numbers[10][3] = {
 
 
 /* should be written again */
-void drawSecondsGraph(int seconds) {
+void drawSecondsGraph() {
   //scale seconds from 0 to 7
-  int secPixels = seconds / 8;
+  int secPixels = second() / 8;
   // loop through last line of display
   for(int i = 0; i<8; i++) {
     if(i<=secPixels) {
@@ -244,11 +244,11 @@ void drawWeather(int number, int addr) {
 }
 
 /*splits up time string to numbers: buggy not finsished at all!*/
-void drawTime(String time) {
-  int hour1 = time.charAt(0) - '0';
-  int hour2 = time.charAt(1) - '0';
-  int minute1 = time.charAt(3) - '0';
-  int minute2 = time.charAt(4) - '0';
+void drawTime() {
+  int hour1 = hour() / 10;
+  int hour2 = hour() % 10;
+  int minute1 = minute() / 10;
+  int minute2 = minute() % 10;
   // each number is 3 pixel wide, wich adds up to 4 pixels including spacing
   drawNumber(hour1, 0, 0);
   drawSpacing(3, 0);
