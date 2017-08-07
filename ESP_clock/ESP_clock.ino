@@ -65,7 +65,8 @@ unsigned long postSensorPreviousMillis = 0;
 
 //NTP
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, NTP_SERVER, NTP_TIMEZONE * SECS_PER_HOUR, NTP_INTERVAL);
+NTPClient timeClient(ntpUDP, NTP_SERVER, 0, NTP_INTERVAL);
+bool isSummerTime = false;
 
 //DYNDNS
 HTTPClient http;
@@ -141,6 +142,7 @@ void setup()
   
   setSyncProvider(UnixStamp);
   setSyncInterval(NTP_INTERVAL);
+  adjustTime(NTP_TIMEZONE * SECS_PER_HOUR);
   setProgress(0.9);
 
   //RC-Switch

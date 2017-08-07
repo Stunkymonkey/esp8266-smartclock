@@ -34,10 +34,13 @@ bool inSummerTime(int hours, int currentDay, int currentMonth, int currentYear) 
 }
 
 void ajdustSummerTime() {
-  if (inSummerTime(hour(), day(), month(), year())) {
-    timeClient.setTimeOffset(NTP_TIMEZONE * SECS_PER_HOUR + 3600);
-  } else {
-    timeClient.setTimeOffset(NTP_TIMEZONE * SECS_PER_HOUR);
+  bool isNewSummerTime = inSummerTime(hour(), day(), month(), year());
+  if ( isNewSummerTime && !isSummerTime) {
+    adjustTime(3600);
+    isSummerTime = true;
+  } else if (!isNewSummerTime && isSummerTime){
+    adjustTime(-3600);
+    isSummerTime = false;
   }
 }
 
