@@ -29,6 +29,7 @@ void createServer() {
       server.on(pathToggleChar, [i](){SocketToggle(i);});
     }
   }
+  server.onNotFound(handleNotFound);
 }
 
 void returnTo(String path) {
@@ -158,5 +159,10 @@ void sensorData() {
   json += " \"humidity\": \""+String(humidity)+"\",";
   json += " \"timestamp\": \""+String(timeClient.getFormattedTime())+"\"}";
   server.send(200, "application/json", json);
+}
+
+void handleNotFound() {
+  content = "<h1>404 - Not Found</h1>";
+  sendResponse(content);
 }
 
