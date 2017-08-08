@@ -163,15 +163,19 @@ byte numbers[10][3] = {
 void drawSecondsGraph() {
   //scale seconds from 0 to 7
   int secPixels = second() / 8;
-  // loop through last line of display
-  for(int i = 0; i<8; i++) {
-    if(i<=secPixels) {
-      displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, true);
+  if (prevSecond != secPixels) {
+    // loop through last line of display
+    for(int i = 0; i<8; i++) {
+      if(i<=secPixels) {
+        displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, true);
+      }
+      else {
+        displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, false);
+      }
     }
-    else {
-      displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, false);
-    }
+    prevSecond = secPixels;
   }
+  
 }
 
 /*
@@ -210,10 +214,13 @@ void matrixBlinkSeperator() {
     matrixBlinkPreviousMillis = currentMillis;
     seperatorBlink = !seperatorBlink;
   }
-  if (!seperatorBlink) {
-    drawSeperator(0, 1);
-  } else {
-    drawSpacing(0, 1);
+  if (prevBlink != seperatorBlink) {
+    if (!seperatorBlink) {
+      drawSeperator(0, 1);
+    } else {
+      drawSpacing(0, 1);
+    }
+    prevBlink = seperatorBlink;
   }
 }
 
@@ -238,8 +245,10 @@ void drawWeather(int number, int addr) {
     return;
   }
   /*each row of the number*/
-  for(int a=0; a<8; a++) {
-    displayColumn(addr, a, weather[number][a]);
+  if (prevWeather != number) {
+    for(int a=0; a<8; a++) {
+      displayColumn(addr, a, weather[number][a]);
+    }
   }
 }
 
@@ -250,14 +259,26 @@ void drawTime() {
   int minute1 = minute() / 10;
   int minute2 = minute() % 10;
   // each number is 3 pixel wide, wich adds up to 4 pixels including spacing
-  drawNumber(hour1, 0, 0);
-  drawSpacing(3, 0);
-  drawNumber(hour2, 4, 0);
-  drawSpacing(7, 0);
+  if (prevHour1 != hour1) {
+    drawNumber(hour1, 0, 0);
+    prevHour1 = hour1;
+  }
+  //drawSpacing(3, 0);
+  if (prevHour2 != hour2) {
+    drawNumber(hour2, 4, 0);
+    prevHour2 = hour2;
+  }
+  //drawSpacing(7, 0);
   matrixBlinkSeperator();
-  drawSpacing(1, 1);
-  drawNumber(minute1, 2, 1);
-  drawSpacing(5, 1);
-  drawNumber(minute2, 6, 1);
+  //drawSpacing(1, 1);
+  if (prevMin1 != minute1) {
+    drawNumber(minute1, 2, 1);
+    prevMin1 = minute1;
+  }
+  //drawSpacing(5, 1);
+  if (prevMin2 != minute2) {
+    drawNumber(minute2, 6, 1);
+    prevMin2 = minute2;
+  }
 }
 

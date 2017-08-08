@@ -40,6 +40,14 @@ boolean MatrixStatus = true;
 boolean seperatorBlink = false;
 unsigned long matrixBlinkPreviousMillis = 0;
 
+int prevMin1 = 0;
+int prevMin2 = 0;
+int prevHour1 = 0;
+int prevHour2 = 0;
+int prevWeather = 12;
+int prevSecond = 0;
+boolean prevBlink = false;
+
 boolean isAPMode = false;
 
 ESP8266WebServer server(80);
@@ -49,7 +57,6 @@ String DEBUG_STRING = "";
 
 //OTA-Server
 ESP8266HTTPUpdateServer httpUpdater;
-
 
 //AP-Settings
 DNSServer dnsServer;
