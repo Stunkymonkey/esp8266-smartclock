@@ -81,7 +81,7 @@ void setProgress(float progress) {
     amountOfOn = amountOfOn - 8;
   }
   if (progress == 1.0) {
-    delay(300);
+    delay(200);
     clearMatrix();
   }
 }

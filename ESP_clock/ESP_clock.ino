@@ -90,52 +90,55 @@ void setup()
   pinMode(2, OUTPUT);
   LEDOn();
   WifiLEDOff();
+  setProgress(266/8593.0);
   
   //mount File-System
   bool mountFs = SPIFFS.begin();
   if (!mountFs) {
     print("Failed to mount File-System!");
   }
-  setProgress(0.1);
-
+  setProgress(341/8593.0);
+  
   //init Led-Matrixes:
   if (ENABLE_MATRIX) {
     led_matrix_intensity = loadIntensity();
     initMatrix(led_matrix_intensity);
   }
-
+  setProgress(348/8593.0);
+  
   //load device Name
   deviceName = loadDeviceName();
-
+  setProgress(434/8593.0);
   //load sockets
   if (ENABLE_SOCKETS) {
     loadSocketSets();
   }
-  setProgress(0.3);
-
+  setProgress(510/8593.0);
+  
   //init wifi access point
   initWifi();
-
-  setProgress(0.6);
+  setProgress(7213/8593.0);
 
   //network stuff
   createServer();
   if (!MDNS.begin(deviceName.c_str())) {
     print("Error setting up MDNS responder!");
   }
+  setProgress(7229/8593.0);
   
   // OTA enable
   if (ENABLE_OTA) {
     httpUpdater.setup(&server, "/update", OTA_USERNAME, OTA_PASSWORD);
   }
+  setProgress(7230/8593.0);
   
   // Http-Server start
   server.begin();
-  setProgress(0.7);
+  setProgress(7247/8593.0);
   
   //service announcement
   MDNS.addService("http", "tcp", 80);
-
+  
   //NTP-init
   timeClient.begin();
   timeClient.update();
@@ -143,7 +146,7 @@ void setup()
   setSyncProvider(UnixStamp);
   setSyncInterval(NTP_INTERVAL);
   adjustTime(NTP_TIMEZONE * SECS_PER_HOUR);
-  setProgress(0.9);
+  setProgress(7319/8593.0);
 
   //RC-Switch
   if (ENABLE_SOCKETS) {
@@ -154,14 +157,20 @@ void setup()
     dht.begin();
     getTemperature();
   }
+  setProgress(7593/8593.0);
 
   sendSensorData();
+  setProgress(7702/8593.0);
+  
   getWeatherInfo();
+  setProgress(7814/8593.0);
+  
   updateDYNDNS();
+  setProgress(8265/8593.0);
   
   LEDOff();
-  setProgress(1.0);
   WifiLEDOff();
+  setProgress(1.0);
   //yolo();
 }
 

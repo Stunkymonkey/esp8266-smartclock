@@ -45,13 +45,14 @@ void initWifi() {
 bool testWifi(void) {
   int c = 0;
   Serial.print("Waiting for Wifi");
-  while ( c < 20 ) {
+  while ( c < 40 ) {
     if (WiFi.status() == WL_CONNECTED) {
       Serial.println("");
       return true;
     }
     Serial.print(".");
-    delay(500);
+    setProgress((510+((c/40.0)*10000.0))/8593.0);
+    delay(250);
     c++;
   }
   Serial.println("");
