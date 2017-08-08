@@ -40,12 +40,12 @@ boolean MatrixStatus = true;
 boolean seperatorBlink = false;
 unsigned long matrixBlinkPreviousMillis = 0;
 
-int prevMin1 = 0;
-int prevMin2 = 0;
-int prevHour1 = 0;
-int prevHour2 = 0;
+int prevMin1 = -1;
+int prevMin2 = -1;
+int prevHour1 = -1;
+int prevHour2 = -1;
 int prevWeather = 12;
-int prevSecond = 0;
+int prevSecond = -1;
 boolean prevBlink = false;
 
 boolean isAPMode = false;
