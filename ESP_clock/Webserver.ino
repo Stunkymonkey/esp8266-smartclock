@@ -162,7 +162,7 @@ void sensorData() {
 }
 
 void handleNotFound() {
-  content = "<h1>404 - Not Found</h1>";
+  content = "<h1 style=\"text-align:center;\">404 - Not Found</h1>";
   sendResponse(content);
 }
 
