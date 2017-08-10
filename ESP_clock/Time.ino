@@ -36,10 +36,11 @@ bool inSummerTime(int hours, int currentDay, int currentMonth, int currentYear) 
 void ajdustSummerTime() {
   bool isNewSummerTime = inSummerTime(hour(), day(), month(), year());
   if ( isNewSummerTime && !isSummerTime) {
+    setTime(UnixStamp());
     adjustTime(3600);
     isSummerTime = true;
   } else if (!isNewSummerTime && isSummerTime){
-    adjustTime(-3600);
+    setTime(UnixStamp());
     isSummerTime = false;
   }
 }
