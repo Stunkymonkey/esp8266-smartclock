@@ -92,6 +92,12 @@ void clearMatrix() {
   for (int i = 0; i < lc.getDeviceCount(); i++) {
     lc.clearDisplay(i);
   }
+  prevMin1 = -1;
+  prevMin2 = -1;
+  prevHour1 = -1;
+  prevHour2 = -1;
+  prevWeather = 12;
+  prevSecond = -1;
 }
 
 int loadIntensity() {
