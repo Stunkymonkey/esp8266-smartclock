@@ -1,6 +1,7 @@
 void createServer() {
   server.on("/", Home);
   server.on("/settings", Settings);
+  server.on("/restart", restart);
   if (ENABLE_SENSOR) {
     server.on("/sensorData", sensorData);
   }
@@ -128,6 +129,9 @@ void Settings() {
       content += "</form><br>";
     }
   }
+  content += "<h3>RESTART</h3><form action='/restart' method='GET'>";
+  content += "<input type='submit' value='RESTART'>";
+  content += "</form>";
   sendResponse(content);
 }
 

@@ -79,3 +79,8 @@ void WifiLEDOff() {
   digitalWrite(2, HIGH);
 }
 
+void restart() {
+  if (!auth()) { return; }
+  ESP.restart();
+}
+
