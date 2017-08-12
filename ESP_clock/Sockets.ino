@@ -1,4 +1,5 @@
 void saveSocketSet() {
+  if (!auth()) { return; }
   String socketID = server.arg("socketID");
   String isv3 = server.arg("isV3");
   if (isv3 != "on") {
