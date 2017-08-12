@@ -54,7 +54,7 @@ const String  POST_SENSOR_DATA_TOKEN = "sometoken";
 const long    POST_SENSOR_INTERVAL = 1800000; // every 30 minutes
 
 //DYNDNS
-const long    DYNDNS_INTERVAL = 600000; // every 10 minutes
+const long    DYNDNS_INTERVAL = 60000; // every 10 minutes
 const String  DYNDNS_URL = "http://freedns.afraid.org/dynamic/update.php?asdf...";
 
 //WEATHER
