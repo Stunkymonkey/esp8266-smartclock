@@ -73,7 +73,7 @@ unsigned long postSensorPreviousMillis = 0;
 //NTP
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, NTP_SERVER, 0, NTP_INTERVAL);
-bool isSummerTime = false;
+bool timeInit = false;
 
 //DYNDNS
 HTTPClient http;
@@ -149,10 +149,11 @@ void setup()
   //NTP-init
   timeClient.begin();
   timeClient.update();
-  
-  setSyncProvider(UnixStamp);
+
   setSyncInterval(NTP_INTERVAL);
-  adjustTime(NTP_TIMEZONE * SECS_PER_HOUR);
+  setSyncProvider(UnixStamp);
+  timeInit = true;
+  setTime(UnixStamp());
   setProgress(7319/8593.0);
 
   //RC-Switch
@@ -191,8 +192,8 @@ void loop()
   getWeatherInfo();
   updateDYNDNS();
   timeClient.update();
-  ajdustSummerTime();
-  //DEBUG_STRING = " " + String(hour()) + ":" + String(minute()) + ":" + String(second()) +" - " + String(day()) + "." + String(month()) + "." + String(year());
+  //DEBUG_STRING = "hour: " + String(hour()) + " minute: " + String(minute()) + " second: " + String(second());
+  //DEBUG_STRING += " || timeclient: " + timeClient.getFormattedTime() ;
   if (ENABLE_MATRIX && MatrixStatus) {
     drawTime();
     drawSecondsGraph();

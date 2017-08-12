@@ -33,19 +33,11 @@ bool inSummerTime(int hours, int currentDay, int currentMonth, int currentYear) 
   return false;
 }
 
-void ajdustSummerTime() {
-  bool isNewSummerTime = inSummerTime(hour(), day(), month(), year());
-  if ( isNewSummerTime && !isSummerTime) {
-    setTime(UnixStamp());
-    adjustTime(3600);
-    isSummerTime = true;
-  } else if (!isNewSummerTime && isSummerTime){
-    setTime(UnixStamp());
-    isSummerTime = false;
-  }
-}
-
 time_t UnixStamp() {
-  return timeClient.getEpochTime();
+  int offset = NTP_TIMEZONE;
+  if (timeInit && inSummerTime(hour(), day(), month(), year())) {
+    offset += 1;
+  }
+  return timeClient.getEpochTime() + (offset * SECS_PER_HOUR);
 }
 
