@@ -1,5 +1,5 @@
 void getWeatherInfo() {
-  if(ENABLE_WEATHER) {
+  if(ENABLE_WEATHER && !isAPMode) {
     unsigned long currentMillis = millis();
     if(currentMillis - weatherPreviousMillis >= GET_WEATHER_INTERVAL || weatherPreviousMillis == 0) {
       WiFiClient client;

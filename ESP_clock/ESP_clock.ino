@@ -192,8 +192,6 @@ void loop()
   getWeatherInfo();
   updateDYNDNS();
   timeClient.update();
-  //DEBUG_STRING = "hour: " + String(hour()) + " minute: " + String(minute()) + " second: " + String(second());
-  //DEBUG_STRING += " || timeclient: " + timeClient.getFormattedTime() ;
   if (ENABLE_MATRIX && MatrixStatus) {
     drawTime();
     drawSecondsGraph();

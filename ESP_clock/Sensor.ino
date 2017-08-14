@@ -29,7 +29,7 @@ int get_heat_index_level() {
 }
 
 void sendSensorData() {
-  if(ENABLE_POST_SENSOR_DATA) {
+  if(ENABLE_POST_SENSOR_DATA && !isAPMode) {
     unsigned long currentMillis = millis();
     if(currentMillis - postSensorPreviousMillis >= POST_SENSOR_INTERVAL || postSensorPreviousMillis == 0) {
       postSensorPreviousMillis = currentMillis;

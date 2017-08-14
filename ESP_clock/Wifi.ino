@@ -85,7 +85,7 @@ void saveWifi() {
 }
 
 void updateDYNDNS() {
-  if (ENABLE_DYNDNS) {
+  if (ENABLE_DYNDNS && !isAPMode) {
     unsigned long currentMillis = millis();
     if(currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL || dyndnsPreviousMillis == 0) {
       dyndnsPreviousMillis = currentMillis;
