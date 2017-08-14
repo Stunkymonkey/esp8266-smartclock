@@ -35,8 +35,10 @@ bool inSummerTime(int hours, int currentDay, int currentMonth, int currentYear) 
 
 time_t UnixStamp() {
   int offset = NTP_TIMEZONE;
-  if (timeInit && inSummerTime(hour(), day(), month(), year())) {
-    offset += 1;
+  if (NTP_DST) {
+    if (timeInit && inSummerTime(hour(), day(), month(), year())) {
+      offset += 1;
+    }
   }
   return timeClient.getEpochTime() + (offset * SECS_PER_HOUR);
 }
