@@ -3,6 +3,7 @@ void getWeatherInfo() {
     unsigned long currentMillis = millis();
     if(currentMillis - weatherPreviousMillis >= GET_WEATHER_INTERVAL || weatherPreviousMillis == 0) {
       WiFiClient client;
+      client.flush();
       const char* host = "api.openweathermap.org";
       if (!client.connect(host, 80)) {
         print("weather: connection failed");
@@ -38,6 +39,7 @@ void getWeatherInfo() {
         // we want to get the second icon, because the first shows the weather right now
         payload = client.readStringUntil(']');
         payload = client.readStringUntil(']');
+        client.flush();
         client.stop();
       }
 

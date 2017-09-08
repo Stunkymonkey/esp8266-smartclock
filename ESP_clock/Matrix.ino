@@ -250,7 +250,7 @@ void drawWeather(int number, int addr) {
   if (number == -1) {
     return;
   }
-  /*each row of the number*/
+  /*each column of the weather*/
   if (prevWeather != number) {
     for(int a=0; a<8; a++) {
       displayColumn(addr, a, weather[number][a]);
