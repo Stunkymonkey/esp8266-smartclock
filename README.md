@@ -30,6 +30,15 @@ The total costs are around 20€:
 
 ## Development
 
+###Dependencies
+* [ESP8266](https://github.com/esp8266/Arduino)
+* [NTPClient](https://github.com/arduino-libraries/NTPClient)
+* [Adafruit_Sensor](https://github.com/adafruit/Adafruit_Sensor)
+* [DHT-sensor-library](https://github.com/adafruit/DHT-sensor-library)
+* [LedControl](http://wayoda.github.io/LedControl/)
+* [rc-switch](https://github.com/sui77/rc-switch)
+* [Time](http://playground.arduino.cc/code/time)
+
 ### Compile
 ```
 arduino ./ESP_clock/ESP_clock.ino --verify --preserve-temp-files
