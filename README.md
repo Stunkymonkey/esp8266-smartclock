@@ -30,7 +30,7 @@ The total costs are around 25€:
 
 ## Development
 
-###Dependencies
+### Dependencies
 * [ESP8266](https://github.com/esp8266/Arduino)
 * [NTPClient](https://github.com/arduino-libraries/NTPClient)
 * [Adafruit_Sensor](https://github.com/adafruit/Adafruit_Sensor)
