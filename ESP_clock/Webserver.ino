@@ -1,3 +1,6 @@
+/*
+ * main Webserver method with routing definitions
+ */
 void createServer() {
   server.on("/", Home);
   server.on("/settings", Settings);
@@ -40,6 +43,9 @@ void returnTo(String path) {
   WifiLEDOff();
 }
 
+/*
+ * main response helper that wraps the content into the html markup including stylesheets 
+ */
 void sendResponse(String content) {
   WifiLEDOn();
   String finalContent = "<!DOCTYPE html><html><head><title>" + deviceName + "</title><meta name='viewport' content='initial-scale=1'><style>";
@@ -54,6 +60,10 @@ void sendResponse(String content) {
   WifiLEDOff();
 }
 
+/*
+ * route /
+ * markup for the homepage
+ */
 void Home() {
   if (!auth()) { return; }
   content = "";
@@ -81,6 +91,10 @@ void Home() {
   sendResponse(content);
 }
 
+/*
+ * route /settings
+ * markup for the settings page
+ */
 void Settings() {
   if (!auth()) { return; }
   //wifi settings
