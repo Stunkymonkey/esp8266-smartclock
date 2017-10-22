@@ -1,3 +1,6 @@
+/*
+ * checks if we are in summer time
+ */
 bool inSummerTime(int hours, int currentDay, int currentMonth, int currentYear) {
   if (currentDay<0 || currentMonth<0 || currentYear<0) return false;
   if ((currentMonth>=3)&&(currentMonth<=10)) { // March to October inclusive
@@ -33,6 +36,9 @@ bool inSummerTime(int hours, int currentDay, int currentMonth, int currentYear) 
   return false;
 }
 
+/*
+ * returns unixtime-stmap with DST correction
+ */
 time_t UnixStamp() {
   int offset = NTP_TIMEZONE;
   if (NTP_DST) {

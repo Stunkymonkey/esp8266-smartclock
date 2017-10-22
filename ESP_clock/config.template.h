@@ -1,8 +1,8 @@
 //PERSONAL-CONFIG-FILE
 
 //DEBUG
-const bool    DEBUG = true;
-const int     REACTION_TIME = 500;  //less power consumption or less responsive
+const bool    DEBUG = false;
+const int     REACTION_TIME = 500;
 
 //SERVICES
 const bool    ENABLE_SOCKETS = true;
@@ -13,6 +13,7 @@ const bool    ENABLE_DYNDNS = false;
 const bool    ENABLE_LOGIN = true;
 const bool    ENABLE_LOCAL_NO_LOGIN = true;
 const bool    ENABLE_OTA = true;
+const bool    ENABLE_WEATHER = true;
 
 //DEVICE-NAME
 const String  DEFAULT_DEVICE_NAME= "ESP8266";
@@ -49,21 +50,23 @@ const int     SOCKET_AMOUNT = 3;
 
 //TEMPERATURE AND HUMIDITY
 const int     SENSOR_PORT = D5;
-const long    SENSOR_INTERVAL = 2000;
+const long    SENSOR_INTERVAL = 2000; //in ms
 const String  POST_SENSOR_DATA_ENDPOINT = "someurl";
 const String  POST_SENSOR_DATA_TOKEN = "sometoken";
-const long    POST_SENSOR_INTERVAL = 1800000; // every 30 minutes
+const long    POST_SENSOR_INTERVAL = 1800000; // in ms (every 30 minutes)
 
 //DYNDNS
-const long    DYNDNS_INTERVAL = 60000; // every 10 minutes
+const long    DYNDNS_INTERVAL = 60000; // in ms (every 10 minutes)
 const String  DYNDNS_URL = "http://freedns.afraid.org/dynamic/update.php?asdf...";
 
 //WEATHER
-const long    GET_WEATHER_INTERVAL = 1800000; // every 30 minutes
+const long    GET_WEATHER_INTERVAL = 1800000; // in ms (every 30 minutes)
 const String  WEATHER_CITY = "London,uk";
 const String  WEATHER_API_TOKEN = "asdasdewqrsv..."; // api.openweathermap.org
 
-//############################################
+
+//################################################################
+// DO NOT CHANGE THINGS BELOW, UNLESS YOU KNOW WHAT YOU ARE DOING
 
 //STORAGE
 /* File structure:

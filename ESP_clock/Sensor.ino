@@ -1,3 +1,6 @@
+/*
+ * read temperature from sensor
+ */
 void getTemperature() {
   if (ENABLE_SENSOR) {
     unsigned long currentMillis = millis();
@@ -14,6 +17,9 @@ void getTemperature() {
   }
 }
 
+/*
+ * calculate if it hits critical values => changes color
+ */
 int get_heat_index_level() {
   if (heatindex < 27) {
     return 0;
@@ -28,6 +34,9 @@ int get_heat_index_level() {
   }
 }
 
+/*
+ * sending your data via json request
+ */
 void sendSensorData() {
   if(ENABLE_POST_SENSOR_DATA && !isAPMode) {
     unsigned long currentMillis = millis();

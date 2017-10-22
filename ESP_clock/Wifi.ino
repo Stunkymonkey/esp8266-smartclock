@@ -1,4 +1,6 @@
-
+/*
+ * connects to wifi or start in ap
+ */
 void initWifi() {
   File configFile = SPIFFS.open(WIFI_CONFIG_PATH, "r");
   if (!configFile) {
@@ -42,6 +44,9 @@ void initWifi() {
   }
 }
 
+/*
+ * tries to connect to wifi
+ */
 bool testWifi(void) {
   int c = 0;
   Serial.print("Waiting for Wifi");
@@ -60,6 +65,9 @@ bool testWifi(void) {
   return false;
 } 
 
+/*
+ * starts AP-Mode
+ */
 void setupAP(void) {
   print("Setup AP Mode");
   WiFi.mode(WIFI_AP);
@@ -71,6 +79,9 @@ void setupAP(void) {
   dnsServer.start(53, "*", WiFi.localIP());
 }
 
+/*
+ * save SSID and password
+ */
 void saveWifi() {
   if (!auth()) { return; }
   String ssid = server.arg("ssid");
@@ -84,6 +95,9 @@ void saveWifi() {
   sendResponse("Please restart the module");
 }
 
+/*
+ * makes ping to given url
+ */
 void updateDYNDNS() {
   if (ENABLE_DYNDNS && !isAPMode) {
     unsigned long currentMillis = millis();

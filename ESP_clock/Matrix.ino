@@ -1,4 +1,6 @@
-// init all matrixes
+/*
+ * waking all matrixes up
+ */
 void initMatrix(int k) {
   for (int i = 0; i < lc.getDeviceCount(); i++) {
     // Wake up display
@@ -10,6 +12,9 @@ void initMatrix(int k) {
   }
 }
 
+/*
+ * set pixel-row to a byte value
+ */
 void displayRow(int addr, int line, byte value) {
   switch (LED_MATRIX_DIRECTION) {
     case 0:
@@ -30,6 +35,9 @@ void displayRow(int addr, int line, byte value) {
   }
 }
 
+/*
+ * set pixel-column to a byte value
+ */
 void displayColumn(int addr, int line, byte value) {
   switch (LED_MATRIX_DIRECTION) {
     case 0:
@@ -50,6 +58,9 @@ void displayColumn(int addr, int line, byte value) {
   }
 }
 
+/*
+ * set pixel to a bit value
+ */
 void displayLed(int addr, int row, int col, boolean state){
   switch (LED_MATRIX_DIRECTION) {
     case 0:
@@ -70,7 +81,9 @@ void displayLed(int addr, int row, int col, boolean state){
   }
 }
 
-//add progress in percent
+/*
+ * display progress in percent
+ */
 void setProgress(float progress) {
   int amount = lc.getDeviceCount() * 8;
   int amountOfOn = progress * amount;
@@ -86,8 +99,9 @@ void setProgress(float progress) {
   }
 }
 
-
-// clear all matrixes
+/*
+ * clear all matrixes
+ */
 void clearMatrix() {
   for (int i = 0; i < lc.getDeviceCount(); i++) {
     lc.clearDisplay(i);
@@ -100,6 +114,9 @@ void clearMatrix() {
   prevSecond = -1;
 }
 
+/*
+ * load intensity from storage
+ */
 int loadIntensity() {
   File configFile = SPIFFS.open(LED_CONFIG_PATH, "r");
   if (configFile) {
@@ -116,6 +133,9 @@ int loadIntensity() {
   }
 }
 
+/*
+ * save intensity to storage
+ */
 void saveIntensity() {
   if (!auth()) { return; }
   String intensity_String = server.arg("intensity");
@@ -128,6 +148,9 @@ void saveIntensity() {
   returnTo("/settings");
 }
 
+/*
+ * toggle display, wether on or off
+ */
 void setMatrixStatus(boolean newStatus) {
   MatrixStatus = newStatus;
   if (!newStatus) {
@@ -136,21 +159,9 @@ void setMatrixStatus(boolean newStatus) {
   returnTo("/");
 }
 
-void yolo() {
-  for(int k = 0; k<lc.getDeviceCount(); k++) {
-    for(int i = 0; i<8; i++) {
-      displayRow(k, i, B11111111);
-      delay(200);
-    }
-  }
-  for(int k = 0; k<lc.getDeviceCount(); k++) {
-    for(int i = 0; i<8; i++) {
-      displayRow(k, i, B00000000);
-      delay(200);
-    }
-  }
-}
-
+/*
+ * numbers saved in bytes
+ */
 byte numbers[10][3] = {
   /*0*/{B11111110,B10000010,B11111110},
   /*1*/{B00001000,B00000100,B11111110},
@@ -165,7 +176,9 @@ byte numbers[10][3] = {
 };
 
 
-/* should be written again */
+/*
+ * draws line from bottom to top according to seconds
+ */
 void drawSecondsGraph() {
   //scale seconds from 0 to 7
   int secPixels = second() / 8;
@@ -181,7 +194,6 @@ void drawSecondsGraph() {
     }
     prevSecond = secPixels;
   }
-  
 }
 
 /*
@@ -230,6 +242,9 @@ void matrixBlinkSeperator() {
   }
 }
 
+/*
+ * weather saved in bytes
+ */
 byte weather[13][8] = {
   {B10000001,B01011010,B00111100,B01111110,B01111110,B00111100,B01011010,B10000001},//clear sky day
   {B01100000,B00011000,B00001100,B00001110,B00001110,B00001100,B00011000,B01100000},//clear sky night
@@ -246,6 +261,9 @@ byte weather[13][8] = {
   {B00111000,B01000100,B01000100,B00100000,B00010000,B00010000,B00000000,B00010000}//??
 };
 
+/*
+ * draw weather on last display
+ */
 void drawWeather(int number, int addr) {
   if (number == -1) {
     return;
@@ -258,7 +276,9 @@ void drawWeather(int number, int addr) {
   }
 }
 
-/*splits up time string to numbers: buggy not finsished at all!*/
+/*
+ * draws time on display
+ */
 void drawTime() {
   int hour1 = hour() / 10;
   int hour2 = hour() % 10;
@@ -285,6 +305,24 @@ void drawTime() {
   if (prevMin2 != minute2) {
     drawNumber(minute2, 6, 1);
     prevMin2 = minute2;
+  }
+}
+
+/*
+ * testing code
+ */
+void yolo() {
+  for(int k = 0; k<lc.getDeviceCount(); k++) {
+    for(int i = 0; i<8; i++) {
+      displayRow(k, i, B11111111);
+      delay(200);
+    }
+  }
+  for(int k = 0; k<lc.getDeviceCount(); k++) {
+    for(int i = 0; i<8; i++) {
+      displayRow(k, i, B00000000);
+      delay(200);
+    }
   }
 }
 

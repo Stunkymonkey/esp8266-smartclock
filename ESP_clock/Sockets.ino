@@ -1,3 +1,6 @@
+/*
+ * saves socket information
+ */
 void saveSocketSet() {
   if (!auth()) { return; }
   String socketID = server.arg("socketID");
@@ -24,6 +27,9 @@ void saveSocketSet() {
   returnTo("/settings");
 }
 
+/*
+ * loads socket information while starting
+ */
 void loadSocketSets() {
   Dir socketFolder = SPIFFS.openDir(SOCKET_CONFIG_PATH);
   while(socketFolder.next()){
@@ -89,6 +95,9 @@ void loadSocketSets() {
   }
 }
 
+/*
+ * send signal to switch
+ */
 void SocketSwitch(int i, bool state) {
   if (!auth()) { return; }
   String isv3String = configSocketSets[i][0];
@@ -132,6 +141,9 @@ void SocketSwitch(int i, bool state) {
   returnTo("/");
 }
 
+/*
+ * toggle Socket
+ */
 void SocketToggle(int i) {
   Serial.print("Toggle-");
   SocketSwitch(i, !statusSocketSets[i]);

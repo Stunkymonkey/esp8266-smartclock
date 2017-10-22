@@ -14,6 +14,9 @@ void print(int value) {
   }
 }
 
+/*
+ * load hostname from storage
+ */
 String loadDeviceName() {
   File configFile = SPIFFS.open(NAME_CONFIG_PATH, "r");
   if (configFile) {
@@ -30,6 +33,9 @@ String loadDeviceName() {
   }
 }
 
+/*
+ * save hostname to storage and set it
+ */
 void saveDeviceName() {
   if (!auth()) { return; }
   String name = server.arg("name");
@@ -41,6 +47,9 @@ void saveDeviceName() {
   sendResponse("Saved! Restart for resetting network");
 }
 
+/*
+ * check if valid hostname
+ */
 String parseName(String name) {
   String result = "";
   for (int i=0; i<name.length(); i++) {

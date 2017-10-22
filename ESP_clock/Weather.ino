@@ -1,3 +1,6 @@
+/*
+ * get weather-icon/status from openweathermap.org
+ */
 void getWeatherInfo() {
   if(ENABLE_WEATHER && !isAPMode) {
     unsigned long currentMillis = millis();
@@ -60,6 +63,9 @@ void getWeatherInfo() {
   }
 }
 
+/*
+ * returns icon-index from weather status
+ */
 int weatherIconToIndex(String icon) {
   switch (icon[0]) {
     case '0':

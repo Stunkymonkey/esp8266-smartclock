@@ -149,6 +149,9 @@ void Settings() {
   sendResponse(content);
 }
 
+/*
+ * returns true if authenticated
+ */
 bool auth() {
   if (ENABLE_LOGIN) {
     if (ENABLE_LOCAL_NO_LOGIN) {
@@ -179,6 +182,9 @@ void sensorData() {
   server.send(200, "application/json", json);
 }
 
+/*
+ * 404-site
+ */
 void handleNotFound() {
   content = "<h1 style=\"text-align:center;\">404 - Not Found</h1>";
   sendResponse(content);
