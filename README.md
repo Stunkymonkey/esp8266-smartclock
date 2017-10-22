@@ -8,23 +8,23 @@ We started designing and building a small clock that is connected to your local 
 <img src="images/screenshot2.png"/>
 
 ## Hardware
-The total costs are around 20€:
+The total costs are around 25€:
 
-* NodeMCU board
-* DHT11 (optional)
-* 433Mhz transmitter
-* 3x MAX7219 based 8x8 led matrix
-* Wireless Remote Control Electrical Outlet Switch (working on 433Mhz)
+* NodeMCU board with the ESP8266 and an USB programmer
+* DHT11 or DHT22 (optional)
+* 433Mhz transmitter (XD-RF-5V)
+* 4x MAX7219 based 8x8 led matrix
+* 433mhz Wireless Remote Control Electrical Outlet Switch (<a href="https://www.amazon.de/dp/B001AX8QUM/ref=cm_sw_em_r_mt_dp_Abo7zbDRGS07B">example</a>) 
 * some wires
 
 ## Features
 * opens an access point to enter your local Wifi SSID and password
-* customisable slots for your outlets
+* customisable slots for your power outlets
 * custom brightness settings for the LED matrix
 * Read Data from a DHT11 temperature and humidity sensor
 * NTP Time support
-* supports multiple Wireless Remote Control protocols (We are using the <a href="https://github.com/sui77/rc-switch">rc-switch</a> library)
-* dyndns (making a get request on a given url every 10 minutes)
+* supports multiple Wireless Remote Control protocols (we are using the <a href="https://github.com/sui77/rc-switch">rc-switch</a> library)
+* dyndns (using a get request on a given url every 10 minutes)
 * password-authentication for user from the internet (no https 😞)
 * OverTheAir Update
 
@@ -40,7 +40,3 @@ arduino ./ESP_clock/ESP_clock.ino --verify --preserve-temp-files
 curl -u admin:admin -F "image=@$(find /tmp/arduino* -name 'ESP_clock.ino.bin')" esp8266/update
 ```
 or via webinterface at `http://esp8266/update`
-
-## Ideas for the future
-* a light sensor could turn on the lights automatically
-* a proper case (3D printed, wood...)
