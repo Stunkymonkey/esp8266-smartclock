@@ -3,9 +3,7 @@
 We started designing and building a small clock that is connected to your local Wifi and controls your home using cheap 433Mhz power outlets. The ESP8266 operates as a relay to communicate with your power outlets.
 
 <img src="images/IMG_4446.JPG"/>
-<img src="images/IMG_1157.JPG"/>
 <img src="images/screenshot1.png"/>
-<img src="images/screenshot2.png"/>
 
 ## Hardware
 The total costs are around 25€:
@@ -16,6 +14,11 @@ The total costs are around 25€:
 * 4x MAX7219 based 8x8 led matrix
 * 433mhz Wireless Remote Control Electrical Outlet Switch (<a href="https://www.amazon.de/dp/B001AX8QUM/ref=cm_sw_em_r_mt_dp_Abo7zbDRGS07B">example</a>) 
 * some wires
+
+### Schematic
+<img src="images/hardware_fritzing.png"/>
+<a href="esp8266_smartclock.fzz">Fritzing File</a>
+
 
 ## Features
 * opens an access point to enter your local Wifi SSID and password
