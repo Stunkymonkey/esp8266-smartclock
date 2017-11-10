@@ -71,7 +71,9 @@ if (mysqli_query($conn, $sql)) {
 //close connection
 mysqli_close($conn);
 
-if((int)$escaped_values[$hum_i] >= maxValue){
+$int_value = floatval($escaped_values[$hum_i]);
+
+if($int_value >= $maxValue){
     $contents = file_get_contents($notificationUrl);
 }
 
