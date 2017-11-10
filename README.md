@@ -21,7 +21,7 @@ The total costs are around 25€:
 * opens an access point to enter your local Wifi SSID and password
 * customisable slots for your power outlets
 * custom brightness settings for the LED matrix
-* Read Data from a DHT11 temperature and humidity sensor
+* Read Data from a DHT11 temperature and humidity sensor and send it to a remote Host (for saving the data see: sensor.php)
 * NTP Time support
 * supports multiple Wireless Remote Control protocols (we are using the <a href="https://github.com/sui77/rc-switch">rc-switch</a> library)
 * dyndns (using a get request on a given url every 10 minutes)
