@@ -186,10 +186,10 @@ void drawSecondsGraph() {
     // loop through last line of display
     for(int i = 0; i<8; i++) {
       if(i<=secPixels) {
-        displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, true);
+        displayLed(2, 4, i, true);
       }
       else {
-        displayLed(LED_MATRIX_PORT_AMOUNT-2, 4, i, false);
+        displayLed(2, 4, i, false);
       }
     }
     prevSecond = secPixels;
