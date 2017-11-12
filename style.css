@@ -137,6 +137,9 @@ input[type="submit"] {
 	text-transform: uppercase;
 	font-weight: bold;
 }
+input[type="checkbox"] {
+	width: auto;
+}
 label {
 	display: block;
 	margin-bottom: 0.7em;
