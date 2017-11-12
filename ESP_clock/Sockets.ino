@@ -149,3 +149,15 @@ void SocketToggle(int i) {
   SocketSwitch(i, !statusSocketSets[i]);
 }
 
+void SocketMasterOn() {
+  for(int i=0; i < sizeof(statusSocketSets); i++) {
+    SocketSwitch(i, true);
+  }
+}
+
+void SocketMasterOff() {
+  for(int i=0; i < sizeof(statusSocketSets); i++) {
+    SocketSwitch(i, false);
+  }
+}
+
