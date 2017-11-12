@@ -97,12 +97,19 @@ nav {
 .switchContainer.small .switch a {
 	font-size: 50px;
 }
-.switch a.off {
-	color: #f3f3f3;
-}
-.switch a.on {
+.switch.off .onLabel {
 	color: #191919;
 }
+.switch.off .offLabel {
+	color: #f3f3f3;
+}
+.switch.on .onLabel {
+	color: #f3f3f3;
+}
+.switch.on .offLabel {
+	color: #191919;
+}
+
 .toggler {
 	position: absolute;
 	width:  50%;
@@ -111,11 +118,11 @@ nav {
 	z-index: 0;
 	transition: all ease 0.4s;
 }
-.toggler.off {
+.switch.on .toggler {
 	left: 0;
 	background: #115C24;
 }
-.toggler.on {
+.switch.off .toggler {
 	left: 50%;
 	background: #802516;
 }
