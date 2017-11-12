@@ -35,7 +35,10 @@ nav {
 	flex-grow: 2;
 	margin: 0.5em 0;
 }
-.navContainer a {
+.navContainer h2 a {
+	text-decoration: none;
+}
+.navContainer .icon {
 	margin-left: 1em;
 	display: inline-block;
 	width: 28px;
@@ -56,11 +59,10 @@ nav {
 
 .switchContainer {
 	margin: 2em auto;
-	width: 90%;
+	width: 98%;
 	max-width: 500px;
 }
 .switchContainer.small {
-	width: 80%;
 	max-width: 400px;
 }
 .switchContainer h4, .switchContainer h3 {
