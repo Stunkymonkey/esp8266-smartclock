@@ -50,6 +50,7 @@ const int     SOCKET_AMOUNT = 3;
 
 //TEMPERATURE AND HUMIDITY
 const int     SENSOR_PORT = D5;
+const int     SENSOR_TYPE = DHT11;
 const long    SENSOR_INTERVAL = 2000; //in ms
 const String  POST_SENSOR_DATA_ENDPOINT = "someurl";
 const String  POST_SENSOR_DATA_TOKEN = "sometoken";

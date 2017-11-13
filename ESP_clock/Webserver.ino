@@ -85,7 +85,7 @@ void Home() {
     content += "<div class=\"switch ";
     bool allFalse = true;
     bool allTrue = true;
-    for(int i=0; i< sizeof(statusSocketSets); i++) {
+    for(int i=0; i < sizeof(statusSocketSets); i++) {
       if(statusSocketSets[i]){
         allFalse = false;
       } else {

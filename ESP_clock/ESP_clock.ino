@@ -65,7 +65,7 @@ DNSServer dnsServer;
 RCSwitch mySwitch = RCSwitch();
 
 //Temperature and Humidity
-DHT dht(SENSOR_PORT, DHT11);
+DHT dht(SENSOR_PORT, SENSOR_TYPE);
 float humidity, temperature, heatindex;
 unsigned long sensorPreviousMillis = 0;
 unsigned long postSensorPreviousMillis = 0;

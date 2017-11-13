@@ -98,8 +98,7 @@ void loadSocketSets() {
 /*
  * send signal to switch
  */
-void SocketSwitch(int i, bool state) {
-  if (!auth()) { return; }
+void SocketSend(int i, bool state) {
   String isv3String = configSocketSets[i][0];
   bool isv3;
   isv3 = isv3String.equals(String("on"));
@@ -141,23 +140,31 @@ void SocketSwitch(int i, bool state) {
   returnTo("/");
 }
 
+void SocketSwitch(int i, bool state) {
+  if (!auth()) { return; }
+  SocketSend(i, state);
+}
+
 /*
  * toggle Socket
  */
 void SocketToggle(int i) {
-  Serial.print("Toggle-");
-  SocketSwitch(i, !statusSocketSets[i]);
+  if (!auth()) { return; }
+  print("Toggle-");
+  SocketSend(i, !statusSocketSets[i]);
 }
 
 void SocketMasterOn() {
-  for(int i=0; i < sizeof(statusSocketSets); i++) {
-    SocketSwitch(i, true);
+  if (!auth()) { return; }
+  for(int i = 0; i < sizeof(statusSocketSets); i++) {
+    SocketSend(i, true);
   }
 }
 
 void SocketMasterOff() {
-  for(int i=0; i < sizeof(statusSocketSets); i++) {
-    SocketSwitch(i, false);
+  if (!auth()) { return; }
+  for(int i = 0; i < sizeof(statusSocketSets); i++) {
+    SocketSend(i, false);
   }
 }
 
