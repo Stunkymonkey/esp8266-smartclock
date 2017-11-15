@@ -1,12 +1,12 @@
 <?php
 
 $servername = "localhost:3307";
-$username = "smonkey";
-$password = "au0noh4ohCaicaef";
-$dbname = "smonkey_grafana";
+$username = "admin";
+$password = "not4U2see";
+$dbname = "esp8266";
 $table = "esp8266";
-$token = "gPyYUuoUivdni6dzqgGNXfonY";
-$notificationUrl = "https://api.telegram.org/bot494953698:AAHws8cU6F9yCfVb32583wZCDrNzh2ceNTY/sendMessage?chat_id=60195390&text=Bitte%20L%C3%BCften!%F0%9F%92%A8";
+$token = "abcdeefghijklmnopqrstuvwxyz...";
+$notificationUrl = "https://api.telegram.org/bot494953698:ABCDEFGHIJKLMNOPQRSTUVWXYZ.../sendMessage?chat_id=1234567890&text=Please%20open%20the%20window!%F0%9F%92%A8";
 $maxValue = 70;
 
 //Make sure that it is a POST request.
