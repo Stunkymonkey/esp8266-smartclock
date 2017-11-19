@@ -6,12 +6,24 @@ void getTemperature() {
     unsigned long currentMillis = millis();
     if(currentMillis - sensorPreviousMillis >= SENSOR_INTERVAL || sensorPreviousMillis == 0) {
       sensorPreviousMillis = currentMillis;
-      temperature = dht.readTemperature();
-      humidity = dht.readHumidity();
-      heatindex = dht.computeHeatIndex(temperature, humidity);
-      if (isnan(temperature) || isnan(humidity) || isnan(heatindex)) {
-        Serial.println("Failed to read from DHT sensor!");
-        return;
+      float temp;
+      temp = dht.readTemperature();
+      if (!isnan(temp)){
+        temperature = temp;
+      } else {
+        print("Failed to read temperature from DHT sensor!");
+      }
+      temp = dht.readHumidity();
+      if (!isnan(temp)){
+        humidity = temp;
+      } else {
+        print("Failed to read humidity from DHT sensor!");
+      }
+      temp = dht.computeHeatIndex(temperature, humidity);
+      if (!isnan(temp)){
+        heatindex = temp;
+      } else {
+        print("Failed to calculate heatindex!");
       }
     }
   }
