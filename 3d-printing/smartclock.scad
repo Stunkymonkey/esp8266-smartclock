@@ -48,20 +48,47 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
                     scale([(sqrt(2)/2)*1.1,(sqrt(2)/2)*0.8,1])
                         circle(r = 5);
         
-//        translate([x/2-1,0,-(new_x/2)])
+//        translate([x/3-3,0,1])
 //            rotate(angle, [0, 1, 0])
-//                cube([90, new_y-2*r, 2], center = true);
-//        translate([x/2,0,-(new_x/2)])
+//                cube([44, new_y-2*r, 2], center = true);
+//        translate([x/3-1-3.5,0,0])
 //            rotate(angle, [0, 1, 0])
-//                cube([90, new_y-4*r, 2], center = true);
+//                cube([40, new_y-4*r, 2], center = true);
         
         //cube([new_x*2, new_y*0.2, new_zb*2], center = true);
     }
-    translate([10, y/4, 0])
+    translate([-8,new_y/2-40,1]){
+        difference(){
+            cube([5, 8, x-6], center = true);
+            translate([-2.1, 0, 5]){
+                rotate(90, [0, 1, 0])
+                    cylinder(d=5, h=height*2, center=true);
+            }
+            translate([-2.1, 0, -8]){
+                rotate(90, [0, 1, 0])
+                    cylinder(d=5, h=height*2, center=true);
+            }
+        }
+    }
+    translate([-8,-new_y/2+40,1]){
+        difference(){
+            cube([5, 8, x-6], center = true);
+            translate([-2.1, 0, 5]){
+                rotate(90, [0, 1, 0])
+                    cylinder(d=5, h=2, center=true);
+            }
+            translate([-2.1, 0, -8]){
+                rotate(90, [0, 1, 0])
+                    cylinder(d=5, h=2, center=true);
+            }
+        }
+    }
+    
+    translate([10, y/3, 0])
         rotate(180+angle, [0, 1, 0])
                 esp_mount(3, 2);
     translate([0, 0, -zb/2])
-        stands(4, 2, 10, x, y, zb, 10);
+        stands(4, 2, 10, x-5, y-5, zb, 10);
 }
 
 // height_front = front distance to floor
