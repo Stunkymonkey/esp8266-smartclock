@@ -56,7 +56,8 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
     }
     translate([-8,new_y/2-40,1]){
         difference(){
-            cube([5, 8, x-6], center = true);
+            translate([0, 0, -1])
+                cube([5, 8, x-2], center = true);
             translate([-2.1, 0, 5]){
                 rotate(90, [0, 1, 0])
                     cylinder(d=5, h=2, center=true);
@@ -69,7 +70,8 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
     }
     translate([-8,-new_y/2+40,1]){
         difference(){
-            cube([5, 8, x-6], center = true);
+            translate([0, 0, -1])
+                cube([5, 8, x-2], center = true);
             translate([-2.1, 0, 5]){
                 rotate(90, [0, 1, 0])
                     cylinder(d=5, h=2, center=true);
