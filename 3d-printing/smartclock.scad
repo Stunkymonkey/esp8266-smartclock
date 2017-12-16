@@ -1,4 +1,4 @@
-$fn=30;
+$fn=50;
 
 // x = height
 // y = widht
@@ -48,25 +48,22 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
                     scale([(sqrt(2)/2)*1.1,(sqrt(2)/2)*0.8,1])
                         circle(r = 5);
         
-//        translate([x/3-3,0,1])
-//            rotate(angle, [0, 1, 0])
-//                cube([44, new_y-2*r, 2], center = true);
-//        translate([x/3-1-3.5,0,0])
-//            rotate(angle, [0, 1, 0])
-//                cube([40, new_y-4*r, 2], center = true);
-        
-        //cube([new_x*2, new_y*0.2, new_zb*2], center = true);
+        translate([x/3-1-3.5,0,-5]){
+            rotate(angle, [0, 1, 0])
+                cube([15.5, 21, 10], center = true);
+        }
+//        cube([new_x*2, new_y*0.2, new_zb*2], center = true);
     }
     translate([-8,new_y/2-40,1]){
         difference(){
             cube([5, 8, x-6], center = true);
             translate([-2.1, 0, 5]){
                 rotate(90, [0, 1, 0])
-                    cylinder(d=5, h=height*2, center=true);
+                    cylinder(d=5, h=2, center=true);
             }
             translate([-2.1, 0, -8]){
                 rotate(90, [0, 1, 0])
-                    cylinder(d=5, h=height*2, center=true);
+                    cylinder(d=5, h=2, center=true);
             }
         }
     }
@@ -89,6 +86,26 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
                 esp_mount(3, 2);
     translate([0, 0, -zb/2])
         stands(4, 2, 10, x-5, y-5, zb, 10);
+    
+
+    translate([x/3-1-3,15,-5]){
+        rotate(angle, [0, 1, 0]){
+            difference() {
+                cylinder(d=4.5, h=4, center=true);
+                translate([0,0,-0.1])
+                    cylinder(d=3, h=4, center=true);
+            }
+        }
+    }
+    translate([x/3-1-3,-12.5,-5]){
+        rotate(angle, [0, 1, 0]){
+            difference() {
+                cylinder(d=4, h=4, center=true);
+                translate([0,0,-0.1])
+                    cylinder(d=2.5, h=4, center=true);
+            }
+        }
+    }
 }
 
 // height_front = front distance to floor
@@ -120,8 +137,8 @@ module stands(height_front, height_back, diameter, x, y, zb, distance) {
 module esp_mount(height, depth) {
     XDim = 25.0;
     YDim = 48.0;
-    HD = 2.5; //are in reality 3.0
-    hole_size = 1.5;
+    HD = 4.5; //are in reality 3.0
+    hole_size = 2.5;
     HXO = 2.0;
     HYO = 2.2;
     difference() {
