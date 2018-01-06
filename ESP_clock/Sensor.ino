@@ -62,6 +62,7 @@ void sendSensorData() {
       int httpCode = http.POST(message);
       if(DEBUG && httpCode == 200) {
         http.writeToStream(&Serial);
+        print("");
       }
       http.end();
     }
