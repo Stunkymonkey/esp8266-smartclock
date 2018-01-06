@@ -110,6 +110,7 @@ void updateDYNDNS() {
         //payload.trim();
         //print("DYNDNS-update succeed!");
       } else {
+        dyndnsPreviousMillis = currentMillis - (DYNDNS_INTERVAL/10);
         print("DYNDNS-update failed!");
       }
       http.end();
