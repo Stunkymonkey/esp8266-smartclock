@@ -191,7 +191,9 @@ void loop()
   sendSensorData();
   getWeatherInfo();
   updateDYNDNS();
-  timeClient.update();
+  if (!isAPMode) {
+    timeClient.update();
+  }
   if (ENABLE_MATRIX && MatrixStatus) {
     drawTime();
     drawSecondsGraph();
