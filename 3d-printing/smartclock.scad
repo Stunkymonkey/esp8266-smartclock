@@ -41,7 +41,7 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
         }
         
         side_position = side ? y/2 : -y/2 ;
-        translate([0, side_position, -zb/10])
+        translate([8.5, side_position, -zb/10+4])
             rotate(angle, [0, 1, 0])
             rotate(90, [1, 0, 0])
                 linear_extrude(height = r*2, center = true, convexity = 10, twist = 0)
@@ -83,7 +83,7 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
         }
     }
     
-    translate([10, y/3, 0])
+    translate([10, -y/3 + 0.7, 0])
         rotate(180+angle, [0, 1, 0])
                 esp_mount(3, 2);
     translate([0, 0, -zb/2])
@@ -93,7 +93,7 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
     translate([x/3-1-3,15,-5]){
         rotate(angle, [0, 1, 0]){
             difference() {
-                cylinder(d=4.5, h=4, center=true);
+                cylinder(d=6, h=4, center=true);
                 translate([0,0,-0.1])
                     cylinder(d=3, h=4, center=true);
             }
@@ -102,7 +102,8 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
     translate([x/3-1-3,-12.5,-5]){
         rotate(angle, [0, 1, 0]){
             difference() {
-                cylinder(d=4, h=4, center=true);
+                //cylinder(d=4, h=4, center=true);
+                cube([4,4,4], center = true);
                 translate([0,0,-0.1])
                     cylinder(d=2.5, h=4, center=true);
             }
@@ -139,7 +140,7 @@ module stands(height_front, height_back, diameter, x, y, zb, distance) {
 module esp_mount(height, depth) {
     XDim = 25.0;
     YDim = 48.0;
-    HD = 4.5; //are in reality 3.0
+    HD = 5; //are in reality 3.0
     hole_size = 2.5;
     HXO = 2.0;
     HYO = 2.2;
@@ -169,4 +170,4 @@ module esp_mount(height, depth) {
     }
 }
 
-box(50, 160, 50, 20, 2, 5, 32, 133, true);
+box(50, 160, 50, 20, 2.5, 5, 32, 133, false);
