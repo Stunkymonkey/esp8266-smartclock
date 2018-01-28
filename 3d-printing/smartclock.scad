@@ -103,9 +103,23 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
         rotate(angle, [0, 1, 0]){
             difference() {
                 //cylinder(d=4, h=4, center=true);
-                cube([4,4,4], center = true);
+                cube([6,4,4], center = true);
                 translate([0,0,-0.1])
                     cylinder(d=2.5, h=4, center=true);
+            }
+        }
+    }
+    
+    #translate([10-1.5, y/3, 0]){
+        rotate(angle, [0, 1, 0]){
+            difference() {
+                cube([24,24,6], center = true);
+                translate([0, -3, 0]){
+                    translate([0, -1, -0.1])
+                        cube([17.5,26,7], center = true);
+                    translate([0, -1, -1])
+                        cube([19.5,28,1.2], center = true);
+                }
             }
         }
     }
