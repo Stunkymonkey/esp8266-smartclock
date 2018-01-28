@@ -42,9 +42,10 @@ void getWeatherInfo() {
         // we want to get the second icon, because the first shows the weather right now
         payload = client.readStringUntil(']');
         payload = client.readStringUntil(']');
-        client.flush();
-        client.stop();
       }
+
+      client.flush();
+      client.stop();
 
       payload.trim();
       const String searchString = "\"icon\":\"";
