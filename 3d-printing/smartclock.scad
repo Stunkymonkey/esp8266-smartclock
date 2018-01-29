@@ -87,7 +87,7 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
         rotate(180+angle, [0, 1, 0])
                 esp_mount(3, 2);
     translate([0, 0, -zb/2])
-        stands(4, 2, 10, x-5, y-5, zb, 10);
+        stands(2, 2, 8, x-5, y-5, zb, 10);
     
 
     translate([x/3-1-3,15,-5]){
