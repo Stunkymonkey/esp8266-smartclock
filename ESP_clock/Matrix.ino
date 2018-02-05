@@ -7,9 +7,8 @@ void initMatrix(int k) {
     lc.shutdown(i, false);
     // Set intensity levels
     lc.setIntensity(i,k);
-    // Clear Displays
-    lc.clearDisplay(i);
   }
+  clearMatrix();
 }
 
 /*
