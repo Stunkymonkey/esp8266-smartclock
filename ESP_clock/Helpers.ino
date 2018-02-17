@@ -13,6 +13,11 @@ void print(int value) {
     Serial.println(value);
   }
 }
+void print(double value) {
+  if (DEBUG) {
+    Serial.println(value);
+  }
+}
 void print(bool value) {
   if (DEBUG) {
     Serial.println(value);

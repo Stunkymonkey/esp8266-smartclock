@@ -35,6 +35,8 @@ void createServer() {
       server.on(pathToggleChar, [i](){SocketToggle(i);});
     }
   }
+  server.on("/disco", disco);
+  server.on("/disco-toggle", disco_toggle);
   server.onNotFound(handleNotFound);
 }
 

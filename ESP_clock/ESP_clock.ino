@@ -84,6 +84,10 @@ unsigned long dyndnsPreviousMillis = 0;
 unsigned long weatherPreviousMillis = 0;
 int weatherStatus = -1;
 
+void (* Disco_Functions[2])(void);
+bool DiscoStatus = false;
+int DiscoState = 0;
+int DiscoTmp = 0; //shared storage for all disco-functions
 
 void setup()
 {
@@ -175,6 +179,9 @@ void setup()
   
   updateDYNDNS();
   setProgress(8265/8593.0);
+
+  Disco_Functions[0] = { random_pixel };
+  Disco_Functions[1] = { cosine_wave };
   
   LEDOff();
   WifiLEDOff();
@@ -195,9 +202,13 @@ void loop()
     timeClient.update();
   }
   if (ENABLE_MATRIX && MatrixStatus) {
-    drawTime();
-    drawSecondsGraph();
-    drawWeather(weatherStatus, 3);
+    if (!DiscoStatus) {
+      drawTime();
+      drawSecondsGraph();
+      drawWeather(weatherStatus, 3);
+    } else {
+      draw_disco();
+    }
   }
 }
 
