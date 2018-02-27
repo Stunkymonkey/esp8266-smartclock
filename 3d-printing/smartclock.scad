@@ -109,18 +109,22 @@ module box(x, y, zb, zt, t, r, dispx, dispy, side) {
             }
         }
     }
-    
-    #translate([10-1.5, y/3, 0]){
-        rotate(angle, [0, 1, 0]){
-            difference() {
-                cube([24,24,6], center = true);
-                translate([0, -3, 0]){
-                    translate([0, -1, -0.1])
-                        cube([17.5,26,7], center = true);
-                    translate([0, -1, -1])
-                        cube([19.5,28,1.2], center = true);
+    difference() {
+        translate([10-1.5, y/3, 0]){
+            rotate(angle, [0, 1, 0]){
+                difference() {
+                    cube([24,24,6], center = true);
+                    translate([0, -3, 0]){
+                        translate([0, -1, -0.1])
+                            cube([17.5,26,7], center = true);
+                        translate([0, -1, -1])
+                            cube([19.5,28,1.2], center = true);
+                    }
                 }
             }
+        }
+        translate([-1, y/3, 8]){
+            cube([4,24.1,6], center = true);
         }
     }
 }
