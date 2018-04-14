@@ -132,8 +132,10 @@ void setup()
 
   //network stuff
   createServer();
-  if (!MDNS.begin(deviceName.c_str())) {
-    print("Error setting up MDNS responder!");
+  if (ENABLE_MDNS) {
+    if (!MDNS.begin(deviceName.c_str())) {
+      print("Error setting up MDNS responder!");
+    } 
   }
   setProgress(7229/8593.0);
   
@@ -148,7 +150,9 @@ void setup()
   setProgress(7247/8593.0);
   
   //service announcement
-  MDNS.addService("http", "tcp", 80);
+  if (ENABLE_MDNS) {
+    MDNS.addService("http", "tcp", 80);
+  }
   
   //NTP-init
   timeClient.begin();

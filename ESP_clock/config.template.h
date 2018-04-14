@@ -10,6 +10,7 @@ const bool    ENABLE_SENSOR = true;
 const bool    ENABLE_POST_SENSOR_DATA = false;
 const bool    ENABLE_MATRIX = true;
 const bool    ENABLE_DYNDNS = false;
+const bool    ENABLE_MDNS = false;
 const bool    ENABLE_LOGIN = true;
 const bool    ENABLE_LOCAL_NO_LOGIN = true;
 const bool    ENABLE_OTA = true;
