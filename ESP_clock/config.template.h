@@ -15,6 +15,7 @@ const bool    ENABLE_LOGIN = true;
 const bool    ENABLE_LOCAL_NO_LOGIN = true;
 const bool    ENABLE_OTA = true;
 const bool    ENABLE_WEATHER = true;
+const bool    ENABLE_VICTRON = false;
 
 //DEVICE-NAME
 const String  DEFAULT_DEVICE_NAME= "ESP8266";
@@ -66,6 +67,9 @@ const long    GET_WEATHER_INTERVAL = 1800000; // in ms (every 30 minutes)
 const String  WEATHER_CITY = "London,uk";
 const String  WEATHER_API_TOKEN = "asdasdewqrsv..."; // api.openweathermap.org
 
+//VICTRON
+const int     VICTRON_RX = D7;
+const int     VICTRON_TX = D8;
 
 //################################################################
 // DO NOT CHANGE THINGS BELOW, UNLESS YOU KNOW WHAT YOU ARE DOING

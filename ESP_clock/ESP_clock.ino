@@ -18,9 +18,11 @@ extern "C" {
 #include <DHT.h>
 #include <Time.h>
 #include <TimeLib.h>
+#include <SoftwareSerial.h>
 
 //include personal config
 #include "config.h"
+#include "victron.h"
 
 
 // GLOBAL VARIABLES
@@ -81,6 +83,17 @@ bool DiscoStatus = false;
 int DiscoState = 0;
 int DiscoTmp = 0; //shared storage for all disco-functions
 
+// Victron
+SoftwareSerial victronSerial(VICTRON_RX, VICTRON_TX);
+char receivedChars[buffsize];
+char tempChars[buffsize];
+char recv_label[num_keywords][label_bytes]  = {0};
+char recv_value[num_keywords][value_bytes]  = {0};
+char value[num_keywords][value_bytes]       = {0};
+static byte blockindex = 0;
+bool new_data = false;
+bool blockend = false;
+
 void setup()
 {
   //Serial-Output
@@ -88,6 +101,10 @@ void setup()
     Serial.begin(115200);
   }
   print("Starting setup");
+  // start vicront serial
+  if (ENABLE_VICTRON){
+    victronSerial.begin(19200);
+  }
   //enable LEDs
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(2, OUTPUT);
@@ -188,7 +205,6 @@ void setup()
 
 void loop()
 {
-  delay(REACTION_TIME);
   server.handleClient();
   getTemperature();
   sendSensorData();
@@ -197,6 +213,7 @@ void loop()
   if (!isAPMode) {
     timeClient.update();
   }
+  victron();
   if (ENABLE_MATRIX && MatrixStatus) {
     if (!DiscoStatus) {
       drawTime();
@@ -207,4 +224,5 @@ void loop()
     }
   }
 }
+
 
