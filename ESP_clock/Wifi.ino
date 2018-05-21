@@ -100,6 +100,7 @@ void saveWifi() {
  */
 void updateDYNDNS() {
   if (ENABLE_DYNDNS && !isAPMode) {
+    static unsigned long dyndnsPreviousMillis;
     unsigned long currentMillis = millis();
     if(currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL || dyndnsPreviousMillis == 0) {
       dyndnsPreviousMillis = currentMillis;

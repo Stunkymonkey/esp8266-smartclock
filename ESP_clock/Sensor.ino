@@ -3,6 +3,7 @@
  */
 void getTemperature() {
   if (ENABLE_SENSOR) {
+    static unsigned long sensorPreviousMillis;
     unsigned long currentMillis = millis();
     if(currentMillis - sensorPreviousMillis >= SENSOR_INTERVAL || sensorPreviousMillis == 0) {
       sensorPreviousMillis = currentMillis;
@@ -51,6 +52,7 @@ int get_heat_index_level() {
  */
 void sendSensorData() {
   if(ENABLE_POST_SENSOR_DATA && !isAPMode) {
+    static unsigned long postSensorPreviousMillis;
     unsigned long currentMillis = millis();
     if(currentMillis - postSensorPreviousMillis >= POST_SENSOR_INTERVAL || postSensorPreviousMillis == 0) {
       postSensorPreviousMillis = currentMillis;

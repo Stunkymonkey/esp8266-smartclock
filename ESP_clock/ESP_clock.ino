@@ -37,9 +37,6 @@ LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
 int led_matrix_intensity;
 boolean MatrixStatus = true;
 
-boolean seperatorBlink = false;
-unsigned long matrixBlinkPreviousMillis = 0;
-
 int prevMin1 = -1;
 int prevMin2 = -1;
 int prevHour1 = -1;
@@ -67,8 +64,6 @@ RCSwitch mySwitch = RCSwitch();
 //Temperature and Humidity
 DHT dht(SENSOR_PORT, SENSOR_TYPE);
 float humidity, temperature, heatindex;
-unsigned long sensorPreviousMillis = 0;
-unsigned long postSensorPreviousMillis = 0;
 
 //NTP
 WiFiUDP ntpUDP;
@@ -77,11 +72,8 @@ bool timeInit = false;
 
 //DYNDNS
 HTTPClient http;
-const int httpPort = 80;
-unsigned long dyndnsPreviousMillis = 0;
 
 //WEATHER
-unsigned long weatherPreviousMillis = 0;
 int weatherStatus = -1;
 
 void (* Disco_Functions[2])(void);

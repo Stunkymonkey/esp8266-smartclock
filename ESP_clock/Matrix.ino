@@ -226,6 +226,8 @@ void drawNumber(int number, int row, int dis) {
  * draws seperator with 2 leds
  */
 void matrixBlinkSeperator() {
+  static unsigned long matrixBlinkPreviousMillis;
+  static boolean seperatorBlink = false;
   unsigned long currentMillis = millis();
   if(currentMillis - matrixBlinkPreviousMillis >= 1000) {
     matrixBlinkPreviousMillis = currentMillis;
