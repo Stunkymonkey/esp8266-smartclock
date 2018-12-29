@@ -193,8 +193,8 @@ void setup()
   updateDYNDNS();
   setProgress(8265/8593.0);
 
-  Disco_Functions[0] = { random_pixel };
-  Disco_Functions[1] = { cosine_wave };
+  Disco_Functions[0] = { waterworld };
+  Disco_Functions[1] = { random_pixel };
   
   LEDOff();
   WifiLEDOff();
@@ -224,5 +224,3 @@ void loop()
     }
   }
 }
-
-
