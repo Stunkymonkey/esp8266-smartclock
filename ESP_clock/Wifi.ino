@@ -27,8 +27,6 @@ void initWifi() {
     char deviceNameChar[len];
     deviceName.toCharArray(deviceNameChar, len);
     wifi_station_set_hostname(deviceNameChar);
-    //Serial.println(WiFi.localIP());
-
     WiFi.disconnect(true);
     WiFi.begin(ssid.c_str(), pw.c_str());
 
@@ -39,6 +37,7 @@ void initWifi() {
       setupAP();
     } else {
       print("Connected to "+ssid+"!");
+      print(WiFi.localIP().toString());
       WifiLEDOn();
     }
   }
@@ -77,6 +76,7 @@ void setupAP(void) {
   }
   dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
   dnsServer.start(53, "*", WiFi.localIP());
+  print(WiFi.localIP().toString());
 }
 
 /*
@@ -118,4 +118,3 @@ void updateDYNDNS() {
     }
   }
 }
-
