@@ -72,7 +72,9 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, NTP_SERVER, 0, NTP_INTERVAL);
 bool timeInit = false;
 
-//DYNDNS
+//HTTP
+std::unique_ptr<BearSSL::WiFiClientSecure> client_secure(new BearSSL::WiFiClientSecure);
+WiFiClient client;
 HTTPClient http;
 
 //WEATHER
@@ -191,11 +193,14 @@ void setup()
   setProgress(7814 / 8593.0);
 
   updateDYNDNS();
-  setProgress(8265/8593.0);
+  setProgress(8265 / 8593.0);
+
+  // fingerprint verification is skipped
+  client_secure->setInsecure();
 
   Disco_Functions[0] = { random_pixel };
   Disco_Functions[1] = { cosine_wave };
-  
+
   LEDOff();
   WifiLEDOff();
   setProgress(1.0);

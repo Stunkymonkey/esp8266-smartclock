@@ -1,65 +1,33 @@
 /*
- * get weather-icon/status from openweathermap.org
- */
+   get weather-icon/status from openweathermap.org
+*/
 void getWeatherInfo() {
-  if(ENABLE_WEATHER && !isAPMode) {
+  if (ENABLE_WEATHER && !isAPMode) {
     static unsigned long weatherPreviousMillis;
     unsigned long currentMillis = millis();
-    if(currentMillis - weatherPreviousMillis >= GET_WEATHER_INTERVAL || weatherPreviousMillis == 0) {
-      WiFiClient client;
-      client.flush();
-      const char* host = "api.openweathermap.org";
-      if (!client.connect(host, 80)) {
+    if (currentMillis - weatherPreviousMillis >= GET_WEATHER_INTERVAL || weatherPreviousMillis == 0) {
+      if (!http.begin(client, "http://api.openweathermap.org/data/2.5/forecast?q=" + WEATHER_CITY + "&appid=" + WEATHER_API_TOKEN)) {
         print("weather: connection failed");
-        weatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/10);
+        weatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL / 10);
         weatherStatus = weatherIconToIndex("not defined");
         return;
       }
-      
-      // We now create a URI for the request
-      String url = "/data/2.5/forecast?q=";
-      url += WEATHER_CITY;
-      url += "&appid=";
-      url += WEATHER_API_TOKEN;
-      
-      // This will send the request to the server
-      client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-                   "Host: " + host + "\r\n" + 
-                   "Connection: close\r\n\r\n");
       unsigned long timeout = millis();
-      while (client.available() == 0) {
-        if (millis() - timeout > 3000) {
-          print("weather: Client Timeout !");
-          weatherPreviousMillis = currentMillis - (GET_WEATHER_INTERVAL/10);
-          weatherStatus = weatherIconToIndex("not defined");
-          client.stop();
-          return;
+
+      int httpCode = http.GET();
+      String weatherIcon;
+      if (httpCode > 0 && (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY)) {
+        for (int i = 1; i <= WEATHER_3HOUR_FUTURE; i++) {
+          weatherIcon = getHTTPValue(http, "icon", 3, 3);
+          //print(String(i) + ":" + weatherIcon);
         }
-      }
-      
-      String payload = "";
-      if(client.available()){
-        payload = client.readStringUntil('\n');
-        // we want to get the second icon, because the first shows the weather right now
-        payload = client.readStringUntil(']');
-        payload = client.readStringUntil(']');
-      }
-
-      client.flush();
-      client.stop();
-
-      payload.trim();
-      const String searchString = "\"icon\":\"";
-      int index = 0;
-      index = payload.indexOf(searchString);
-      if (index != -1) {
-        String weatherIcon = "";
-        weatherIcon = payload.substring(index+searchString.length(),index+searchString.length()+3);
-        weatherStatus = weatherIconToIndex(weatherIcon);
-        print("Weather-Icon: " + String(weatherStatus));
       } else {
-        print("Error: updating weather");
+        Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
       }
+      http.end();
+
+      weatherStatus = weatherIconToIndex(weatherIcon);
+      print("Weather-Icon: " + String(weatherStatus));
       weatherPreviousMillis = currentMillis;
     }
   }

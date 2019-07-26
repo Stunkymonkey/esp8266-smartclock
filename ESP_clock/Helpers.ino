@@ -78,6 +78,47 @@ String parseName(String name) {
   return result;
 }
 
+/*
+   extract the value from a json response
+*/
+String getHTTPValue(HTTPClient &http, String key, int skip, int get) {
+  bool found = false, look = false;
+  int ind = 0;
+  String ret_str = "";
+
+  int len = http.getSize();
+  char char_buff[1];
+  WiFiClient * stream = http.getStreamPtr();
+  while (http.connected() && (len > 0 || len == -1)) {
+    size_t size = stream->available();
+    if (size) {
+      int c = stream->readBytes(char_buff, ((size > sizeof(char_buff)) ? sizeof(char_buff) : size));
+      if (len > 0)
+        len -= c;
+      if (found) {
+        if (skip == 0) {
+          ret_str += char_buff[0];
+          get --;
+        } else
+          skip --;
+        if (get <= 0)
+          break;
+      }
+      else if ((!look) && (char_buff[0] == key[0])) {
+        look = true;
+        ind = 1;
+      } else if (look && (char_buff[0] == key[ind])) {
+        ind ++;
+        if (ind == key.length()) found = true;
+      } else if (look && (char_buff[0] != key[ind])) {
+        ind = 0;
+        look = false;
+      }
+    }
+  }
+  return ret_str;
+}
+
 void LEDOn() {
   digitalWrite(LED_BUILTIN, LOW);
 }
