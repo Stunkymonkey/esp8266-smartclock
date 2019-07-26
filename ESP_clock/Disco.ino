@@ -36,6 +36,7 @@ void random_pixel() {
   lc.setLed(addr, index, pos, state);
 }
 
+
 /*
    cosine wave
 */
@@ -54,4 +55,42 @@ void cosine_wave() {
     }
   }
   DiscoTmp++;
+}
+
+/*
+   waterworld
+*/
+byte fishes[1][8] = {
+  {B00010000, B00111000, B01000100, B01000100, B01000100, B00111000, B00010000, B00111000}, // medium fish
+};
+long WATERWORLD_SPEED = 200;
+void waterworld() {
+  static unsigned long lastWaterworldDraw;
+  unsigned long currentDraw = millis();
+  if (currentDraw - lastWaterworldDraw >= WATERWORLD_SPEED || lastWaterworldDraw == 0) {
+    lastWaterworldDraw = currentDraw;
+    clearMatrix();
+    drawWaterWorld();
+  }
+}
+
+int iconPosition = 0;
+void drawWaterWorld() {
+  int amount = lc.getDeviceCount() * 8;
+  int currentRow = 0;
+
+  iconPosition = iconPosition - 1;
+  if (iconPosition < -8) iconPosition = lc.getDeviceCount() * 8;
+
+  for (int k = 0; k < lc.getDeviceCount(); k++) {
+    for (int i = 0; i < 8; i++) {
+      currentRow++;
+      //currentRow is in the iconPosition Window
+      if (currentRow >= iconPosition && currentRow < (iconPosition + 8)) {
+        int rowInIconPosition = currentRow - iconPosition;
+        displayRow(k, i, fishes[0][rowInIconPosition]);
+      }
+    }
+  }
+  WATERWORLD_SPEED = random(100, 300);
 }

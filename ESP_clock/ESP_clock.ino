@@ -80,7 +80,7 @@ HTTPClient http;
 //WEATHER
 int weatherStatus = -1;
 
-void (* Disco_Functions[2])(void);
+void (* Disco_Functions[3])(void);
 bool DiscoStatus = false;
 int DiscoState = 0;
 int DiscoTmp = 0; //shared storage for all disco-functions
@@ -200,7 +200,7 @@ void setup()
 
   Disco_Functions[0] = { random_pixel };
   Disco_Functions[1] = { cosine_wave };
-
+  Disco_Functions[2] = { waterworld };
   LEDOff();
   WifiLEDOff();
   setProgress(1.0);
