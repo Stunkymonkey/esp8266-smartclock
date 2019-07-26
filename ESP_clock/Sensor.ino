@@ -1,27 +1,27 @@
 /*
- * read temperature from sensor
- */
+   read temperature from sensor
+*/
 void getTemperature() {
   if (ENABLE_SENSOR) {
     static unsigned long sensorPreviousMillis;
     unsigned long currentMillis = millis();
-    if(currentMillis - sensorPreviousMillis >= SENSOR_INTERVAL || sensorPreviousMillis == 0) {
+    if (currentMillis - sensorPreviousMillis >= SENSOR_INTERVAL || sensorPreviousMillis == 0) {
       sensorPreviousMillis = currentMillis;
       float temp;
       temp = dht.readTemperature();
-      if (!isnan(temp)){
+      if (!isnan(temp)) {
         temperature = temp;
       } else {
         print("Failed to read temperature from DHT sensor!");
       }
       temp = dht.readHumidity();
-      if (!isnan(temp)){
+      if (!isnan(temp)) {
         humidity = temp;
       } else {
         print("Failed to read humidity from DHT sensor!");
       }
       temp = dht.computeHeatIndex(temperature, humidity);
-      if (!isnan(temp)){
+      if (!isnan(temp)) {
         heatindex = temp;
       } else {
         print("Failed to calculate heatindex!");
@@ -31,8 +31,8 @@ void getTemperature() {
 }
 
 /*
- * calculate if it hits critical values => changes color
- */
+   calculate if it hits critical values => changes color
+*/
 int get_heat_index_level() {
   if (heatindex < 27) {
     return 0;

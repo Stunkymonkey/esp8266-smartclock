@@ -18,7 +18,7 @@ const bool    ENABLE_WEATHER = true;
 const bool    ENABLE_VICTRON = false;
 
 //DEVICE-NAME
-const String  DEFAULT_DEVICE_NAME= "ESP8266";
+const String  DEFAULT_DEVICE_NAME = "ESP8266";
 
 //LOGIN
 const char    WWW_USERNAME[] = "admin";
@@ -29,7 +29,7 @@ const char    OTA_USERNAME[] = "admin";
 const char    OTA_PASSWORD[] = "admin";
 
 //NTP
-const char    NTP_SERVER[] = "de.pool.ntp.org";
+const char    NTP_SERVER[] = "pool.ntp.org";
 const int     NTP_TIMEZONE = 1;     // Central European Time
 //const int     NTP_TIMEZONE = -5;  // Eastern Standard Time (USA)
 //const int     NTP_TIMEZONE = -4;  // Eastern Daylight Time (USA)
@@ -66,6 +66,7 @@ const String  DYNDNS_URL = "http://freedns.afraid.org/dynamic/update.php?asdf...
 const long    GET_WEATHER_INTERVAL = 1800000; // in ms (every 30 minutes)
 const String  WEATHER_CITY = "London,uk";
 const String  WEATHER_API_TOKEN = "asdasdewqrsv..."; // api.openweathermap.org
+const int     WEATHER_3HOUR_FUTURE = 2; // gives the weather time in the future: 1 current quarter, 2 next quarter, ..
 
 //VICTRON
 const int     VICTRON_RX = D7;
@@ -76,20 +77,19 @@ const int     VICTRON_TX = D8;
 
 //STORAGE
 /* File structure:
- * /NAME_CONFIG_PATH:
- *    name
- * /WIFI_CONFIG_PATH:
- *    ssid \n
- *    pw
- * /sockets/$id:
- *    protocol (v3 = true; v1 = false)
- *    socketName;
- *    houseCode;
- *    groupCode;
- *    socketCode;
- */
+   /NAME_CONFIG_PATH:
+      name
+   /WIFI_CONFIG_PATH:
+      ssid \n
+      pw
+   /sockets/$id:
+      protocol (v3 = true; v1 = false)
+      socketName;
+      houseCode;
+      groupCode;
+      socketCode;
+*/
 const String  WIFI_CONFIG_PATH = "/wifi.txt";
 const String  NAME_CONFIG_PATH = "/name.txt";
 const String  LED_CONFIG_PATH = "/led.txt";
 const String  SOCKET_CONFIG_PATH = "/sockets/";
-

@@ -1,6 +1,6 @@
 /*
- * connects to wifi or start in ap
- */
+   connects to wifi or start in ap
+*/
 void initWifi() {
   File configFile = SPIFFS.open(WIFI_CONFIG_PATH, "r");
   if (!configFile) {
@@ -17,7 +17,7 @@ void initWifi() {
       } else {
         pw = configFile.readStringUntil('\n');
       }
-      tmp = tmp +1;
+      tmp = tmp + 1;
     }
     ssid.trim();
     pw.trim();
@@ -38,15 +38,15 @@ void initWifi() {
     if (!testWifi()) {
       setupAP();
     } else {
-      print("Connected to "+ssid+"!");
+      print("Connected to " + ssid + "!");
       WifiLEDOn();
     }
   }
 }
 
 /*
- * tries to connect to wifi
- */
+   tries to connect to wifi
+*/
 bool testWifi(void) {
   int c = 0;
   Serial.print("Waiting for Wifi");
@@ -56,18 +56,18 @@ bool testWifi(void) {
       return true;
     }
     Serial.print(".");
-    setProgress((510+((c/40.0)*10000.0))/8593.0);
+    setProgress((510 + ((c / 40.0) * 10000.0)) / 8593.0);
     delay(250);
     c++;
   }
   Serial.println("");
   print("Connect timed out, opening AP");
   return false;
-} 
+}
 
 /*
- * starts AP-Mode
- */
+   starts AP-Mode
+*/
 void setupAP(void) {
   print("Setup AP Mode");
   WiFi.mode(WIFI_AP);
@@ -80,10 +80,12 @@ void setupAP(void) {
 }
 
 /*
- * save SSID and password
- */
+   save SSID and password
+*/
 void saveWifi() {
-  if (!auth()) { return; }
+  if (!auth()) {
+    return;
+  }
   String ssid = server.arg("ssid");
   String pw = server.arg("pw");
   print(ssid);

@@ -25,8 +25,8 @@ void print(bool value) {
 }
 
 /*
- * load hostname from storage
- */
+   load hostname from storage
+*/
 String loadDeviceName() {
   File configFile = SPIFFS.open(NAME_CONFIG_PATH, "r");
   if (configFile) {
@@ -44,10 +44,12 @@ String loadDeviceName() {
 }
 
 /*
- * save hostname to storage and set it
- */
+   save hostname to storage and set it
+*/
 void saveDeviceName() {
-  if (!auth()) { return; }
+  if (!auth()) {
+    return;
+  }
   String name = server.arg("name");
   name = parseName(name);
   File f = SPIFFS.open(NAME_CONFIG_PATH, "w");
@@ -58,13 +60,13 @@ void saveDeviceName() {
 }
 
 /*
- * check if valid hostname
- */
+   check if valid hostname
+*/
 String parseName(String name) {
   String result = "";
-  for (int i=0; i<name.length(); i++) {
+  for (int i = 0; i < name.length(); i++) {
     char letter = name.charAt(i);
-    if (isalnum(letter) || letter == '-'){
+    if (isalnum(letter) || letter == '-') {
       result = result + String(letter);
     }
   }
@@ -72,7 +74,7 @@ String parseName(String name) {
   if (result == "") {
     result = deviceName;
   }
-  print("New hostname : "+result);
+  print("New hostname : " + result);
   return result;
 }
 
@@ -99,7 +101,8 @@ void WifiLEDOff() {
 }
 
 void restart() {
-  if (!auth()) { return; }
+  if (!auth()) {
+    return;
+  }
   ESP.restart();
 }
-

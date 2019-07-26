@@ -1,29 +1,29 @@
 // IMPORTS
 extern "C" {
-  #include "user_interface.h"
+#include "user_interface.h"
 }
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-#include <ESP8266HTTPClient.h>
-#include <ESP8266WebServer.h>
-#include <ESP8266mDNS.h>
-#include <DNSServer.h>
-#include <WiFiUdp.h>
 #include <ArduinoOTA.h>
-#include <ESP8266HTTPUpdateServer.h>
-#include <NTPClient.h>
-#include <FS.h>
-#include <RCSwitch.h>
-#include <LedControl.h>
 #include <DHT.h>
+#include <DNSServer.h>
+#include <ESP8266HTTPClient.h>
+#include <ESP8266HTTPUpdateServer.h>
+#include <ESP8266mDNS.h>
+#include <ESP8266WebServer.h>
+#include <ESP8266WiFi.h>
+#include <FS.h>
+#include <LedControl.h>
+#include <NTPClient.h>
+#include <RCSwitch.h>
+#include <SoftwareSerial.h>
 #include <Time.h>
 #include <TimeLib.h>
-#include <SoftwareSerial.h>
+#include <WiFiClient.h>
+#include <WiFiClientSecure.h>
+#include <WiFiUdp.h>
 
 //include personal config
 #include "config.h"
 #include "victron.h"
-
 
 // GLOBAL VARIABLES
 String deviceName = "";
@@ -34,8 +34,8 @@ String WifiPw = "";
 String configSocketSets[SOCKET_AMOUNT][5];
 boolean statusSocketSets[SOCKET_AMOUNT];
 
-LedControl lc=LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK,\
-                         LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
+LedControl lc = LedControl(LED_MATRIX_PORT_DATA,        LED_MATRIX_PORT_CLK, \
+                           LED_MATRIX_PORT_CHIP_SELECT, LED_MATRIX_PORT_AMOUNT);
 int led_matrix_intensity;
 boolean MatrixStatus = true;
 
@@ -97,12 +97,12 @@ bool blockend = false;
 void setup()
 {
   //Serial-Output
-  if (DEBUG){
+  if (DEBUG) {
     Serial.begin(115200);
   }
   print("Starting setup");
   // start vicront serial
-  if (ENABLE_VICTRON){
+  if (ENABLE_VICTRON) {
     victronSerial.begin(19200);
   }
   //enable LEDs
@@ -110,59 +110,59 @@ void setup()
   pinMode(2, OUTPUT);
   LEDOn();
   WifiLEDOff();
-  setProgress(266/8593.0);
-  
+  setProgress(266 / 8593.0);
+
   //mount File-System
   bool mountFs = SPIFFS.begin();
   if (!mountFs) {
     print("Failed to mount File-System!");
   }
-  setProgress(341/8593.0);
-  
+  setProgress(341 / 8593.0);
+
   //init Led-Matrixes:
   if (ENABLE_MATRIX) {
     led_matrix_intensity = loadIntensity();
     initMatrix(led_matrix_intensity);
   }
-  setProgress(348/8593.0);
-  
+  setProgress(348 / 8593.0);
+
   //load device Name
   deviceName = loadDeviceName();
-  setProgress(434/8593.0);
+  setProgress(434 / 8593.0);
   //load sockets
   if (ENABLE_SOCKETS) {
     loadSocketSets();
   }
-  setProgress(510/8593.0);
-  
+  setProgress(510 / 8593.0);
+
   //init wifi access point
   initWifi();
-  setProgress(7213/8593.0);
+  setProgress(7213 / 8593.0);
 
   //network stuff
   createServer();
   if (ENABLE_MDNS) {
     if (!MDNS.begin(deviceName.c_str())) {
       print("Error setting up MDNS responder!");
-    } 
+    }
   }
-  setProgress(7229/8593.0);
-  
+  setProgress(7229 / 8593.0);
+
   // OTA enable
   if (ENABLE_OTA) {
     httpUpdater.setup(&server, "/update", OTA_USERNAME, OTA_PASSWORD);
   }
-  setProgress(7230/8593.0);
-  
+  setProgress(7230 / 8593.0);
+
   // Http-Server start
   server.begin();
-  setProgress(7247/8593.0);
-  
+  setProgress(7247 / 8593.0);
+
   //service announcement
   if (ENABLE_MDNS) {
     MDNS.addService("http", "tcp", 80);
   }
-  
+
   //NTP-init
   timeClient.begin();
   timeClient.update();
@@ -171,7 +171,7 @@ void setup()
   setSyncProvider(UnixStamp);
   timeInit = true;
   setTime(UnixStamp());
-  setProgress(7319/8593.0);
+  setProgress(7319 / 8593.0);
 
   //RC-Switch
   if (ENABLE_SOCKETS) {
@@ -182,14 +182,14 @@ void setup()
     dht.begin();
     getTemperature();
   }
-  setProgress(7593/8593.0);
+  setProgress(7593 / 8593.0);
 
   sendSensorData();
-  setProgress(7702/8593.0);
-  
+  setProgress(7702 / 8593.0);
+
   getWeatherInfo();
-  setProgress(7814/8593.0);
-  
+  setProgress(7814 / 8593.0);
+
   updateDYNDNS();
   setProgress(8265/8593.0);
 
@@ -223,6 +223,6 @@ void loop()
       draw_disco();
     }
   }
+  // for debugging
+  //Serial.println(ESP.getFreeHeap());
 }
-
-

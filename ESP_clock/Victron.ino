@@ -9,7 +9,7 @@ void RecvWithEndMarker() {
       receivedChars[ndx] = rc;
       ndx++;
       if (ndx >= buffsize) {
-          ndx = buffsize - 1;
+        ndx = buffsize - 1;
       }
     }
     else {
@@ -22,7 +22,7 @@ void RecvWithEndMarker() {
 }
 
 void HandleNewData() {
-  // We have gotten a field of data 
+  // We have gotten a field of data
   if (new_data == true) {
     //Copy it to the temp array because parseData will alter it.
     strcpy(tempChars, receivedChars);
@@ -33,17 +33,17 @@ void HandleNewData() {
 
 void ParseData() {
   char * strtokIndx; // this is used by strtok() as an index
-  strtokIndx = strtok(tempChars,"\t");      // get the first part - the label
+  strtokIndx = strtok(tempChars, "\t");     // get the first part - the label
   // The last field of a block is always the Checksum
   if (strcmp(strtokIndx, "Checksum") == 0) {
-      blockend = true;
+    blockend = true;
   }
   strcpy(recv_label[blockindex], strtokIndx); // copy it to label
-  
+
   // Now get the value
   strtokIndx = strtok(NULL, "\r");    // This continues where the previous call left off until '/r'.
   if (strtokIndx != NULL) {           // We need to check here if we don't receive NULL.
-      strcpy(recv_value[blockindex], strtokIndx);
+    strcpy(recv_value[blockindex], strtokIndx);
   }
   blockindex++;
 
@@ -54,7 +54,7 @@ void ParseData() {
     byte checksum = 0;
     for (int x = 0; x < blockindex; x++) {
       // Loop over the labels and value gotten and add them.
-      // Using a byte so the the % 256 is integrated. 
+      // Using a byte so the the % 256 is integrated.
       char *v = recv_value[x];
       char *l = recv_label[x];
       while (*v) {
@@ -62,20 +62,20 @@ void ParseData() {
         v++;
       }
       while (*l) {
-        checksum+= *l;
+        checksum += *l;
         l++;
       }
-      // Because we strip the new line(10), the carriage return(13) and 
-      // the horizontal tab(9) we add them here again.  
+      // Because we strip the new line(10), the carriage return(13) and
+      // the horizontal tab(9) we add them here again.
       checksum += 32;
     }
     // Checksum should be 0, so if !0 we have correct data.
     if (!checksum) {
-      // Since we are getting blocks that are part of a 
+      // Since we are getting blocks that are part of a
       // keyword chain, but are not certain where it starts
       // we look for the corresponding label. This loop has a trick
       // that will start searching for the next label at the start of the last
-      // hit, which should optimize it. 
+      // hit, which should optimize it.
       int start = 0;
       for (int i = 0; i < blockindex; i++) {
         for (int j = start; (j - start) < num_keywords; j++) {
@@ -105,18 +105,17 @@ void PrintEverySecond() {
 
 void PrintValues() {
   DEBUG_STRING = "";
-  for (int i = 0; i < num_keywords; i++){
+  for (int i = 0; i < num_keywords; i++) {
     print(String(keywords[i]) + ", " + String(value[i]));
     DEBUG_STRING += String(keywords[i]) + ", " + String(value[i]) + "<br />";
   }
 }
 
 
-void victron(){
-  if (ENABLE_VICTRON){
+void victron() {
+  if (ENABLE_VICTRON) {
     RecvWithEndMarker();
     HandleNewData();
     PrintEverySecond();
   }
 }
-

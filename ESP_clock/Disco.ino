@@ -1,7 +1,7 @@
 
 /*
- * enable/disable the disco mode (default = off)
- */
+   enable/disable the disco mode (default = off)
+*/
 void disco() {
   DiscoStatus = !DiscoStatus;
   clearMatrix();
@@ -9,15 +9,15 @@ void disco() {
 }
 
 /*
- * draw the current disco-mode
- */
-void draw_disco(){
+   draw the current disco-mode
+*/
+void draw_disco() {
   Disco_Functions[DiscoState]();
 }
 
 /*
- * go to next disco mode
- */
+   go to next disco mode
+*/
 void disco_toggle() {
   DiscoState = (DiscoState + 1) % sizeof(Disco_Functions);
   clearMatrix();
@@ -26,8 +26,8 @@ void disco_toggle() {
 }
 
 /*
- * random pixel beeing displayed
- */
+   random pixel beeing displayed
+*/
 void random_pixel() {
   int addr = random(0, lc.getDeviceCount());
   int index = random(0, 8);
@@ -37,19 +37,19 @@ void random_pixel() {
 }
 
 /*
- * cosine wave
- */
+   cosine wave
+*/
 void cosine_wave() {
   clearMatrix();
-  if(DiscoTmp==32) {
+  if (DiscoTmp == 32) {
     DiscoTmp = 0;
   }
-  for(int k = 0; k<lc.getDeviceCount(); k++) {
-    for(int i = 0; i<8; i++) {
-      int x = (k*8)+i;
-      int y = (int)(4*cos((float)x*0.3+DiscoTmp)+4+0.5);
-      for(int a = 0; a<y; a++) {
-        lc.setLed(k, a, 7-i, true);
+  for (int k = 0; k < lc.getDeviceCount(); k++) {
+    for (int i = 0; i < 8; i++) {
+      int x = (k * 8) + i;
+      int y = (int)(4 * cos((float)x * 0.3 + DiscoTmp) + 4 + 0.5);
+      for (int a = 0; a < y; a++) {
+        lc.setLed(k, a, 7 - i, true);
       }
     }
   }

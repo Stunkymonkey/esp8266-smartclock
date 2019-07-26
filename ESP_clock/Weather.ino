@@ -66,8 +66,8 @@ void getWeatherInfo() {
 }
 
 /*
- * returns icon-index from weather status
- */
+   returns icon-index from weather status
+*/
 int weatherIconToIndex(String icon) {
   switch (icon[0]) {
     case '0':
@@ -82,7 +82,7 @@ int weatherIconToIndex(String icon) {
               break;
             default:    // ??
               return 12;
-            break;
+              break;
           }
         case '2': //few clouds
           switch (icon[2]) {
@@ -94,7 +94,7 @@ int weatherIconToIndex(String icon) {
               break;
             default:    // ??
               return 12;
-            break;
+              break;
           }
         case '3': //scattered clouds day/night
           return 4;
@@ -107,7 +107,7 @@ int weatherIconToIndex(String icon) {
           break;
         default:    // ??
           return 12;
-        break;
+          break;
       }
     case '1':
       switch (icon[1]) {
@@ -121,7 +121,7 @@ int weatherIconToIndex(String icon) {
               break;
             default:    // ??
               return 12;
-            break;
+              break;
           }
         case '1': //thunderstorm day/night
           return 9;
@@ -131,14 +131,13 @@ int weatherIconToIndex(String icon) {
           break;
         default:    // ??
           return 12;
-        break;
+          break;
       }
     case '5': //mist day/night
       return 11;
       break;
     default:    // ??
       return 12;
-    break;
+      break;
   }
 }
-
