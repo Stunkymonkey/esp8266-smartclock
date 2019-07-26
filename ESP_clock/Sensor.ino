@@ -48,26 +48,33 @@ int get_heat_index_level() {
 }
 
 /*
- * sending your data via json request
- */
+   sending your data via json request
+*/
 void sendSensorData() {
-  if(ENABLE_POST_SENSOR_DATA && !isAPMode) {
+  if (ENABLE_POST_SENSOR_DATA && !isAPMode) {
     static unsigned long postSensorPreviousMillis;
     unsigned long currentMillis = millis();
-    if(currentMillis - postSensorPreviousMillis >= POST_SENSOR_INTERVAL || postSensorPreviousMillis == 0) {
+    if (currentMillis - postSensorPreviousMillis >= POST_SENSOR_INTERVAL || postSensorPreviousMillis == 0) {
       postSensorPreviousMillis = currentMillis;
-      
-      String message = "{\"temp\":\""+ String(temperature) + "\", \"humidity\":\"" + String(humidity) + "\"}";
-      http.begin(POST_SENSOR_DATA_ENDPOINT);
+
+      String message = "{\"temp\":\"" + String(temperature) + "\", \"humidity\":\"" + String(humidity) + "\"}";
+      if (POST_SENSOR_DATA_ENDPOINT.startsWith("https")) {
+        http.begin(*client_secure, POST_SENSOR_DATA_ENDPOINT);
+      } else {
+        http.begin(client, POST_SENSOR_DATA_ENDPOINT);
+      }
       http.addHeader("Content-Type", "application/json");
       http.addHeader("token", POST_SENSOR_DATA_TOKEN);
       int httpCode = http.POST(message);
-      if(DEBUG && httpCode == 200) {
-        http.writeToStream(&Serial);
-        print("");
+      if (httpCode > 0) {
+        if (DEBUG && (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY)) {
+          http.writeToStream(&Serial);
+          print("");
+        }
+      } else {
+        Serial.printf("HTTP Sensor-POST failed, error: %s\n", http.errorToString(httpCode).c_str());
       }
       http.end();
     }
   }
 }
-
