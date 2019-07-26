@@ -98,26 +98,26 @@ void saveWifi() {
 }
 
 /*
- * makes ping to given url
- */
+   makes ping to given url
+*/
 void updateDYNDNS() {
   if (ENABLE_DYNDNS && !isAPMode) {
     static unsigned long dyndnsPreviousMillis;
     unsigned long currentMillis = millis();
-    if(currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL || dyndnsPreviousMillis == 0) {
+    if (currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL || dyndnsPreviousMillis == 0) {
       dyndnsPreviousMillis = currentMillis;
-      http.begin(DYNDNS_URL);
+      http.begin(client, DYNDNS_URL);
       int httpCode = http.GET();
-      if (httpCode == HTTP_CODE_OK) {
-        String payload = http.getString();
-        //payload.trim();
-        //print("DYNDNS-update succeed!");
+      if (httpCode > 0) {
+        if (DEBUG && (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY)) {
+          //String payload = http.getString();
+          //print("DYNDNS-update successful!");
+        }
       } else {
-        dyndnsPreviousMillis = currentMillis - (DYNDNS_INTERVAL/10);
-        print("DYNDNS-update failed!");
+        Serial.printf("DYNDNS-update failed, error: %s\n", http.errorToString(httpCode).c_str());
+        dyndnsPreviousMillis = currentMillis - (DYNDNS_INTERVAL / 10);
       }
       http.end();
     }
   }
 }
-
