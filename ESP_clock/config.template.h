@@ -2,7 +2,7 @@
 
 //DEBUG
 const bool    DEBUG = false;
-const int     REACTION_TIME = 500;
+const unsigned int     REACTION_TIME = 500;
 
 //SERVICES
 const bool    ENABLE_SOCKETS = true;
