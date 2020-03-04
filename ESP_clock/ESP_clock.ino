@@ -211,6 +211,9 @@ void setup()
 void loop()
 {
   server.handleClient();
+  if (ENABLE_MDNS) {
+    MDNS.update();
+  }
   getTemperature();
   sendSensorData();
   getWeatherInfo();
