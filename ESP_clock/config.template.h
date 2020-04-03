@@ -35,7 +35,7 @@ const int     NTP_TIMEZONE = 1;     // Central European Time
 //const int     NTP_TIMEZONE = -4;  // Eastern Daylight Time (USA)
 //const int     NTP_TIMEZONE = -8;  // Pacific Standard Time (USA)
 //const int     NTP_TIMEZONE = -7;  // Pacific Daylight Time (USA)
-const int     NTP_INTERVAL = 60000; // every 10 minutes
+const int     NTP_INTERVAL = 600; // every 10 minutes
 const bool    NTP_DST = true; //Daylight saving time
 
 //LED-Matrix
