@@ -215,10 +215,10 @@ void loop()
     MDNS.update();
   }
   getTemperature();
-  sendSensorData();
-  getWeatherInfo();
-  updateDYNDNS();
   if (!isAPMode) {
+    sendSensorData();
+    getWeatherInfo();
+    updateDYNDNS();
     timeClient.update();
   }
   victron();
