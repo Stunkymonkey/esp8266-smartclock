@@ -143,11 +143,6 @@ void setup()
 
   //network stuff
   createServer();
-  if (ENABLE_MDNS) {
-    if (!MDNS.begin(deviceName.c_str())) {
-      print("Error setting up MDNS responder!");
-    }
-  }
   setProgress(7229 / 8593.0);
 
   // OTA enable
@@ -162,7 +157,14 @@ void setup()
 
   //service announcement
   if (ENABLE_MDNS) {
+    // currently there is a bug, so this should be change back in the future to:
+    // MDNS.begin(deviceName)
+    if (!MDNS.begin(deviceName, WiFi.localIP(), 120)) {
+      print("Error setting up MDNS responder!");
+    }
+    //WiFi.localIP().toString()
     MDNS.addService("http", "tcp", 80);
+    MDNS.notifyAPChange();
   }
 
   //NTP-init
