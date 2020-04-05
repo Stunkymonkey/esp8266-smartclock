@@ -182,7 +182,7 @@ byte numbers[10][3] = {
 */
 void drawSecondsGraph() {
   //scale seconds from 0 to 7
-  int secPixels = second() / 8;
+  int secPixels = second(timeClient.getEpochTime()) / 8;
   if (prevSecond != secPixels) {
     // loop through last line of display
     for (int i = 0; i < 8; i++) {
@@ -286,10 +286,10 @@ void drawWeather(int number, int addr) {
    draws time on display
 */
 void drawTime() {
-  int hour1 = hour() / 10;
-  int hour2 = hour() % 10;
-  int minute1 = minute() / 10;
-  int minute2 = minute() % 10;
+  int hour1 = hour(timeClient.getEpochTime()) / 10;
+  int hour2 = hour(timeClient.getEpochTime()) % 10;
+  int minute1 = minute(timeClient.getEpochTime()) / 10;
+  int minute2 = minute(timeClient.getEpochTime()) % 10;
   // each number is 3 pixel wide, wich adds up to 4 pixels including spacing
   if (prevHour1 != hour1) {
     drawNumber(hour1, 0, 0);

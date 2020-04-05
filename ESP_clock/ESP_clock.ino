@@ -16,7 +16,6 @@ extern "C" {
 #include <RCSwitch.h>
 #include <SoftwareSerial.h>
 #include <Time.h>
-#include <TimeLib.h>
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
 #include <WiFiUdp.h>
@@ -70,7 +69,6 @@ float humidity, temperature, heatindex;
 //NTP
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, NTP_SERVER, 0, NTP_INTERVAL);
-bool timeInit = false;
 
 //HTTP
 std::unique_ptr<BearSSL::WiFiClientSecure> client_secure(new BearSSL::WiFiClientSecure);
@@ -169,12 +167,8 @@ void setup()
 
   //NTP-init
   timeClient.begin();
-  timeClient.update();
-
-  setSyncInterval(NTP_INTERVAL);
-  setSyncProvider(UnixStamp);
-  timeInit = true;
-  setTime(UnixStamp());
+  timeClient.forceUpdate();
+  timeClient.setTimeOffset(calculate_offset());
   setProgress(7319 / 8593.0);
 
   //RC-Switch
@@ -218,10 +212,11 @@ void loop()
   }
   getTemperature();
   if (!isAPMode) {
+    timeClient.update();
+    timeClient.setTimeOffset(calculate_offset());
     sendSensorData();
     getWeatherInfo();
     updateDYNDNS();
-    timeClient.update();
   }
   victron();
   if (ENABLE_MATRIX && MatrixStatus) {
@@ -233,6 +228,4 @@ void loop()
       draw_disco();
     }
   }
-  // for debugging
-  //Serial.println(ESP.getFreeHeap());
 }
