@@ -15,12 +15,21 @@ bool isSummerTime(int hour, int day, int month, int year, int tzHours) {
 /*
    returns unixtime-stmap with DST correction
 */
-time_t UnixStamp() {
-  int offset = NTP_TIMEZONE;
-  if (NTP_DST) {
-    if (timeInit && inSummerTime(hour(), day(), month(), year())) {
-      offset += 1;
+time_t calculate_offset() {
+  static unsigned int previous_offset = NTP_TIMEZONE;
+  if (!isAPMode) {
+    static unsigned long timeoffset_PreviousMillis;
+    unsigned long currentMillis = millis();
+    if (currentMillis - timeoffset_PreviousMillis >= 1000 || timeoffset_PreviousMillis == 0) {
+      timeoffset_PreviousMillis = currentMillis;
+      int offset = NTP_TIMEZONE;
+      if (NTP_DST) {
+        if (isSummerTime(hour(timeClient.getEpochTime()), day(timeClient.getEpochTime()), month(timeClient.getEpochTime()), year(timeClient.getEpochTime()), NTP_TIMEZONE)) {
+          offset += 1;
+        }
+      }
+      previous_offset = offset;
     }
   }
-  return timeClient.getEpochTime() + (offset * SECS_PER_HOUR);
+  return previous_offset * SECS_PER_HOUR;
 }
