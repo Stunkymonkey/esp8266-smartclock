@@ -38,6 +38,7 @@ void initWifi() {
     } else {
       print("Connected to " + ssid + "!");
       print(WiFi.localIP().toString());
+      WiFi.mode(WIFI_AP_STA);
       WifiLEDOn();
     }
   }
@@ -67,7 +68,7 @@ bool testWifi(void) {
 /*
    starts AP-Mode
 */
-void setupAP(void) {
+void setupAP() {
   print("Setup AP Mode");
   WiFi.mode(WIFI_AP);
   boolean result = WiFi.softAP(deviceName.c_str());
@@ -98,7 +99,7 @@ void saveWifi() {
 }
 
 /*
-   makes ping to given url
+   GET-request to given url
 */
 void updateDYNDNS() {
   if (ENABLE_DYNDNS && !isAPMode) {
@@ -106,7 +107,12 @@ void updateDYNDNS() {
     unsigned long currentMillis = millis();
     if (currentMillis - dyndnsPreviousMillis >= DYNDNS_INTERVAL || dyndnsPreviousMillis == 0) {
       dyndnsPreviousMillis = currentMillis;
-      http.begin(client, DYNDNS_URL);
+
+      if (DYNDNS_URL.startsWith("https")) {
+        http.begin(*client_secure, DYNDNS_URL);
+      } else {
+        http.begin(client, DYNDNS_URL);
+      }
       int httpCode = http.GET();
       if (httpCode > 0) {
         if (DEBUG && (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY)) {
