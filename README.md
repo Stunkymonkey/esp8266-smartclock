@@ -34,13 +34,31 @@ The total costs are around 25€:
 ## Development
 
 ### Dependencies
-* [ESP8266](https://github.com/esp8266/Arduino)
-* [NTPClient](https://github.com/arduino-libraries/NTPClient)
-* [Adafruit_Sensor](https://github.com/adafruit/Adafruit_Sensor)
-* [DHT-sensor-library](https://github.com/adafruit/DHT-sensor-library)
-* [LedControl](http://wayoda.github.io/LedControl/)
-* [rc-switch](https://github.com/sui77/rc-switch)
-* [Time](http://playground.arduino.cc/code/time)
+
+| Module                                                       | last tested version |
+| ------------------------------------------------------------ | ------------------- |
+| [ESP8266](https://github.com/esp8266/Arduino)                | 2.7.1               |
+| [NTPClient](https://github.com/arduino-libraries/NTPClient)  | 3.2.0               |
+| [Adafruit_Sensor](https://github.com/adafruit/Adafruit_Sensor) | 1.1.3               |
+| [DHT-sensor-library](https://github.com/adafruit/DHT-sensor-library) | 1.3.10              |
+| [LedControl](http://wayoda.github.io/LedControl/)            | 1.0.6               |
+| [rc-switch](https://github.com/sui77/rc-switch)              | 2.6.3               |
+| [Time](http://playground.arduino.cc/code/time)               | 1.6.0               |
+
+### Board-Settings (used)
+
+- Board: NodeMCU 1.0 (ESP-12E Module)
+- Builtin Led: 2
+- Upload Speed: 115200
+- CPU Frequency: 80Mhz
+- Flash Size: 4MB (FS:1MB OTA:~1019KB)
+- Debug Port: Disabled
+- Debug Level: None
+- lwIP Variant: v2 Lower Memory
+- VTables: Flash
+- Exceptions: Enabled
+- Erase Flash: Only Sketch
+- SSL Support: All SSL ciphers (most compatible)
 
 ### Compile
 ```
