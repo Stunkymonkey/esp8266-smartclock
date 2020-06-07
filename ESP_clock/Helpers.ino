@@ -3,6 +3,11 @@ void print(char value[]) {
     Serial.println(value);
   }
 }
+void print(const char* value) {
+  if (DEBUG) {
+    Serial.println(value);
+  }
+}
 void print(String value) {
   if (DEBUG) {
     Serial.println(value);
