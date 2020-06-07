@@ -15,7 +15,7 @@ extern "C" {
 #include <NTPClient.h>
 #include <RCSwitch.h>
 #include <SoftwareSerial.h>
-#include <Time.h>
+#include <TimeLib.h>
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
 #include <WiFiUdp.h>
