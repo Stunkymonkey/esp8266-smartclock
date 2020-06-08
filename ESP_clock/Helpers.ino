@@ -69,7 +69,7 @@ void saveDeviceName() {
 */
 String parseName(String name) {
   String result = "";
-  for (int i = 0; i < name.length(); i++) {
+  for (size_t i = 0; i < name.length(); i++) {
     char letter = name.charAt(i);
     if (isalnum(letter) || letter == '-') {
       result = result + String(letter);
@@ -114,7 +114,7 @@ String getHTTPValue(HTTPClient &http, String key, int skip, int get) {
         ind = 1;
       } else if (look && (char_buff[0] == key[ind])) {
         ind ++;
-        if (ind == key.length()) found = true;
+        if (ind == (int)key.length()) found = true;
       } else if (look && (char_buff[0] != key[ind])) {
         ind = 0;
         look = false;

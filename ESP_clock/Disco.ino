@@ -63,7 +63,7 @@ void cosine_wave() {
 byte fishes[1][8] = {
   {B00010000, B00111000, B01000100, B01000100, B01000100, B00111000, B00010000, B00111000}, // medium fish
 };
-long WATERWORLD_SPEED = 200;
+unsigned int WATERWORLD_SPEED = 200;
 void waterworld() {
   static unsigned long lastWaterworldDraw;
   unsigned long currentDraw = millis();
@@ -76,7 +76,6 @@ void waterworld() {
 
 int iconPosition = 0;
 void drawWaterWorld() {
-  int amount = lc.getDeviceCount() * 8;
   int currentRow = 0;
 
   iconPosition = iconPosition - 1;

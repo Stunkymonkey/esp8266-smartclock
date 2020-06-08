@@ -28,7 +28,7 @@ void createServer() {
     server.on("/socketSet", saveSocketSet);
     server.on("/socketMasterOn", SocketMasterOn);
     server.on("/socketMasterOff", SocketMasterOff);
-    for (int i = 0; i < (sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+    for (size_t i = 0; i < (sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       String pathOn = "/socket" + String(i) + "On";
       const char* pathOnChar = pathOn.c_str();
       String pathOff = "/socket" + String(i) + "Off";
@@ -101,7 +101,7 @@ void Home() {
     content += "<div class=\"switch ";
     bool allFalse = true;
     bool allTrue = true;
-    for (int i = 0; i < sizeof(statusSocketSets); i++) {
+    for (size_t i = 0; i < sizeof(statusSocketSets); i++) {
       if (statusSocketSets[i]) {
         allFalse = false;
       } else {
@@ -119,7 +119,7 @@ void Home() {
     content += "<div class=\"toggler\"></div>";
     content += "</div>";
     content += "</div>";
-    for (int i = 0; i < (sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+    for (size_t i = 0; i < (sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       content += "<div class=\"switchContainer small\">";
       content += "<h4>" + configSocketSets[i][1] + "</h4>";
       content += "<div class=\"switch ";
@@ -182,7 +182,7 @@ void Settings() {
   //sockets
   if (ENABLE_SOCKETS) {
     content += "<h3>Sockets</h3>";
-    for (int i = 0; i < (sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
+    for (size_t i = 0; i < (sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
       String socketSet[5] = configSocketSets[i];
       content += "<form action='/socketSet' method='GET'><span><p><b>Socket ";
       content +=  String(i + 1);

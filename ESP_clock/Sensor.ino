@@ -45,6 +45,7 @@ int get_heat_index_level() {
   } else if (heatindex >= 54) {
     return 4;
   }
+  return -1;
 }
 
 /*

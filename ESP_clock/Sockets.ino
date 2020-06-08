@@ -70,7 +70,7 @@ void loadSocketSets() {
       }
       socketId.replace(SOCKET_CONFIG_PATH, "");
       int i = socketId.toInt();
-      if (i >= (sizeof configSocketSets / sizeof configSocketSets[0])) {
+      if (i >= (int)(sizeof configSocketSets / sizeof configSocketSets[0])) {
         continue;
       }
       isv3.trim();
@@ -164,7 +164,7 @@ void SocketMasterOn() {
   if (!auth()) {
     return;
   }
-  for (int i = 0; i < sizeof(statusSocketSets); i++) {
+  for (size_t i = 0; i < sizeof(statusSocketSets); i++) {
     SocketSend(i, true);
   }
 }
@@ -173,7 +173,7 @@ void SocketMasterOff() {
   if (!auth()) {
     return;
   }
-  for (int i = 0; i < sizeof(statusSocketSets); i++) {
+  for (size_t i = 0; i < sizeof(statusSocketSets); i++) {
     SocketSend(i, false);
   }
 }

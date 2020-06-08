@@ -12,7 +12,6 @@ void getWeatherInfo() {
         weatherStatus = weatherIconToIndex("not defined");
         return;
       }
-      unsigned long timeout = millis();
 
       int httpCode = http.GET();
       String weatherIcon;
