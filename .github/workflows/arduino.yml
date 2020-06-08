@@ -10,8 +10,9 @@ jobs:
     - name: Copy config
       run: cp ESP_clock/config{.template,}.h
     - name: Compile all
-      uses: ArminJo/arduino-test-compile@v2.4.1
+      uses: ArminJo/arduino-test-compile@v2
       with:
-        arduino-board-fqbn: esp8266:esp8266:nodemcuv2:eesz=4M3M,xtal=80
+        sketch-names: "ESP_clock.ino"
+        arduino-board-fqbn: esp8266:esp8266:nodemcuv2:eesz=4M1M,xtal=80
         platform-url: https://arduino.esp8266.com/stable/package_esp8266com_index.json
         required-libraries: NTPClient,DHT sensor library,LedControl,rc-switch,Time
