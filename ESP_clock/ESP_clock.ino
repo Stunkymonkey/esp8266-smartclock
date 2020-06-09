@@ -12,6 +12,7 @@ extern "C" {
 #include <ESP8266WiFi.h>
 #include <FS.h>
 #include <LedControl.h>
+#include <LittleFS.h>
 #include <NTPClient.h>
 #include <RCSwitch.h>
 #include <SoftwareSerial.h>
@@ -113,7 +114,7 @@ void setup()
   setProgress(266 / 8593.0);
 
   //mount File-System
-  bool mountFs = SPIFFS.begin();
+  bool mountFs = LittleFS.begin();
   if (!mountFs) {
     print("Failed to mount File-System!");
   }

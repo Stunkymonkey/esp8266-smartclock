@@ -117,7 +117,7 @@ void clearMatrix() {
    load intensity from storage
 */
 int loadIntensity() {
-  File configFile = SPIFFS.open(LED_CONFIG_PATH, "r");
+  File configFile = LittleFS.open(LED_CONFIG_PATH, "r");
   if (configFile) {
     String intensity;
     while (configFile.available()) {
@@ -141,7 +141,7 @@ void saveIntensity() {
   }
   String intensity_String = server.arg("intensity");
   int intensity = intensity_String.toInt();
-  File f = SPIFFS.open(LED_CONFIG_PATH, "w");
+  File f = LittleFS.open(LED_CONFIG_PATH, "w");
   f.println(intensity);
   f.close();
   led_matrix_intensity = intensity;

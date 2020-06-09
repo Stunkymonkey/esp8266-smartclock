@@ -33,7 +33,7 @@ void print(bool value) {
    load hostname from storage
 */
 String loadDeviceName() {
-  File configFile = SPIFFS.open(NAME_CONFIG_PATH, "r");
+  File configFile = LittleFS.open(NAME_CONFIG_PATH, "r");
   if (configFile) {
     String name;
     while (configFile.available()) {
@@ -57,7 +57,7 @@ void saveDeviceName() {
   }
   String name = server.arg("name");
   name = parseName(name);
-  File f = SPIFFS.open(NAME_CONFIG_PATH, "w");
+  File f = LittleFS.open(NAME_CONFIG_PATH, "w");
   f.println(name);
   f.close();
   deviceName = name;

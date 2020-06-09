@@ -16,7 +16,7 @@ void saveSocketSet() {
   String socketCode = server.arg("socketCode");
 
   String path = SOCKET_CONFIG_PATH + socketID;
-  File f = SPIFFS.open(path, "w");
+  File f = LittleFS.open(path, "w");
 
   f.println(isv3);
   f.println(socketName);
@@ -33,7 +33,7 @@ void saveSocketSet() {
    loads socket information while starting
 */
 void loadSocketSets() {
-  Dir socketFolder = SPIFFS.openDir(SOCKET_CONFIG_PATH);
+  Dir socketFolder = LittleFS.openDir(SOCKET_CONFIG_PATH);
   while (socketFolder.next()) {
     File entry = socketFolder.openFile("r");
     if (entry) {
@@ -63,7 +63,7 @@ void loadSocketSets() {
             break;
           default:
             print("Error too many lines in reading sockets... deleting file");
-            SPIFFS.remove(entry.name());
+            LittleFS.remove(entry.name());
             break;
         }
         n ++;

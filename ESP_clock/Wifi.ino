@@ -2,7 +2,7 @@
    connects to wifi or start in ap
 */
 void initWifi() {
-  File configFile = SPIFFS.open(WIFI_CONFIG_PATH, "r");
+  File configFile = LittleFS.open(WIFI_CONFIG_PATH, "r");
   if (!configFile) {
     print(WIFI_CONFIG_PATH + " not found");
     setupAP();
@@ -91,7 +91,7 @@ void saveWifi() {
   String pw = server.arg("pw");
   print(ssid);
   print(pw);
-  File f = SPIFFS.open(WIFI_CONFIG_PATH, "w");
+  File f = LittleFS.open(WIFI_CONFIG_PATH, "w");
   f.println(ssid);
   f.println(pw);
   f.close();
