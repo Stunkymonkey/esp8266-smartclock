@@ -16,7 +16,3 @@ jobs:
         arduino-board-fqbn: esp8266:esp8266:nodemcuv2:eesz=4M1M,xtal=80
         platform-url: https://arduino.esp8266.com/stable/package_esp8266com_index.json
         required-libraries: NTPClient,DHT sensor library,LedControl,rc-switch,Time
-    - name: Lint Code Base
-      uses: docker://github/super-linter:v2.2.0
-      env:
-        VALIDATE_ALL_CODEBASE: false
