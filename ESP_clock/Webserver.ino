@@ -183,20 +183,19 @@ void Settings() {
   if (ENABLE_SOCKETS) {
     content += "<h3>Sockets</h3>";
     for (size_t i = 0; i < (sizeof configSocketSets / sizeof configSocketSets[0]); i++) {
-      String socketSet[5] = configSocketSets[i];
       content += "<form action='/socketSet' method='GET'><span><p><b>Socket ";
       content +=  String(i + 1);
       content += "</b></p><br>";
       content += "<input type='hidden' name='socketID' value='" + String(i) + "'>";
-      if (socketSet[0].equals(String("on"))) {
+      if (configSocketSets[i][0].equals(String("on"))) {
         content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3' checked><br>";
       } else {
         content += "<label for='isV3'>Is Protocol 3</label><input type='checkbox' name='isV3' placeholder='is Protocol 3'><br>";
       }
-      content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='" + socketSet[1] + "'><br>";
-      content += "<label for='houseCode'>Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='" + socketSet[2] + "'><br>";
-      content += "<label for='groupCode'>Groupcode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='" + socketSet[3] + "'><br>";
-      content += "<label for='socketCode'>Socketcode</label><input type='text' id='socketCode' name='socketCode' placeholder='Device Code' value='" + socketSet[4] + "'><br>";
+      content += "<label for='name'>Name of socket</label><input id='name' type='text' name='name' placeholder='Name for socket' value='" + configSocketSets[i][1] + "'><br>";
+      content += "<label for='houseCode'>Housecode</label><input type='text' id='houseCode' name='houseCode' placeholder='Housecode' value='" + configSocketSets[i][2] + "'><br>";
+      content += "<label for='groupCode'>Groupcode</label><input type='number' id='groupCode' name='groupCode' placeholder='Gruppe (optional)' value='" + configSocketSets[i][3] + "'><br>";
+      content += "<label for='socketCode'>Socketcode</label><input type='text' id='socketCode' name='socketCode' placeholder='Device Code' value='" + configSocketSets[i][4] + "'><br>";
       content += "<input type='submit' value='Speichern'>";
       content += "</form><br>";
     }
