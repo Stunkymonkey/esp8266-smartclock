@@ -6,6 +6,7 @@ We started designing and building a small clock that is connected to your local 
 
 <img src="images/IMG_4446.JPG"/>
 <img src="images/screenshot1.png"/>
+<img src="images/case_2.jpg"/>
 
 ## Hardware
 The total costs are around 25€:
